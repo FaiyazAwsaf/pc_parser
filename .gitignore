@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.env
+env/
+*.sqlite3
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media
+staticfiles
+
+# VSCode / IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Env
+/venv/
+.env
+# Node modules (huge folder, recreate with npm install)
+node_modules/
+
+# Build output
+dist/
+
+# Local environment files
+.env
+.env.* 
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env

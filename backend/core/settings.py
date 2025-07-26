@@ -98,7 +98,10 @@ DATABASES = {
 }
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+#CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # For development only
+# For production, use:
+# CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "https://yourdomain.com"]
 CORS_ALLOW_CREDENTIALS = True
 
 # Password validation

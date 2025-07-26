@@ -21,7 +21,7 @@ staticfiles
 .DS_Store
 
 # Env
-/venv/
+venv/
 .env
 # Node modules (huge folder, recreate with npm install)
 node_modules/

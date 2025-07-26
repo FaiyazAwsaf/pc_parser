@@ -1,0 +1,7 @@
+Django>=4.0
+djangorestframework
+django-cors-headers
+djangorestframework-simplejwt
+python-dotenv
+psycopg2-binary
+pillow

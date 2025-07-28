@@ -5,3 +5,4 @@ djangorestframework-simplejwt
 python-dotenv
 psycopg2-binary
 pillow
+django-filter

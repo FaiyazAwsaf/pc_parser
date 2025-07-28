@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-gray-50 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div class="bg-white rounded-lg shadow-md p-8">
         <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-8">Login to PC Parser</h2>
@@ -113,6 +113,16 @@ const handleLogin = async () => {
       localStorage.setItem('access_token', data.access_token)
       localStorage.setItem('refresh_token', data.refresh_token)
       localStorage.setItem('user', JSON.stringify(data.user))
+      
+      // Dispatch custom event to notify navbar of login
+      window.dispatchEvent(new CustomEvent('userLoggedIn'))
+      
+      // Force update of navbar by triggering a storage-like event
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'access_token',
+        newValue: data.access_token,
+        oldValue: null
+      }))
       
       message.value = data.message
       messageType.value = 'success'

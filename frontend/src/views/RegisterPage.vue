@@ -72,6 +72,45 @@
           </div>
 
           <div>
+            <label for="profile_image" class="block text-sm font-medium text-gray-700 mb-2">Profile Image (Optional)</label>
+            <div class="flex items-center space-x-4">
+              <!-- Image Preview -->
+              <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-300 bg-gray-100 flex items-center justify-center">
+                <img 
+                  v-if="imagePreview" 
+                  :src="imagePreview" 
+                  alt="Profile preview"
+                  class="w-full h-full object-cover"
+                />
+                <svg v-else class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              
+              <!-- File Input -->
+              <div class="flex-1">
+                <input
+                  type="file"
+                  id="profile_image"
+                  ref="fileInput"
+                  @change="handleImageChange"
+                  accept="image/*"
+                  class="hidden"
+                />
+                <button
+                  type="button"
+                  @click="$refs.fileInput.click()"
+                  class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                >
+                  Choose Image
+                </button>
+                <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 5MB</p>
+              </div>
+            </div>
+            <span v-if="errors.profile_image" class="text-red-500 text-sm mt-1 block">{{ errors.profile_image }}</span>
+          </div>
+
+          <div>
             <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
             <input
               type="password"
@@ -154,8 +193,12 @@ const errors = reactive({
   username: '',
   email: '',
   password: '',
-  password_confirm: ''
+  password_confirm: '',
+  profile_image: ''
 })
+
+const selectedImage = ref(null)
+const imagePreview = ref(null)
 
 const clearErrors = () => {
   Object.keys(errors).forEach(key => {
@@ -164,17 +207,54 @@ const clearErrors = () => {
   message.value = ''
 }
 
+const handleImageChange = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      errors.profile_image = 'Image size must be less than 5MB'
+      return
+    }
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      errors.profile_image = 'Please select a valid image file'
+      return
+    }
+
+    selectedImage.value = file
+    errors.profile_image = ''
+
+    // Create preview
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      imagePreview.value = e.target.result
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
 const handleRegister = async () => {
   clearErrors()
   loading.value = true
 
   try {
+    // Create FormData for file upload
+    const formData = new FormData()
+    
+    // Add form fields
+    Object.keys(form).forEach(key => {
+      formData.append(key, form[key])
+    })
+    
+    // Add image if selected
+    if (selectedImage.value) {
+      formData.append('profile_image', selectedImage.value)
+    }
+
     const response = await fetch('http://localhost:8000/api/auth/register/', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form)
+      body: formData // Don't set Content-Type header, let browser set it with boundary
     })
 
     const data = await response.json()

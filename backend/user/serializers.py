@@ -11,7 +11,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name', 'password', 'password_confirm')
+        fields = ('email', 'username', 'first_name', 'last_name', 'password', 'password_confirm', 'profile_image')
         
     def validate_email(self, value):
         """Validate email format and uniqueness"""
@@ -117,7 +117,18 @@ class ResendVerificationSerializer(serializers.Serializer):
         return value
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    profile_image_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'first_name', 'last_name', 'is_email_verified', 'date_joined')
-        read_only_fields = ('id', 'email', 'is_email_verified', 'date_joined')
+        fields = ('id', 'email', 'username', 'first_name', 'last_name', 'is_email_verified', 'date_joined', 'profile_image', 'profile_image_url')
+        read_only_fields = ('id', 'email', 'is_email_verified', 'date_joined', 'profile_image_url')
+    
+    def get_profile_image_url(self, obj):
+        """Get the full URL for the profile image"""
+        if obj.profile_image:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.profile_image.url)
+            return obj.profile_image.url
+        return None

@@ -63,7 +63,7 @@ class UserLoginView(APIView):
                 'message': 'Login successful',
                 'access_token': str(access_token),
                 'refresh_token': str(refresh),
-                'user': UserProfileSerializer(user).data
+                'user': UserProfileSerializer(user, context={'request': request}).data
             }, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -139,11 +139,11 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        serializer = UserProfileSerializer(request.user)
+        serializer = UserProfileSerializer(request.user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def put(self, request):
-        serializer = UserProfileSerializer(request.user, data=request.data, partial=True)
+        serializer = UserProfileSerializer(request.user, data=request.data, partial=True, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response({

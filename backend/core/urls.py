@@ -19,12 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from user.views import HelloView
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/hello/', HelloView.as_view(), name='hello'),
+    path('api/auth/', include('user.urls')),
     path('api/components/', include('components.urls')),
+    path('api/marketplace/', include('marketplace.urls')),
 ]
 
 # Serve media files in development

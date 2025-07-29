@@ -1,25 +1,27 @@
 <template>
-  <div class="marketplace">
-    <div class="marketplace-header">
-      <h1>PC Parts Marketplace</h1>
-      <div class="search-bar">
+  <div class="p-5 max-w-7xl mx-auto">
+    <div class="text-center mb-8">
+      <h1 class="text-gray-800 mb-5 text-3xl font-bold">PC Parts Marketplace</h1>
+      <div class="flex justify-center gap-2.5 mb-5">
         <input
           v-model="searchQuery"
           @input="handleSearch"
           type="text"
           placeholder="Search for products..."
-          class="search-input"
+          class="px-3 py-3 border-2 border-gray-300 rounded-lg w-96 text-base focus:outline-none focus:border-blue-500"
         />
-        <button @click="handleSearch" class="search-btn">Search</button>
+        <button @click="handleSearch" class="px-6 py-3 bg-blue-500 text-white border-none rounded-lg cursor-pointer text-base hover:bg-blue-600 transition-colors">
+          Search
+        </button>
       </div>
     </div>
 
-    <div class="marketplace-content">
+    <div class="flex gap-8 lg:flex-row flex-col">
       <!-- Sidebar Filters -->
-      <div class="sidebar">
-        <div class="filter-section">
-          <h3>Category</h3>
-          <select v-model="selectedCategory" @change="applyFilters">
+      <div class="w-full lg:w-64 bg-gray-50 p-5 rounded-lg h-fit">
+        <div class="mb-6">
+          <h3 class="mb-2.5 text-gray-800 text-base font-semibold">Category</h3>
+          <select v-model="selectedCategory" @change="applyFilters" class="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500">
             <option value="">All Categories</option>
             <option v-for="category in categories" :key="category" :value="category">
               {{ category }}
@@ -27,9 +29,9 @@
           </select>
         </div>
 
-        <div class="filter-section">
-          <h3>Condition</h3>
-          <select v-model="selectedCondition" @change="applyFilters">
+        <div class="mb-6">
+          <h3 class="mb-2.5 text-gray-800 text-base font-semibold">Condition</h3>
+          <select v-model="selectedCondition" @change="applyFilters" class="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500">
             <option value="">All Conditions</option>
             <option v-for="condition in conditions" :key="condition" :value="condition">
               {{ condition }}
@@ -37,9 +39,9 @@
           </select>
         </div>
 
-        <div class="filter-section">
-          <h3>Price Range</h3>
-          <div class="price-slider">
+        <div class="mb-6">
+          <h3 class="mb-2.5 text-gray-800 text-base font-semibold">Price Range</h3>
+          <div class="flex flex-col gap-2.5">
             <Slider
               v-model="priceRange"
               :min="0"
@@ -47,27 +49,27 @@
               :step="1000"
               @change="applyFilters"
             />
-            <div class="price-labels">
+            <div class="flex justify-between text-sm text-gray-600">
               <span>৳{{ formatPrice(priceRange[0]) }}</span>
               <span>৳{{ formatPrice(priceRange[1]) }}</span>
             </div>
           </div>
         </div>
 
-        <div class="filter-section" v-if="isAuthenticated">
-          <button @click="showAddProductModal = true" class="add-product-btn">
+        <div v-if="isAuthenticated" class="mb-6">
+          <button @click="showAddProductModal = true" class="w-full px-3 py-3 bg-green-500 text-white border-none rounded-lg cursor-pointer text-base hover:bg-green-600 transition-colors">
             Add Product
           </button>
         </div>
       </div>
 
       <!-- Product Grid -->
-      <div class="product-grid">
-        <div class="products-container">
+      <div class="flex-1">
+        <div>
           <div
             v-for="(productRow, index) in productRows"
             :key="index"
-            class="product-row"
+            class="flex gap-5 mb-5 flex-wrap"
           >
             <ProductCard
               v-for="product in productRow"
@@ -80,18 +82,20 @@
         </div>
 
         <!-- No products message -->
-        <div v-if="!loading && products.length === 0" class="no-products">
-          <div class="no-products-icon">📦</div>
-          <h3>No products found</h3>
-          <p>Try adjusting your search criteria or filters to find what you're looking for.</p>
+        <div v-if="!loading && products.length === 0" class="text-center py-16 px-5 text-gray-600">
+          <div class="text-6xl mb-5">📦</div>
+          <h3 class="text-2xl text-gray-800 mb-2.5 font-semibold">No products found</h3>
+          <p class="text-base mb-8 max-w-md mx-auto">Try adjusting your search criteria or filters to find what you're looking for.</p>
         </div>
 
         <!-- Loading indicator -->
-        <div v-if="loading" class="loading">Loading more products...</div>
+        <div v-if="loading" class="text-center py-5 text-gray-600">Loading more products...</div>
 
         <!-- Load more button -->
-        <div v-if="hasMore && !loading && products.length > 0" class="load-more">
-          <button @click="loadMore" class="load-more-btn">Load More</button>
+        <div v-if="hasMore && !loading && products.length > 0" class="text-center mt-8">
+          <button @click="loadMore" class="px-6 py-3 bg-blue-500 text-white border-none rounded-lg cursor-pointer text-base hover:bg-blue-600 transition-colors">
+            Load More
+          </button>
         </div>
       </div>
     </div>
@@ -308,222 +312,4 @@ export default {
 
 <style scoped>
 @import '@vueform/slider/themes/default.css';
-
-.marketplace {
-  padding: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.marketplace-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.marketplace-header h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.search-bar {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.search-input {
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  width: 400px;
-  font-size: 16px;
-}
-
-.search-btn {
-  padding: 12px 24px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.search-btn:hover {
-  background: #0056b3;
-}
-
-.add-product-header-btn {
-  padding: 12px 24px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.add-product-header-btn:hover {
-  background: #218838;
-}
-
-.marketplace-content {
-  display: flex;
-  gap: 30px;
-}
-
-.sidebar {
-  width: 250px;
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  height: fit-content;
-}
-
-.filter-section {
-  margin-bottom: 25px;
-}
-
-.filter-section h3 {
-  margin-bottom: 10px;
-  color: #333;
-  font-size: 16px;
-}
-
-.filter-section select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.price-slider {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.slider {
-  width: 100%;
-}
-
-.price-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  color: #666;
-}
-
-.add-product-btn {
-  width: 100%;
-  padding: 12px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.add-product-btn:hover {
-  background: #218838;
-}
-
-.product-grid {
-  flex: 1;
-}
-
-.product-row {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.loading {
-  text-align: center;
-  padding: 20px;
-  color: #666;
-}
-
-.load-more {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.load-more-btn {
-  padding: 12px 24px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.load-more-btn:hover {
-  background: #0056b3;
-}
-
-.no-products {
-  text-align: center;
-  padding: 60px 20px;
-  color: #666;
-}
-
-.no-products-icon {
-  font-size: 4rem;
-  margin-bottom: 20px;
-}
-
-.no-products h3 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.no-products p {
-  font-size: 1rem;
-  margin-bottom: 30px;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.add-first-product-btn {
-  padding: 12px 24px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.add-first-product-btn:hover {
-  background: #218838;
-}
-
-@media (max-width: 768px) {
-  .marketplace-content {
-    flex-direction: column;
-  }
-  
-  .sidebar {
-    width: 100%;
-  }
-  
-  .search-input {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .product-row {
-    justify-content: center;
-  }
-}
 </style>

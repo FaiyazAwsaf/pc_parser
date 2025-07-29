@@ -48,7 +48,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
             <h3 class="font-semibold text-xl mb-2">AI Build Helper</h3>
-            <p class="text-gray-600 group-hover:text-green-600">Tell us your budget &amp; needs. Instantly get compatible, optimized builds for gaming, work, or study—powered by AI!</p>
+            <p class="text-gray-600 group-hover:text-green-600">Tell us your budget &amp; needs. Instantly get compatible, optimized builds for gaming, work, or study powered by AI!</p>
           </div>
           <!-- Feature: Second-hand Marketplace -->
           <div class="bg-gradient-to-tr from-purple-50 to-purple-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300">
@@ -58,7 +58,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8" />
             </svg>
             <h3 class="font-semibold text-xl mb-2">Trusted Used Market</h3>
-            <p class="text-gray-600 group-hover:text-purple-600">Browse verified, trustworthy second-hand parts—buy and sell with confidence, no more marketplace scams.</p>
+            <p class="text-gray-600 group-hover:text-purple-600">Browse verified, trustworthy second-hand parts buy and sell with confidence, no more marketplace scams.</p>
           </div>
         </div>
       </div>

@@ -1,13 +1,12 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-blue-800 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
-      <div class="bg-white rounded-lg shadow-md p-8">
-        <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-8">Create Account</h2>
-        
+    <div class="bg-white/10 backdrop-blur-md rounded-lg shadow-xl p-8 border border-white/20">
+       <h2 class="text-center text-3xl font-extrabold text-white mb-8">Create Account</h2>
         <form @submit.prevent="handleRegister" class="space-y-6">
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+              <label for="first_name" class="block text-sm font-medium text-white mb-2">First Name</label>
               <input
                 type="text"
                 id="first_name"
@@ -23,7 +22,7 @@
             </div>
 
             <div>
-              <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+              <label for="last_name" class="block text-sm font-medium text-white mb-2">Last Name</label>
               <input
                 type="text"
                 id="last_name"
@@ -40,7 +39,7 @@
           </div>
 
           <div>
-            <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+            <label for="username" class="block text-sm font-medium text-white mb-2">Username</label>
             <input
               type="text"
               id="username"
@@ -56,7 +55,7 @@
           </div>
 
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <label for="email" class="block text-sm font-medium text-white mb-2">Email Address</label>
             <input
               type="email"
               id="email"
@@ -72,7 +71,7 @@
           </div>
 
           <div>
-            <label for="profile_image" class="block text-sm font-medium text-gray-700 mb-2">Profile Image (Optional)</label>
+            <label for="profile_image" class="block text-sm font-medium text-white mb-2">Profile Image (Optional)</label>
             <div class="flex items-center space-x-4">
               <!-- Image Preview -->
               <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-300 bg-gray-100 flex items-center justify-center">
@@ -104,14 +103,14 @@
                 >
                   Choose Image
                 </button>
-                <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 5MB</p>
+               <p class="text-xs text-white mt-1">PNG, JPG up to 5MB</p>
               </div>
             </div>
             <span v-if="errors.profile_image" class="text-red-500 text-sm mt-1 block">{{ errors.profile_image }}</span>
           </div>
 
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label for="password" class="block text-sm font-medium text-white mb-2">Password</label>
             <input
               type="password"
               id="password"
@@ -127,7 +126,7 @@
           </div>
 
           <div>
-            <label for="password_confirm" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+            <label for="password_confirm" class="block text-sm font-medium text-white mb-2">Confirm Password</label>
             <input
               type="password"
               id="password_confirm"
@@ -159,9 +158,9 @@
         </div>
 
         <div class="mt-6 text-center">
-          <p class="text-sm text-gray-600">
-            Already have an account? 
-            <router-link to="/login" class="text-blue-600 hover:text-blue-500 font-medium">Login</router-link>
+         <p class="text-sm text-white">
+               Already have an account? 
+            <router-link to="/login" class=" text-white hover:text-blue-500 font-medium">Login</router-link>
           </p>
         </div>
       </div>

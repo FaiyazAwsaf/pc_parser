@@ -1,0 +1,258 @@
+<template>
+  <nav class="bg-white shadow-lg border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo and Brand -->
+        <div class="flex items-center">
+          <router-link to="/" class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-sm">PC</span>
+            </div>
+            <span class="text-xl font-bold text-gray-800">PC Parser</span>
+          </router-link>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="hidden md:flex items-center space-x-8">
+          <router-link 
+            to="/" 
+            class="text-gray-600 hover:text-blue-600 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path === '/' }"
+          >
+            Home
+          </router-link>
+          <router-link 
+            to="/components" 
+            class="text-gray-600 hover:text-blue-600 transition-colors font-medium"
+            :class="{ 'text-blue-600': $route.path.startsWith('/components') }"
+          >
+            Components
+          </router-link>
+        </div>
+
+        <!-- User Section -->
+        <div class="flex items-center space-x-4">
+          <!-- Authenticated User -->
+          <div v-if="isLoggedIn && user" class="flex items-center space-x-3">
+            <span class="hidden sm:block text-sm text-gray-600">
+              Welcome, {{ user.first_name }}!
+            </span>
+            <UserAvatar :user="user" @logout="handleLogout" />
+          </div>
+
+          <!-- Guest User -->
+          <div v-else class="flex items-center space-x-3">
+            <router-link 
+              to="/login" 
+              class="text-gray-600 hover:text-blue-600 transition-colors font-medium"
+            >
+              Login
+            </router-link>
+            <router-link 
+              to="/register" 
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            >
+              Sign Up
+            </router-link>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button 
+            @click="toggleMobileMenu"
+            class="md:hidden p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 transition-colors"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path 
+                v-if="!showMobileMenu"
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+              <path 
+                v-else
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div v-if="showMobileMenu" class="md:hidden border-t border-gray-200 py-4">
+        <div class="flex flex-col space-y-3">
+          <router-link 
+            to="/" 
+            @click="closeMobileMenu"
+            class="text-gray-600 hover:text-blue-600 transition-colors font-medium px-2 py-1"
+            :class="{ 'text-blue-600': $route.path === '/' }"
+          >
+            Home
+          </router-link>
+          <router-link 
+            to="/components" 
+            @click="closeMobileMenu"
+            class="text-gray-600 hover:text-blue-600 transition-colors font-medium px-2 py-1"
+            :class="{ 'text-blue-600': $route.path.startsWith('/components') }"
+          >
+            Components
+          </router-link>
+          
+          <!-- Mobile Auth Links -->
+          <div v-if="!isLoggedIn" class="border-t border-gray-200 pt-3 mt-3">
+            <router-link 
+              to="/login" 
+              @click="closeMobileMenu"
+              class="block text-gray-600 hover:text-blue-600 transition-colors font-medium px-2 py-1"
+            >
+              Login
+            </router-link>
+            <router-link 
+              to="/register" 
+              @click="closeMobileMenu"
+              class="block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium mt-2"
+            >
+              Sign Up
+            </router-link>
+          </div>
+          
+          <!-- Mobile User Info -->
+          <div v-else class="border-t border-gray-200 pt-3 mt-3">
+            <div class="flex items-center space-x-3 px-2 py-1">
+              <div class="w-8 h-8 rounded-full overflow-hidden">
+                <img 
+                  v-if="user?.profile_image_url" 
+                  :src="user.profile_image_url" 
+                  :alt="`${user.first_name} ${user.last_name}`"
+                  class="w-full h-full object-cover"
+                />
+                <div 
+                  v-else 
+                  class="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-xs"
+                >
+                  {{ getInitials() }}
+                </div>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-gray-900">
+                  {{ user?.first_name }} {{ user?.last_name }}
+                </p>
+                <p class="text-xs text-gray-500">
+                  {{ user?.email }}
+                </p>
+              </div>
+            </div>
+            <button
+              @click="handleLogout"
+              class="block w-full text-left text-red-600 hover:bg-red-50 transition-colors font-medium px-2 py-1 mt-2"
+            >
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import UserAvatar from './UserAvatar.vue'
+
+const router = useRouter()
+const user = ref(null)
+const showMobileMenu = ref(false)
+const accessToken = ref(localStorage.getItem('access_token'))
+
+// Watch for changes in access token
+watch(accessToken, (newToken) => {
+  if (newToken) {
+    loadUserData()
+  } else {
+    user.value = null
+  }
+})
+
+// Check if user is logged in
+const isLoggedIn = computed(() => {
+  return !!accessToken.value && !!user.value
+})
+
+const getInitials = () => {
+  if (!user.value) return '?'
+  const firstName = user.value.first_name || ''
+  const lastName = user.value.last_name || ''
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
+}
+
+const loadUserData = () => {
+  const userData = localStorage.getItem('user')
+  if (userData) {
+    try {
+      user.value = JSON.parse(userData)
+    } catch (error) {
+      console.error('Error parsing user data:', error)
+      localStorage.removeItem('user')
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+    }
+  }
+}
+
+const handleLogout = async () => {
+  try {
+    const refreshToken = localStorage.getItem('refresh_token')
+    if (refreshToken) {
+      await fetch('http://localhost:8000/api/auth/logout/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify({ refresh_token: refreshToken })
+      })
+    }
+  } catch (error) {
+    console.error('Logout error:', error)
+  } finally {
+    // Clear local storage regardless of API call success
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    localStorage.removeItem('user')
+    user.value = null
+    
+    // Close mobile menu and redirect to home
+    closeMobileMenu()
+    router.push('/')
+  }
+}
+
+const toggleMobileMenu = () => {
+  showMobileMenu.value = !showMobileMenu.value
+}
+
+const closeMobileMenu = () => {
+  showMobileMenu.value = false
+}
+
+onMounted(() => {
+  loadUserData()
+  
+  // Listen for storage changes (when user logs in/out in another tab or same tab)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'user' || e.key === 'access_token') {
+      loadUserData()
+    }
+  })
+  
+  // Also listen for custom login event
+  window.addEventListener('userLoggedIn', () => {
+    accessToken.value = localStorage.getItem('access_token')
+    loadUserData()
+  })
+})
+</script>

@@ -1,9 +1,12 @@
 <template>
   <div id="app">
+    <Navbar />
     <main>
       <router-view />
     </main>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Navbar from './components/Navbar.vue'
+</script>

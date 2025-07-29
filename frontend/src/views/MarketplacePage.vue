@@ -40,25 +40,16 @@
         <div class="filter-section">
           <h3>Price Range</h3>
           <div class="price-slider">
-            <input
-              type="range"
-              v-model="priceRange.min"
+            <Slider
+              v-model="priceRange"
               :min="0"
               :max="100000"
-              @input="applyFilters"
-              class="slider"
-            />
-            <input
-              type="range"
-              v-model="priceRange.max"
-              :min="0"
-              :max="100000"
-              @input="applyFilters"
-              class="slider"
+              :step="1000"
+              @change="applyFilters"
             />
             <div class="price-labels">
-              <span>৳{{ priceRange.min }}</span>
-              <span>৳{{ priceRange.max }}</span>
+              <span>৳{{ formatPrice(priceRange[0]) }}</span>
+              <span>৳{{ formatPrice(priceRange[1]) }}</span>
             </div>
           </div>
         </div>
@@ -88,24 +79,29 @@
           </div>
         </div>
 
+        <!-- No products message -->
+        <div v-if="!loading && products.length === 0" class="no-products">
+          <div class="no-products-icon">📦</div>
+          <h3>No products found</h3>
+          <p>Try adjusting your search criteria or filters to find what you're looking for.</p>
+        </div>
+
         <!-- Loading indicator -->
         <div v-if="loading" class="loading">Loading more products...</div>
 
         <!-- Load more button -->
-        <div v-if="hasMore && !loading" class="load-more">
+        <div v-if="hasMore && !loading && products.length > 0" class="load-more">
           <button @click="loadMore" class="load-more-btn">Load More</button>
         </div>
       </div>
     </div>
 
-    <!-- Add Product Modal -->
     <AddProductModal
       v-if="showAddProductModal"
       @close="showAddProductModal = false"
       @product-added="handleProductAdded"
     />
 
-    <!-- Chat Modal -->
     <ChatModal
       v-if="showChatModal"
       :product="selectedProduct"
@@ -117,6 +113,7 @@
 <script>
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import Slider from '@vueform/slider'
 import ProductCard from '../components/ProductCard.vue'
 import AddProductModal from '../components/AddProductModal.vue'
 import ChatModal from '../components/ChatModal.vue'
@@ -124,6 +121,7 @@ import ChatModal from '../components/ChatModal.vue'
 export default {
   name: 'MarketplacePage',
   components: {
+    Slider,
     ProductCard,
     AddProductModal,
     ChatModal
@@ -146,10 +144,7 @@ export default {
     const searchQuery = ref('')
     const selectedCategory = ref('')
     const selectedCondition = ref('')
-    const priceRange = reactive({
-      min: 0,
-      max: 100000
-    })
+    const priceRange = ref([0, 100000])
     
     // Computed
     const isAuthenticated = computed(() => {
@@ -189,12 +184,12 @@ export default {
           params.append('condition', selectedCondition.value)
         }
         
-        if (priceRange.min > 0) {
-          params.append('min_price', priceRange.min)
+        if (priceRange.value[0] > 0) {
+          params.append('min_price', priceRange.value[0])
         }
         
-        if (priceRange.max < 100000) {
-          params.append('max_price', priceRange.max)
+        if (priceRange.value[1] < 100000) {
+          params.append('max_price', priceRange.value[1])
         }
         
         const response = await fetch(`http://localhost:8000/api/marketplace/products/?${params}`)
@@ -250,7 +245,7 @@ export default {
     
     const handleOrder = (product) => {
       if (!isAuthenticated.value) {
-        alert('Please log in to order products')
+        router.push('/login')
         return
       }
       // Handle order logic
@@ -259,16 +254,22 @@ export default {
     
     const handleChat = (product) => {
       if (!isAuthenticated.value) {
-        alert('Please log in to chat with sellers')
+        router.push('/login')
         return
       }
+      console.log('Opening chat for product:', product)
       selectedProduct.value = product
       showChatModal.value = true
+      console.log('Chat modal should be visible:', showChatModal.value)
     }
     
     const handleProductAdded = () => {
       showAddProductModal.value = false
       fetchProducts(true)
+    }
+    
+    const formatPrice = (price) => {
+      return new Intl.NumberFormat('en-BD').format(price)
     }
     
     // Lifecycle
@@ -298,13 +299,16 @@ export default {
       loadMore,
       handleOrder,
       handleChat,
-      handleProductAdded
+      handleProductAdded,
+      formatPrice
     }
   }
 }
 </script>
 
 <style scoped>
+@import '@vueform/slider/themes/default.css';
+
 .marketplace {
   padding: 20px;
   max-width: 1400px;
@@ -348,6 +352,21 @@ export default {
 
 .search-btn:hover {
   background: #0056b3;
+}
+
+.add-product-header-btn {
+  padding: 12px 24px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.add-product-header-btn:hover {
+  background: #218838;
 }
 
 .marketplace-content {
@@ -447,6 +466,46 @@ export default {
 
 .load-more-btn:hover {
   background: #0056b3;
+}
+
+.no-products {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-products-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.no-products h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.no-products p {
+  font-size: 1rem;
+  margin-bottom: 30px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-first-product-btn {
+  padding: 12px 24px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.add-first-product-btn:hover {
+  background: #218838;
 }
 
 @media (max-width: 768px) {

@@ -71,7 +71,9 @@ export default {
             'Authorization': `Bearer ${token}`
           }
         })
-        currentUser.value = await userResponse.json()
+        if (userResponse.ok) {
+          currentUser.value = await userResponse.json()
+        }
         
         // Create or get chat
         const chatResponse = await fetch(`http://localhost:8000/api/marketplace/products/${props.product.id}/chat/`, {

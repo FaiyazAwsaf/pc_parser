@@ -2,8 +2,8 @@
   <div class="min-h-screen bg-gradient-to-br from-slate-900 to-blue-800 text-white flex flex-col">
     <!-- Hero Section -->
     <section class="flex-1 flex flex-col justify-center items-center text-center pt-24 pb-16">
-      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 drop-shadow-xl">
-        <span class="text-blue-400 animate-pulse">PC Parser</span>
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 drop-shadow-xl">
+        <span class="text-blue-400 animate-pulse">Choose Your Parts. Build Your PC</span>
       </h1>
       <p class="max-w-2xl text-xl md:text-2xl mb-10 opacity-90 font-medium">
         Discover, compare &amp; build your perfect PC.<br />

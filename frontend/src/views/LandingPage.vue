@@ -33,7 +33,10 @@
         <p class="text-center text-lg mb-14 text-slate-600">No more tab chaos. All PC parts &amp; deals. One search.</p>
         <div class="grid md:grid-cols-3 gap-8">
           <!-- Feature: Price Comparison -->
-          <div class="bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300">
+          <div
+            class="bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300 cursor-pointer"
+            @click="showProducts = !showProducts"
+          >
             <svg class="mx-auto mb-4 w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17v-2a4 4 0 014-4h14" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-2a4 4 0 014-4h14" />
@@ -42,6 +45,7 @@
             <h3 class="font-semibold text-xl mb-2">Live Price Comparison</h3>
             <p class="text-gray-600 group-hover:text-blue-600">Track and compare the latest prices on new &amp; used PC components from all major vendors in Bangladesh.</p>
           </div>
+
           <!-- Feature: Build Assistant -->
           <div class="bg-gradient-to-tr from-green-50 to-green-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300">
             <svg class="mx-auto mb-4 w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,6 +54,7 @@
             <h3 class="font-semibold text-xl mb-2">AI Build Helper</h3>
             <p class="text-gray-600 group-hover:text-green-600">Tell us your budget &amp; needs. Instantly get compatible, optimized builds for gaming, work, or study powered by AI!</p>
           </div>
+
           <!-- Feature: Second-hand Marketplace -->
           <div class="bg-gradient-to-tr from-purple-50 to-purple-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300">
             <svg class="mx-auto mb-4 w-12 h-12 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,10 +66,20 @@
             <p class="text-gray-600 group-hover:text-purple-600">Browse verified, trustworthy second-hand parts buy and sell with confidence, no more marketplace scams.</p>
           </div>
         </div>
+
+        <!-- Products Dropdown -->
+        <transition name="fade">
+          <div v-if="showProducts" class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10">
+            <div v-for="item in productItems" :key="item.label" class="bg-white p-4 rounded-xl shadow-md hover:shadow-lg flex flex-col items-center">
+              <img :src="item.image" alt="" class="w-16 h-16 object-contain mb-2" />
+              <p class="text-sm font-semibold text-gray-800">{{ item.label }}</p>
+            </div>
+          </div>
+        </transition>
       </div>
     </section>
 
-    <!-- API Status Section (Demo backend health check) -->
+    <!-- API Status Section -->
     <section class="py-16 bg-slate-50 flex-1">
       <div class="max-w-3xl mx-auto px-4 text-center">
         <div class="bg-white rounded-2xl shadow-lg p-8">
@@ -103,23 +118,41 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
+// Case-sensitive image imports
+import cpuImg from '@/assets/Images/CPU.png'
+import monitorImg from '@/assets/Images/Monitor.png'
+import motherboardImg from '@/assets/Images/Motherboard.png'
+import memoryImg from '@/assets/Images/Memory.png'
+import storageImg from '@/assets/Images/Storage.png'
+import gpuImg from '@/assets/Images/GPU.png'
+import powersupplyImg from '@/assets/Images/Powersupply.png'
+import caseImg from '@/assets/Images/Cases.png'
+
 const router = useRouter()
 const message = ref('')
 const loading = ref(true)
+const showProducts = ref(false)
 const user = ref(null)
 
-// Check if user is logged in
 const isLoggedIn = computed(() => {
   return !!localStorage.getItem('access_token') && !!user.value
 })
 
+const productItems = [
+  { label: 'CPUs', image: cpuImg },
+  { label: 'Monitor', image: monitorImg },
+  { label: 'Motherboards', image: motherboardImg },
+  { label: 'Power Supplies', image: powersupplyImg },
+  { label: 'Memory', image: memoryImg },
+  { label: 'Storage', image: storageImg },
+  { label: 'GPU', image: gpuImg },
+  { label: 'Cases', image: caseImg }
+]
+
 const fetchMessage = async () => {
   loading.value = true
   try {
-    // If using Vite proxy:
     const res = await axios.get('/api/auth/hello/')
-    // Otherwise:
-    // const res = await axios.get('http://localhost:8000/api/auth/hello/')
     message.value = res.data.message
   } catch (error) {
     message.value = 'Unable to reach backend. Please try again later.'
@@ -133,10 +166,8 @@ const loadUserData = () => {
   if (userData) {
     try {
       user.value = JSON.parse(userData)
-    } catch (error) {
-      localStorage.removeItem('user')
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
+    } catch {
+      localStorage.clear()
     }
   }
 }
@@ -146,3 +177,13 @@ onMounted(() => {
   fetchMessage()
 })
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+</style>

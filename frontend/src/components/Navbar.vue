@@ -23,21 +23,30 @@
   </router-link>
 
   <!-- Components with dropdown only, no page redirect -->
-  <div class="relative group">
-    <span class="cursor-pointer text-gray-700 hover:text-blue-600 transition-colors font-medium">
-      Components
-    </span>
-    <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
-      <ul class="divide-y divide-gray-200">
-        <li><router-link to="/components/motherboards" class="block px-4 py-2 hover:bg-gray-100">Motherboards</router-link></li>
-        <li><router-link to="/components/monitor" class="block px-4 py-2 hover:bg-gray-100">Monitor</router-link></li>
-        <li><router-link to="/components/gpu" class="block px-4 py-2 hover:bg-gray-100">GPU</router-link></li>
-        <li><router-link to="/components/power-supplies" class="block px-4 py-2 hover:bg-gray-100">Power Supplies</router-link></li>
-        <li><router-link to="/components/cpus" class="block px-4 py-2 hover:bg-gray-100">CPUs</router-link></li>
-        <li><router-link to="/components/cases" class="block px-4 py-2 hover:bg-gray-100">Cases</router-link></li>
-      </ul>
-    </div>
+  <!-- Clickable Components Dropdown -->
+<div ref="componentsDropdown" class="relative">
+  <span
+    @click="toggleComponentsDropdown"
+    class="cursor-pointer text-gray-700 hover:text-blue-600 transition-colors font-medium select-none"
+    :class="{ 'text-blue-600 font-bold': $route.path.startsWith('/components') }"
+  >
+    Components
+  </span>
+  <div
+    v-show="showComponentsDropdown"
+    class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-50 transition-all duration-300"
+  >
+    <ul class="divide-y divide-gray-200">
+      <li><router-link to="/components/motherboards" class="block px-4 py-2 hover:bg-gray-100">Motherboards</router-link></li>
+      <li><router-link to="/components/monitor" class="block px-4 py-2 hover:bg-gray-100">Monitor</router-link></li>
+      <li><router-link to="/components/gpu" class="block px-4 py-2 hover:bg-gray-100">GPU</router-link></li>
+      <li><router-link to="/components/power-supplies" class="block px-4 py-2 hover:bg-gray-100">Power Supplies</router-link></li>
+      <li><router-link to="/components/cpus" class="block px-4 py-2 hover:bg-gray-100">CPUs</router-link></li>
+      <li><router-link to="/components/cases" class="block px-4 py-2 hover:bg-gray-100">Cases</router-link></li>
+    </ul>
   </div>
+</div>
+
 
   <router-link 
     to="/builder" 
@@ -194,16 +203,19 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, onBeforeUnmount} from 'vue'
 import { useRouter } from 'vue-router'
 import UserAvatar from './UserAvatar.vue'
 import pcLogo from '@/assets/Images/PC Parser logo.png' 
+
 
 
 const router = useRouter()
 const user = ref(null)
 const showMobileMenu = ref(false)
 const accessToken = ref(localStorage.getItem('access_token'))
+const showComponentsDropdown = ref(false)
+const componentsDropdown = ref(null)
 
 // Watch for changes in access token
 watch(accessToken, (newToken) => {
@@ -276,8 +288,21 @@ const closeMobileMenu = () => {
   showMobileMenu.value = false
 }
 
+const toggleComponentsDropdown = () => {
+  showComponentsDropdown.value = !showComponentsDropdown.value
+}
+
+const handleClickOutsideDropdown = (e) => {
+  if (componentsDropdown.value && !componentsDropdown.value.contains(e.target)) {
+    showComponentsDropdown.value = false
+  }
+}
+
 onMounted(() => {
   loadUserData()
+
+  document.addEventListener('click', handleClickOutsideDropdown)
+
   
   // Listen for storage changes (when user logs in/out in another tab or same tab)
   window.addEventListener('storage', (e) => {
@@ -292,4 +317,10 @@ onMounted(() => {
     loadUserData()
   })
 })
+
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutsideDropdown)
+})
+
 </script>

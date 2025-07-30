@@ -12,10 +12,7 @@
                 id="first_name"
                 v-model="form.first_name"
                 @blur="validateField('first_name')"
-                :class="[
-                  'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500',
-                  errors.first_name ? 'border-red-500' : 'border-gray-300'
-                ]"
+                :class="inputClass(errors.first_name)"
                 placeholder="Enter your first name"
                 required
               />
@@ -28,10 +25,7 @@
                 id="last_name"
                 v-model="form.last_name"
                 @blur="validateField('last_name')"
-                :class="[
-                  'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500',
-                  errors.last_name ? 'border-red-500' : 'border-gray-300'
-                ]"
+                :class="inputClass(errors.last_name)"
                 placeholder="Enter your last name"
                 required
               />
@@ -46,10 +40,7 @@
               id="username"
               v-model="form.username"
               @blur="validateField('username')"
-              :class="[
-                'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500',
-                errors.username ? 'border-red-500' : 'border-gray-300'
-              ]"
+              :class="inputClass(errors.username)"
               placeholder="Choose a username"
               required
             />
@@ -63,10 +54,7 @@
               id="email"
               v-model="form.email"
               @blur="validateField('email')"
-              :class="[
-                'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500',
-                errors.email ? 'border-red-500' : 'border-gray-300'
-              ]"
+              :class="inputClass(errors.email)"
               placeholder="Enter your email"
               required
             />
@@ -80,10 +68,7 @@
               id="password"
               v-model="form.password"
               @blur="validateField('password')"
-              :class="[
-                'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500',
-                errors.password ? 'border-red-500' : 'border-gray-300'
-              ]"
+              :class="inputClass(errors.password)"
               placeholder="Create a password"
               required
             />
@@ -97,10 +82,7 @@
               id="password_confirm"
               v-model="form.password_confirm"
               @blur="validateField('password_confirm')"
-              :class="[
-                'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500',
-                errors.password_confirm ? 'border-red-500' : 'border-gray-300'
-              ]"
+              :class="inputClass(errors.password_confirm)"
               placeholder="Confirm your password"
               required
             />
@@ -135,6 +117,75 @@
 </template>
 
 <script setup>
-// Use your validated form logic here — imported or created as helper functions
-// Add validators or use functions from your second RegisterPage to perform real-time field validation, confirm passwords, etc.
+import { ref, reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const loading = ref(false)
+const message = ref('')
+const messageType = ref('')
+
+const form = reactive({
+  first_name: '',
+  last_name: '',
+  username: '',
+  email: '',
+  password: '',
+  password_confirm: ''
+})
+
+const errors = reactive({})
+
+const inputClass = (errorField) => [
+  'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500',
+  errorField ? 'border-red-500' : 'border-gray-300'
+]
+
+const isFormValid = computed(() => {
+  return Object.values(errors).every(e => !e)
+})
+
+const validateField = (field) => {
+  switch (field) {
+    case 'email':
+      errors.email = !form.email.includes('@') ? 'Invalid email' : ''
+      break
+    case 'password':
+      errors.password = form.password.length < 8 ? 'Password too short' : ''
+      break
+    case 'password_confirm':
+      errors.password_confirm = form.password !== form.password_confirm ? 'Passwords do not match' : ''
+      break
+    default:
+      errors[field] = !form[field] ? 'Required' : ''
+  }
+}
+
+const handleRegister = async () => {
+  Object.keys(form).forEach(validateField)
+  if (!isFormValid.value) return
+
+  loading.value = true
+  try {
+    const response = await fetch('http://localhost:8000/api/auth/register/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form)
+    })
+    const data = await response.json()
+    if (response.ok) {
+      message.value = data.message || 'Registration successful.'
+      messageType.value = 'success'
+      setTimeout(() => router.push('/verify-email'), 2000)
+    } else {
+      Object.assign(errors, data)
+      messageType.value = 'error'
+    }
+  } catch {
+    message.value = 'Something went wrong. Please try again.'
+    messageType.value = 'error'
+  } finally {
+    loading.value = false
+  }
+}
 </script>

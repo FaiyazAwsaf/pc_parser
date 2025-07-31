@@ -1,30 +1,40 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-slate-900 to-blue-800 text-white flex flex-col">
     <!-- Hero Section -->
-    <section class="flex-1 flex flex-col justify-center items-center text-center pt-24 pb-16">
-      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 drop-shadow-xl">
-        <span class="text-blue-400 animate-pulse">Choose Your Parts. Build Your PC</span>
-      </h1>
-      <p class="max-w-2xl text-xl md:text-2xl mb-10 opacity-90 font-medium">
-        Discover, compare &amp; build your perfect PC.<br />
-        <span class="text-blue-200">
-          Bangladesh’s most advanced PC component marketplace &amp; build assistant.
-        </span>
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <router-link
-          to="/components"
-          class="px-8 py-4 rounded-full bg-blue-500 hover:bg-blue-600 shadow-lg text-white font-semibold text-lg transition-all duration-300"
-        >
-          Browse Components
-        </router-link>
-        <router-link
-          v-if="!isLoggedIn"
-          to="/register"
-          class="px-8 py-4 rounded-full bg-green-500 hover:bg-green-600 shadow-lg text-white font-semibold text-lg transition-all duration-300"
-        >
-          Get Started
-        </router-link>
+    <section class="flex-1 flex flex-col justify-center items-center text-center pt-16 pb-16">
+      <div class="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between px-6 gap-10">
+        <!-- Image in the middle -->
+        <div class="flex-1 flex justify-center lg:justify-center">
+          <img src="@/assets/Images/Pcbuild.png" alt="PC Build Visual" class="w-full max-w-md rounded-xl shadow-2xl" />
+        </div>
+
+        <!-- Writeup on the right -->
+        <div class="flex-1 text-center lg:text-left">
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 drop-shadow-xl">
+            <span class="text-blue-400 animate-pulse">Choose Your Parts. Build Your PC</span>
+          </h1>
+          <p class="max-w-xl text-xl md:text-2xl mb-10 opacity-90 font-medium mx-auto lg:mx-0">
+            Discover, compare &amp; build your perfect PC.<br />
+            <span class="text-blue-200">
+              Bangladesh’s most advanced PC component marketplace &amp; build assistant.
+            </span>
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+            <router-link
+              to="/components"
+              class="px-8 py-4 rounded-full bg-blue-500 hover:bg-blue-600 shadow-lg text-white font-semibold text-lg transition-all duration-300"
+            >
+              Browse Components
+            </router-link>
+            <router-link
+              v-if="!isLoggedIn"
+              to="/register"
+              class="px-8 py-4 rounded-full bg-green-500 hover:bg-green-600 shadow-lg text-white font-semibold text-lg transition-all duration-300"
+            >
+              Get Started
+            </router-link>
+          </div>
+        </div>
       </div>
     </section>
 

@@ -95,14 +95,15 @@
             v-if="showProductDropdown"
             class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10 px-4 sm:px-0 mx-auto max-w-5xl"
           >
-            <div
+            <router-link
               v-for="item in productItems"
               :key="item.label"
-              class="flex flex-col items-center bg-gray-50 hover:bg-gray-100 rounded-lg p-5 shadow"
+              :to="getRouteForItem(item.label)"
+              class="flex flex-col items-center bg-gray-50 hover:bg-gray-100 rounded-lg p-5 shadow transition duration-300"
             >
               <img :src="item.image" alt="" class="w-16 h-16 object-contain mb-2" />
               <p class="text-base font-semibold text-gray-800 text-center">{{ item.label }}</p>
-            </div>
+            </router-link>
           </div>
         </transition>
       </div>
@@ -153,6 +154,20 @@ const productItems = [
   { label: 'GPU', image: gpuImg },
   { label: 'Cases', image: caseImg }
 ]
+
+const getRouteForItem = (label) => {
+  const routes = {
+    'CPUs': '/components/cpu',
+    'Monitor': '/components/monitor',
+    'Motherboards': '/components/motherboards',
+    'Power Supplies': '/components/power-supplies',
+    'Memory': '/components/memory',
+    'Storage': '/components/storage',
+    'GPU': '/components/gpu',
+    'Cases': '/components/cases',
+  }
+  return routes[label] || '/'
+}
 
 const fetchMessage = async () => {
   loading.value = true

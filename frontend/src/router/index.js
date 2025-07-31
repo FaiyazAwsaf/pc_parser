@@ -8,6 +8,10 @@ import EmailVerificationPage from '@/views/EmailVerificationPage.vue'
 import MarketplacePage from '@/views/MarketplacePage.vue'
 import BuildHelperPage from '@/views/BuildHelperPage.vue'
 import AboutPage from '@/views/AboutPage.vue' 
+import SellComponents from '@/views/SellComponents.vue'
+import CpuPage from '@/views/CpuPage.vue'
+import MonitorPage from '@/views/MonitorPage.vue'
+import MemoryPage from '@/views/MemoryPage.vue'
 
 
 const routes = [
@@ -20,6 +24,10 @@ const routes = [
   { path: '/verify-email', component: EmailVerificationPage },
   { path: '/builder', component: BuildHelperPage },
   { path: '/about', component: AboutPage },
+  { path: '/sell', component: SellComponents },
+  { path: '/components/cpu', component: CpuPage },
+  { path: '/components/monitor', component: MonitorPage },
+  { path: '/components/memory', component: MemoryPage },
 
 ]
 

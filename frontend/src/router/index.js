@@ -5,6 +5,9 @@ import ComponentDetailPage from '@/views/ComponentDetailPage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
 import EmailVerificationPage from '@/views/EmailVerificationPage.vue'
+import BuildHelperPage from '@/views/BuildHelperPage.vue'
+import AboutPage from '@/views/AboutPage.vue' 
+
 
 const routes = [
   { path: '/', component: LandingPage },
@@ -13,6 +16,9 @@ const routes = [
   { path: '/login', component: LoginPage },
   { path: '/register', component: RegisterPage },
   { path: '/verify-email', component: EmailVerificationPage },
+  { path: '/builder', component: BuildHelperPage },
+  { path: '/about', component: AboutPage },
+
   // Route for component comparison will be added later
 ]
 

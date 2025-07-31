@@ -1,0 +1,162 @@
+from rest_framework import generics, status, permissions
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from django.db.models import Q
+from .models import Product, Order, Chat, Message
+from .serializers import (
+    ProductSerializer, ProductCreateSerializer, OrderSerializer,
+    ChatSerializer, MessageSerializer
+)
+from .pagination import CursorPagination
+
+class ProductListView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+    pagination_class = CursorPagination
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['category', 'condition']
+    search_fields = ['name', 'description']
+    ordering_fields = ['price', 'created_at']
+    ordering = ['-created_at']
+    
+    def get_queryset(self):
+        queryset = Product.objects.filter(is_available=True)
+        
+        # Price range filtering
+        min_price = self.request.query_params.get('min_price')
+        max_price = self.request.query_params.get('max_price')
+        
+        if min_price:
+            queryset = queryset.filter(price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+            
+        return queryset
+
+class ProductCreateView(generics.CreateAPIView):
+    serializer_class = ProductCreateSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        serializer.save(seller=self.request.user)
+
+class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Product.objects.filter(seller=self.request.user)
+
+class MyProductsView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Product.objects.filter(seller=self.request.user)
+
+class OrderCreateView(generics.CreateAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        serializer.save(buyer=self.request.user)
+
+class OrderListView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Order.objects.filter(buyer=self.request.user)
+
+class MyOrdersView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Order.objects.filter(product__seller=self.request.user)
+
+class ChatListView(generics.ListAPIView):
+    serializer_class = ChatSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Chat.objects.filter(
+            Q(buyer=self.request.user) | Q(seller=self.request.user)
+        )
+
+class ChatDetailView(generics.RetrieveAPIView):
+    serializer_class = ChatSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Chat.objects.filter(
+            Q(buyer=self.request.user) | Q(seller=self.request.user)
+        )
+
+class MessageListView(generics.ListAPIView):
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        chat_id = self.kwargs['chat_id']
+        chat = Chat.objects.get(
+            Q(id=chat_id) & (Q(buyer=self.request.user) | Q(seller=self.request.user))
+        )
+        return Message.objects.filter(chat=chat)
+
+class MessageCreateView(generics.CreateAPIView):
+    serializer_class = MessageSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def perform_create(self, serializer):
+        chat_id = self.kwargs['chat_id']
+        chat = Chat.objects.get(
+            Q(id=chat_id) & (Q(buyer=self.request.user) | Q(seller=self.request.user))
+        )
+        serializer.save(sender=self.request.user, chat=chat)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_chat(request, product_id):
+    try:
+        product = Product.objects.get(id=product_id)
+        
+        # Don't allow seller to chat with themselves
+        if product.seller == request.user:
+            return Response(
+                {'error': 'You cannot chat about your own product'}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Get or create chat
+        chat, created = Chat.objects.get_or_create(
+            product=product,
+            buyer=request.user,
+            seller=product.seller
+        )
+        
+        serializer = ChatSerializer(chat)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+    except Product.DoesNotExist:
+        return Response(
+            {'error': 'Product not found'}, 
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def product_categories(request):
+    """Get all available product categories"""
+    categories = [choice[0] for choice in Product.CATEGORY_CHOICES]
+    return Response({'categories': categories})
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def product_conditions(request):
+    """Get all available product conditions"""
+    conditions = [choice[0] for choice in Product.CONDITION_CHOICES]
+    return Response({'conditions': conditions})

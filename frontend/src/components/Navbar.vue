@@ -4,31 +4,75 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo and Brand -->
         <div class="flex items-center">
-          <router-link to="/" class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm">PC</span>
-            </div>
-            <span class="text-xl font-bold text-gray-800">PC Parser</span>
-          </router-link>
+       <router-link to="/" class="flex items-center">
+          <img :src="pcLogo" alt="PC Parser Logo" class="w-35 h-35 object-contain" />
+            </router-link>
+
+
         </div>
 
         <!-- Navigation Links -->
-        <div class="hidden md:flex items-center space-x-8">
-          <router-link 
-            to="/" 
-            class="text-gray-600 hover:text-blue-600 transition-colors font-medium"
-            :class="{ 'text-blue-600': $route.path === '/' }"
-          >
-            Home
-          </router-link>
-          <router-link 
-            to="/components" 
-            class="text-gray-600 hover:text-blue-600 transition-colors font-medium"
-            :class="{ 'text-blue-600': $route.path.startsWith('/components') }"
-          >
-            Components
-          </router-link>
-        </div>
+        <!-- Navigation Links -->
+<div class="hidden md:flex items-center space-x-8">
+  <router-link 
+    to="/" 
+    class="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+    :class="{ 'text-blue-600 font-bold': $route.path === '/' }"
+  >
+    Home
+  </router-link>
+
+  <!-- Components with dropdown only, no page redirect -->
+  <!-- Clickable Components Dropdown -->
+<div ref="componentsDropdown" class="relative">
+  <span
+    @click="toggleComponentsDropdown"
+    class="cursor-pointer text-gray-700 hover:text-blue-600 transition-colors font-medium select-none"
+    :class="{ 'text-blue-600 font-bold': $route.path.startsWith('/components') }"
+  >
+    Components
+  </span>
+  <div
+    v-show="showComponentsDropdown"
+    class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-50 transition-all duration-300"
+  >
+    <ul class="divide-y divide-gray-200">
+      <li><router-link to="/components/motherboards" class="block px-4 py-2 hover:bg-gray-100">Motherboards</router-link></li>
+      <li><router-link to="/components/monitor" class="block px-4 py-2 hover:bg-gray-100">Monitor</router-link></li>
+      <li><router-link to="/components/gpu" class="block px-4 py-2 hover:bg-gray-100">GPU</router-link></li>
+      <li><router-link to="/components/power-supplies" class="block px-4 py-2 hover:bg-gray-100">Power Supplies</router-link></li>
+      <li><router-link to="/components/cpus" class="block px-4 py-2 hover:bg-gray-100">CPUs</router-link></li>
+      <li><router-link to="/components/cases" class="block px-4 py-2 hover:bg-gray-100">Cases</router-link></li>
+    </ul>
+  </div>
+</div>
+
+
+  <router-link 
+    to="/builder" 
+    class="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+    :class="{ 'text-blue-600 font-bold': $route.path === '/builder' }"
+  >
+    Builder
+  </router-link>
+
+  <router-link 
+    to="/about" 
+    class="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+    :class="{ 'text-blue-600 font-bold': $route.path === '/about' }"
+  >
+    About
+  </router-link>
+
+  <router-link 
+    to="/marketplace" 
+    class="text-gray-700 hover:text-blue-600 transition-colors font-medium"
+    :class="{ 'text-blue-600 font-bold': $route.path === '/marketplace' }"
+  >
+    Marketplace
+  </router-link>
+</div>
+
 
         <!-- User Section -->
         <div class="flex items-center space-x-4">
@@ -159,14 +203,19 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, onBeforeUnmount} from 'vue'
 import { useRouter } from 'vue-router'
 import UserAvatar from './UserAvatar.vue'
+import pcLogo from '@/assets/Images/PC Parser logo.png' 
+
+
 
 const router = useRouter()
 const user = ref(null)
 const showMobileMenu = ref(false)
 const accessToken = ref(localStorage.getItem('access_token'))
+const showComponentsDropdown = ref(false)
+const componentsDropdown = ref(null)
 
 // Watch for changes in access token
 watch(accessToken, (newToken) => {
@@ -239,8 +288,21 @@ const closeMobileMenu = () => {
   showMobileMenu.value = false
 }
 
+const toggleComponentsDropdown = () => {
+  showComponentsDropdown.value = !showComponentsDropdown.value
+}
+
+const handleClickOutsideDropdown = (e) => {
+  if (componentsDropdown.value && !componentsDropdown.value.contains(e.target)) {
+    showComponentsDropdown.value = false
+  }
+}
+
 onMounted(() => {
   loadUserData()
+
+  document.addEventListener('click', handleClickOutsideDropdown)
+
   
   // Listen for storage changes (when user logs in/out in another tab or same tab)
   window.addEventListener('storage', (e) => {
@@ -255,4 +317,10 @@ onMounted(() => {
     loadUserData()
   })
 })
+
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutsideDropdown)
+})
+
 </script>

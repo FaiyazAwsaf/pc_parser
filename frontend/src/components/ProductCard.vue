@@ -1,35 +1,41 @@
 <template>
-  <div class="product-card">
-    <div class="product-image">
+  <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-xl w-64 mb-5">
+    <div class="relative h-48 overflow-hidden">
       <img 
         :src="product.image || '/placeholder-product.jpg'" 
         :alt="product.name"
         @error="handleImageError"
+        class="w-full h-full object-cover"
       />
-      <div class="product-condition">{{ product.condition }}</div>
+      <div class="absolute top-2.5 right-2.5 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs">
+        {{ product.condition }}
+      </div>
     </div>
     
-    <div class="product-info">
-      <h3 class="product-name">{{ product.name }}</h3>
-      <p class="product-category">{{ product.category }}</p>
-      <p class="product-price">৳{{ formatPrice(product.price) }}</p>
-      <p class="product-seller">Seller: {{ product.seller_name }}</p>
+    <div class="p-4">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2 leading-tight">{{ product.name }}</h3>
+      <p class="text-gray-600 text-sm mb-2 uppercase font-medium tracking-wide">{{ product.category }}</p>
+      <p class="text-xl font-bold text-blue-600 mb-2">৳{{ formatPrice(product.price) }}</p>
+      <p class="text-gray-600 text-xs mb-3">Seller: {{ product.seller_name || 'Demo Seller' }}</p>
       
-      <div class="product-description">
+      <div class="text-gray-700 text-sm leading-relaxed mb-4 min-h-[2.5rem]">
         {{ truncateDescription(product.description) }}
       </div>
       
-      <div class="product-actions">
+      <div class="flex gap-2">
         <button 
           @click="$emit('order', product)" 
-          class="order-btn"
           :disabled="!product.is_available"
+          class="flex-1 py-2.5 px-3 rounded-md text-sm font-semibold transition-colors"
+          :class="product.is_available !== false
+            ? 'bg-green-500 text-white hover:bg-green-600' 
+            : 'bg-gray-500 text-white cursor-not-allowed'"
         >
-          {{ product.is_available ? 'Order' : 'Sold Out' }}
+          {{ product.is_available !== false ? 'Order' : 'Sold Out' }}
         </button>
         <button 
           @click="$emit('chat', product)" 
-          class="chat-btn"
+          class="flex-1 py-2.5 px-3 bg-blue-500 text-white rounded-md text-sm font-semibold hover:bg-blue-600 transition-colors"
         >
           Chat
         </button>
@@ -66,130 +72,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.product-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  width: 250px;
-  margin-bottom: 20px;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.product-image {
-  position: relative;
-  height: 200px;
-  overflow: hidden;
-}
-
-.product-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.product-condition {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.product-info {
-  padding: 16px;
-}
-
-.product-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 8px 0;
-  line-height: 1.3;
-}
-
-.product-category {
-  color: #666;
-  font-size: 14px;
-  margin: 0 0 8px 0;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.product-price {
-  font-size: 20px;
-  font-weight: 700;
-  color: #007bff;
-  margin: 0 0 8px 0;
-}
-
-.product-seller {
-  color: #666;
-  font-size: 13px;
-  margin: 0 0 12px 0;
-}
-
-.product-description {
-  color: #555;
-  font-size: 14px;
-  line-height: 1.4;
-  margin-bottom: 16px;
-  min-height: 40px;
-}
-
-.product-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.order-btn, .chat-btn {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.order-btn {
-  background: #28a745;
-  color: white;
-}
-
-.order-btn:hover:not(:disabled) {
-  background: #218838;
-}
-
-.order-btn:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-}
-
-.chat-btn {
-  background: #007bff;
-  color: white;
-}
-
-.chat-btn:hover {
-  background: #0056b3;
-}
-
-@media (max-width: 768px) {
-  .product-card {
-    width: 100%;
-    max-width: 300px;
-  }
-}
-</style>

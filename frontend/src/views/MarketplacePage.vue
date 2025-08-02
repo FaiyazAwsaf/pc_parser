@@ -117,6 +117,7 @@
 <script>
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 import Slider from '@vueform/slider'
 import ProductCard from '../components/ProductCard.vue'
 import AddProductModal from '../components/AddProductModal.vue'
@@ -196,8 +197,7 @@ export default {
           params.append('max_price', priceRange.value[1])
         }
         
-        const response = await fetch(`http://localhost:8000/api/marketplace/products/?${params}`)
-        const data = await response.json()
+        const {data} = await axios.get(`http://localhost:8000/api/marketplace/products/?`, {params})
         
         if (reset) {
           products.value = data.results

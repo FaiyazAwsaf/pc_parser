@@ -1,220 +1,126 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="min-h-screen bg-gray-50">
     <!-- Loading State -->
-    <div v-if="loading" class="flex justify-center items-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
+    <div v-if="loading" class="flex justify-center items-center h-64">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <p class="ml-2 text-gray-600">Loading component details...</p>
     </div>
-    
+
     <!-- Error State -->
-    <div v-else-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6">
-      <strong class="font-bold">Error!</strong>
-      <span class="block sm:inline"> {{ error }}</span>
-      <button @click="router.push('/components')" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md">
-        Back to Components
-      </button>
+    <div v-else-if="error" class="text-center py-8">
+      <p class="text-red-600">{{ error }}</p>
+      <button @click="fetchData" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">Retry</button>
     </div>
-    
+
     <!-- Component Details -->
-    <div v-else class="bg-white rounded-lg shadow-lg overflow-hidden">
-      <!-- Header -->
-      <div class="flex flex-col md:flex-row">
-        <!-- Image -->
-        <div class="md:w-1/3 p-6 flex items-center justify-center bg-gray-100">
-          <img 
-            :src="component.image || '/placeholder-component.png'" 
-            :alt="component.name"
-            class="max-w-full max-h-64 object-contain"
-          />
-        </div>
-        
-        <!-- Basic Info -->
-        <div class="md:w-2/3 p-6">
-          <div class="flex items-center mb-2">
-            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">
-              {{ component.category?.name }}
-            </span>
-            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">
-              {{ component.manufacturer?.name }}
-            </span>
+    <div v-else-if="component" class="max-w-6xl mx-auto px-4 py-8">
+      <!-- Breadcrumb -->
+      <nav class="mb-6">
+        <ol class="flex items-center space-x-2 text-sm text-gray-500">
+          <li><router-link to="/" class="hover:text-blue-600">Home</router-link></li>
+          <li>/</li>
+          <li><router-link to="/components" class="hover:text-blue-600">Components</router-link></li>
+          <li>/</li>
+          <li>{{ component.category.name }}</li>
+          <li>/</li>
+          <li class="text-gray-900">{{ component.name }}</li>
+        </ol>
+      </nav>
+
+      <!-- Component Header -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="md:w-1/3">
+            <img 
+              :src="component.image || '/placeholder-component.png'" 
+              :alt="component.name"
+              class="w-full h-64 object-contain bg-gray-100 rounded-lg"
+            />
           </div>
-          
-          <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ component.name }}</h1>
-          <p class="text-gray-600 mb-4">Model: {{ component.model_number }}</p>
-          
-          <div v-if="lowestPrice" class="mb-6">
-            <p class="text-sm text-gray-500 mb-1">Lowest Price:</p>
-            <div class="flex items-baseline">
-              <span class="text-3xl font-bold text-blue-700 mr-2">
-                {{ lowestPrice.price }} {{ lowestPrice.currency }}
-              </span>
-              <span class="text-sm text-gray-500">
-                at {{ lowestPrice.vendor_name }}
+          <div class="md:w-2/3">
+            <div class="mb-2">
+              <span class="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
+                {{ component.category.name }}
               </span>
             </div>
-            <a 
-              :href="lowestPrice.vendor_url" 
-              target="_blank" 
-              class="inline-block mt-2 text-blue-600 hover:underline"
-            >
-              Visit Store
-            </a>
-          </div>
-          
-          <div class="flex space-x-3">
-            <button 
-              @click="router.push('/components')" 
-              class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition"
-            >
-              Back to Components
-            </button>
-            <button 
-              @click="addToCompare" 
-              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-            >
-              Add to Compare
-            </button>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ component.name }}</h1>
+            <p class="text-lg text-gray-600 mb-4">{{ component.brand }} {{ component.model }}</p>
+            
+            <!-- Price Information -->
+            <div v-if="offers && offers.length > 0" class="mb-4">
+              <h3 class="text-lg font-semibold mb-2">Available from:</h3>
+              <div class="space-y-2">
+                <div v-for="offer in offers.slice(0, 3)" :key="offer.id" class="flex justify-between items-center border rounded-lg p-3">
+                  <div>
+                    <p class="font-medium">{{ offer.retailer_name }}</p>
+                    <p class="text-sm text-gray-500">{{ offer.retailer }}</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-lg font-bold text-green-600">Tk. {{ offer.price }}</p>
+                    <a 
+                      :href="offer.url" 
+                      target="_blank" 
+                      class="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                    >
+                      View Deal
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <button 
+                v-if="offers.length > 3" 
+                @click="showAllOffers = !showAllOffers"
+                class="mt-2 text-blue-600 hover:text-blue-800"
+              >
+                {{ showAllOffers ? 'Show Less' : `Show ${offers.length - 3} More Offers` }}
+              </button>
+            </div>
+            <div v-else class="mb-4">
+              <p class="text-gray-500">No pricing information available</p>
+            </div>
           </div>
         </div>
       </div>
-      
-      <!-- Tabs -->
-      <div class="border-t border-gray-200">
-        <div class="flex border-b">
-          <button 
-            v-for="tab in tabs" 
-            :key="tab.id"
-            @click="activeTab = tab.id"
-            :class="[
-              'px-4 py-2 text-sm font-medium',
-              activeTab === tab.id 
-                ? 'border-b-2 border-blue-500 text-blue-600' 
-                : 'text-gray-500 hover:text-gray-700 hover:border-gray-300'
-            ]"
-          >
-            {{ tab.name }}
-          </button>
-        </div>
-        
-        <!-- Specifications Tab -->
-        <div v-if="activeTab === 'specs'" class="p-6">
-          <h2 class="text-xl font-semibold mb-4">Specifications</h2>
-          <div v-if="Object.keys(component.specifications || {}).length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div v-for="(value, key) in component.specifications" :key="key" class="border-b pb-2">
-              <span class="text-sm text-gray-500">{{ formatSpecKey(key) }}:</span>
-              <span class="ml-2 font-medium">{{ value }}</span>
+
+      <!-- All Offers (when expanded) -->
+      <div v-if="showAllOffers && offers && offers.length > 3" class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 class="text-xl font-bold mb-4">All Available Offers</h3>
+        <div class="grid gap-3">
+          <div v-for="offer in offers.slice(3)" :key="offer.id" class="flex justify-between items-center border rounded-lg p-3">
+            <div>
+              <p class="font-medium">{{ offer.retailer_name }}</p>
+              <p class="text-sm text-gray-500">{{ offer.retailer }}</p>
+              <p class="text-xs" :class="offer.availability ? 'text-green-600' : 'text-red-600'">
+                {{ offer.availability ? 'In Stock' : 'Out of Stock' }}
+              </p>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-bold text-green-600">Tk.{{ offer.price }}</p>
+              <a 
+                :href="offer.url" 
+                target="_blank" 
+                class="text-sm bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+              >
+                View Deal
+              </a>
             </div>
           </div>
-          <p v-else class="text-gray-500">No specification details available.</p>
-          
-          <div class="mt-6">
-            <h3 class="text-lg font-semibold mb-2">Description</h3>
-            <p class="text-gray-700 whitespace-pre-line">{{ component.description || 'No description available.' }}</p>
-          </div>
         </div>
-        
-        <!-- Prices Tab -->
-        <div v-if="activeTab === 'prices'" class="p-6">
-          <h2 class="text-xl font-semibold mb-4">Available Prices</h2>
-          <div v-if="component.prices && component.prices.length > 0" class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Updated</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="price in component.prices" :key="price.id">
-                  <td class="px-6 py-4 whitespace-nowrap">{{ price.vendor_name }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-baseline">
-                      <span class="text-lg font-bold text-gray-900">{{ price.price }} {{ price.currency }}</span>
-                      <span 
-                        v-if="price.is_on_sale && price.original_price" 
-                        class="ml-2 text-sm line-through text-gray-500"
-                      >
-                        {{ price.original_price }} {{ price.currency }}
-                      </span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span 
-                      v-if="price.is_on_sale" 
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                    >
-                      On Sale
-                    </span>
-                    <span 
-                      v-else-if="price.is_available" 
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800"
-                    >
-                      In Stock
-                    </span>
-                    <span 
-                      v-else 
-                      class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                    >
-                      Out of Stock
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {{ formatDate(price.last_checked) }}
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm">
-                    <a 
-                      :href="price.vendor_url" 
-                      target="_blank" 
-                      class="text-blue-600 hover:text-blue-900 hover:underline"
-                    >
-                      Visit Store
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p v-else class="text-gray-500">No price information available.</p>
-        </div>
-        
-        <!-- Price History Tab -->
-        <div v-if="activeTab === 'history'" class="p-6">
-          <h2 class="text-xl font-semibold mb-4">Price History</h2>
-          <div v-if="component.price_history && component.price_history.length > 0">
-            <p class="text-sm text-gray-500 mb-4">Price trends over the last 30 days</p>
-            <!-- Price history chart would go here -->
-            <div class="h-64 bg-gray-100 rounded flex items-center justify-center">
-              <p class="text-gray-500">Price history chart visualization would be implemented here</p>
-            </div>
-            
-            <div class="mt-6 overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendor</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="record in component.price_history" :key="record.id">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {{ formatDate(record.recorded_at) }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {{ record.vendor_name }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {{ record.price }} {{ record.currency }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+      </div>
+
+      <!-- Specifications -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold mb-4">Specifications</h3>
+        <div v-if="component.specs && Object.keys(component.specs).length > 0" class="grid md:grid-cols-2 gap-4">
+          <div v-for="(value, key) in component.specs" :key="key" class="border-b pb-2">
+            <div class="flex justify-between">
+              <span class="font-medium text-gray-700 capitalize">{{ formatSpecKey(key) }}:</span>
+              <span class="text-gray-900">{{ value || 'N/A' }}</span>
             </div>
           </div>
-          <p v-else class="text-gray-500">No price history available.</p>
+        </div>
+        <div v-else class="text-gray-500">
+          No detailed specifications available.
         </div>
       </div>
     </div>
@@ -222,75 +128,64 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import axios from 'axios';
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-const router = useRouter();
-const route = useRoute();
+const route = useRoute()
+const router = useRouter()
 
-// State
-const component = ref({});
-const loading = ref(true);
-const error = ref(null);
-const activeTab = ref('specs');
+// Data
+const component = ref(null)
+const offers = ref([])
+const loading = ref(true)
+const error = ref(null)
+const showAllOffers = ref(false)
 
-// Tabs configuration
-const tabs = [
-  { id: 'specs', name: 'Specifications' },
-  { id: 'prices', name: 'Available Prices' },
-  { id: 'history', name: 'Price History' }
-];
+// Get component ID from route params
+const componentId = route.params.slug || route.params.id
 
-// Computed properties
-const lowestPrice = computed(() => {
-  if (!component.value.prices || component.value.prices.length === 0) return null;
-  return [...component.value.prices].sort((a, b) => a.price - b.price)[0];
-});
+// Format spec keys for display
+const formatSpecKey = (key) => {
+  return key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+}
 
-// Methods
-const fetchComponentDetails = async () => {
-  loading.value = true;
-  error.value = null;
+// Fetch component data
+const fetchData = async () => {
+  loading.value = true
+  error.value = null
   
   try {
-    const slug = route.params.slug;
-    const response = await axios.get(`/api/components/components/${slug}/`);
-    component.value = response.data;
+    const response = await fetch(`http://localhost:8000/api/components/${componentId}/offers/`)
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    component.value = data.component
+    offers.value = data.offers.sort((a, b) => (a.price || 999999) - (b.price || 999999))
+    
   } catch (err) {
-    console.error('Error fetching component details:', err);
-    error.value = 'Failed to load component details. Please try again.';
+    error.value = `Failed to load component: ${err.message}`
+    console.error('Error fetching component:', err)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
-const addToCompare = () => {
-  // This would typically use a store to manage comparison state
-  // For now, we'll just navigate to the compare page with this component
-  router.push({
-    path: '/compare',
-    query: { components: [component.value.slug] }
-  });
-};
-
-const formatDate = (dateString) => {
-  if (!dateString) return 'Unknown';
-  const date = new Date(dateString);
-  return date.toLocaleDateString();
-};
-
-const formatSpecKey = (key) => {
-  // Convert camelCase or snake_case to Title Case with spaces
-  return key
-    .replace(/_/g, ' ')
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, str => str.toUpperCase())
-    .trim();
-};
-
-// Initialize
+// Fetch data on component mount
 onMounted(() => {
-  fetchComponentDetails();
-});
+  fetchData()
+})
 </script>
+
+<style scoped>
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+</style>

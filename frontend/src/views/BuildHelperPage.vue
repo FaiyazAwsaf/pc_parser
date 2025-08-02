@@ -7,7 +7,7 @@
           Build Your PC with AI
         </h1>
         <p class="text-center text-gray-500 mb-6">
-          Ask anything about building your PC — your AI assistant is ready!
+          Ask anything about building your PC your AI assistant is ready!
         </p>
 
         <!-- Chat Box -->
@@ -64,7 +64,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import Navbar from '@/components/Navbar.vue'
 
 const userInput = ref('')
 const messages = ref([

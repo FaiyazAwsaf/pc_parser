@@ -1,0 +1,272 @@
+[
+  {
+    "retailer": "ryans",
+    "retailer_name": "AMD Athlon PRO 300GE AM4 Socket Desktop Processor with Radeon Vega 3 Graphics (Rebox)",
+    "price": 5090,
+    "url": "https://www.ryanscomputers.com/amd-athlon-pro-300ge-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/AMD/athlon-pro-300ge/athlon-pro-300ge-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Intel Pentium Gold G6400 10th gen Coffee Lake Processor",
+    "price": 7100,
+    "url": "https://www.ryanscomputers.com/intel-pentium-gold-g6400-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/g6400/g6400-228x228.jpg",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "AMD Ryzen 5 2400G Desktop Processor with Radeon RX Vega 11 Graphics",
+    "price": 7300,
+    "url": "https://www.ryanscomputers.com/amd-ryzen-5-2400g-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-2400g/ryzen-5-2400g-001-228x228.webp",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "AMD Ryzen 5 3400G Processor with Radeon RX Vega 11 Graphics",
+    "price": 7990,
+    "url": "https://www.ryanscomputers.com/amd-ryzen-5-3400g-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-3400g/3400g-228x228.jpg",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Intel 10th Gen Core i3 10100F Processor",
+    "price": 7790,
+    "url": "https://www.ryanscomputers.com/intel-core-i3-10100f-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i3-10100/i3-10100-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Intel 10th Gen Core i5 10400 Processor",
+    "price": 15450,
+    "url": "https://www.ryanscomputers.com/intel-core-i5-10400-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i5-10400/i5-10400-228x228.jpg",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "AMD Ryzen 5 5600G Processor",
+    "price": 17200,
+    "url": "https://www.ryanscomputers.com/amd-ryzen-5-5600g-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-5600g/5600g-228x228.jpg",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "AMD Ryzen 7 5700G Processor",
+    "price": 23000,
+    "url": "https://www.ryanscomputers.com/amd-ryzen-7-5700g-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-7-5700g/5700g-228x228.jpg",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Intel 12th Gen Core i5 12400 Processor",
+    "price": 24200,
+    "url": "https://www.ryanscomputers.com/intel-core-i5-12400-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i5-12400/i5-12400-228x228.jpg",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Intel 12th Gen Core i7 12700K Processor",
+    "price": 39500,
+    "url": "https://www.ryanscomputers.com/intel-core-i7-12700k-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i7-12700K/i7-12700K-228x228.jpg",
+    "availability": true,
+    "category": "CPU"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Netac Basic DDR3 4GB 1600MHZ Desktop RAM",
+    "price": 1020,
+    "url": "https://www.ryanscomputers.com/netac-ddr3-4gb-1600mhz-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/netac/basic-ddr3-4gb-1600mhz/basic-ddr3-4gb-1600mhz-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "G.SKILL Value 4GB DDR3 1600Mhz Desktop RAM",
+    "price": 1290,
+    "url": "https://www.ryanscomputers.com/gskill-value-4gb-ddr3-1600mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/value-ddr3/value-ddr3-228x228.webp",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Team Elite Plus Red 4GB DDR4 2666MHz RAM",
+    "price": 1500,
+    "url": "https://www.ryanscomputers.com/team-elite-plus-red-4gb-ddr4-2666mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/elite-plus/elite-plus-red-ddr4-4gb-2666/elite-plus-red-ddr4-4gb-2666-01-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Corsair Vengeance LPX 8GB DDR4 3200MHz RAM",
+    "price": 3150,
+    "url": "https://www.ryanscomputers.com/corsair-vengeance-lpx-8gb-ddr4-3200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/corsair/vengeance-lpx-ddr4/vengeance-lpx-8gb-ddr4-3200mhz/vengeance-lpx-8gb-ddr4-3200mhz-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Adata XPG Gammix D30 8GB DDR4 3200MHz Desktop RAM",
+    "price": 2950,
+    "url": "https://www.ryanscomputers.com/adata-xpg-gammix-d30-8gb-ddr4-3200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/adata/xpg-gammix-d30/xpg-gammix-d30-8gb-ddr4-3200mhz/xpg-gammix-d30-8gb-ddr4-3200mhz-01-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Patriot Signature Line 8GB DDR4 3200MHz Desktop RAM",
+    "price": 3050,
+    "url": "https://www.ryanscomputers.com/patriot-signature-line-8gb-ddr4-3200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/patriot/signature-line-8gb-ddr4-3200mhz/signature-line-8gb-ddr4-3200mhz-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Transcend JetRAM 8GB DDR4 2666MHz U-DIMM Desktop RAM",
+    "price": 2750,
+    "url": "https://www.ryanscomputers.com/transcend-jetram-8gb-ddr4-2666mhz-udimm-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/transcend/jetram-ddr4-8gb-2666mhz-udimm/jetram-ddr4-8gb-2666mhz-udimm-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Team Elite Plus Red 8GB DDR4 2666MHz Desktop RAM",
+    "price": 2950,
+    "url": "https://www.ryanscomputers.com/team-elite-plus-red-8gb-ddr4-2666mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/elite-plus/elite-plus-red-ddr4-8gb-2666/elite-plus-red-ddr4-8gb-2666-01-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Team Elite Plus Red 16GB DDR4 3200MHz Desktop RAM",
+    "price": 5750,
+    "url": "https://www.ryanscomputers.com/team-elite-plus-red-16gb-ddr4-3200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/elite-plus/elite-plus-red-ddr4-16gb-3200mhz/elite-plus-red-ddr4-16gb-3200mhz-01-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "G.SKILL Ripjaws V 16GB DDR4 3200MHz Desktop RAM",
+    "price": 5990,
+    "url": "https://www.ryanscomputers.com/gskill-ripjaws-v-16gb-ddr4-3200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/ripjaws-v/ripjaws-v-16gb-ddr4-3200mhz/ripjaws-v-16gb-ddr4-3200mhz-228x228.jpg",
+    "availability": true,
+    "category": "RAM"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "HP V20 19.5 Inch HD+ TN Monitor",
+    "price": 8490,
+    "url": "https://www.ryanscomputers.com/hp-v20-19-5-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/hp/v20/v20-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Acer EK220Q 21.5 Inch FHD VA Monitor",
+    "price": 10990,
+    "url": "https://www.ryanscomputers.com/acer-ek220q-21-5-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/acer/ek220q/ek220q-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Samsung 22 Inch FHD Monitor (LF22T350FHW)",
+    "price": 11700,
+    "url": "https://www.ryanscomputers.com/samsung-22-inch-fhd-monitor-lf22t350fhw",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/samsung/LF22T350FHW/LF22T350FHW-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "LG 22MK600M 22 Inch Full HD IPS LED Monitor",
+    "price": 13550,
+    "url": "https://www.ryanscomputers.com/lg-22mk600m-22-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lg/22mk600m/22mk600m-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "AOC 24B1XHS 24 Inch Full HD IPS Slim Monitor",
+    "price": 15000,
+    "url": "https://www.ryanscomputers.com/aoc-24b1xhs-24-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/aoc/24b1xhs/24b1xhs-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "ASUS VA24EHE 23.8 Inch Full HD IPS Eye Care Monitor",
+    "price": 16200,
+    "url": "https://www.ryanscomputers.com/asus-va24ehe-23-8-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/asus/va24ehe/va24ehe-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Dell SE2422H 23.8 Inch Full HD LED Monitor",
+    "price": 17500,
+    "url": "https://www.ryanscomputers.com/dell-se2422h-23-8-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/dell/se2422h/se2422h-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "ViewSonic VA2215-H 22 Inch Full HD Monitor",
+    "price": 12700,
+    "url": "https://www.ryanscomputers.com/viewsonic-va2215-h-22-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/va2215-h/va2215-h-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "BenQ GW2283 21.5 Inch Full HD Eye-care Monitor",
+    "price": 14200,
+    "url": "https://www.ryanscomputers.com/benq-gw2283-21-5-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/benq/gw2283/gw2283-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  },
+  {
+    "retailer": "ryans",
+    "retailer_name": "Philips 223V7QHSB 21.5 Inch Full HD IPS Monitor",
+    "price": 12400,
+    "url": "https://www.ryanscomputers.com/philips-223v7qhsb-21-5-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/philips/223v7qhsb/223v7qhsb-228x228.jpg",
+    "availability": true,
+    "category": "Monitor"
+  }
+]

@@ -1,21 +1,21 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-blue-800 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
-      <div class="bg-white rounded-lg shadow-md p-8">
-        <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-4">Verify Your Email</h2>
-        <p class="text-center text-sm text-gray-600 mb-8 leading-relaxed">
+      <div class="bg-white/10 backdrop-blur-md rounded-lg shadow-xl p-8 border border-white/20">
+        <h2 class="text-center text-3xl font-extrabold text-white mb-4">Verify Your Email</h2>
+        <p class="text-center text-sm text-white opacity-90 mb-8 leading-relaxed">
           We've sent a 6-digit verification code to your email address. 
           Please enter it below to verify your account.
         </p>
         
         <form @submit.prevent="handleVerification" class="space-y-6">
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+            <label for="email" class="block text-sm font-medium text-white mb-2">Email Address</label>
             <input
               type="email"
               id="email"
               v-model="form.email"
-              :class="[
+              :class="[ 
                 'w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
                 errors.email ? 'border-red-500' : 'border-gray-300'
               ]"
@@ -26,7 +26,7 @@
           </div>
 
           <div>
-            <label for="token" class="block text-sm font-medium text-gray-700 mb-2">Verification Code</label>
+            <label for="token" class="block text-sm font-medium text-white mb-2">Verification Code</label>
             <input
               type="text"
               id="token"
@@ -63,20 +63,20 @@
           <button 
             @click="resendCode" 
             :disabled="resendLoading || resendCooldown > 0"
-            class="text-sm text-blue-600 hover:text-blue-500 font-medium underline disabled:text-gray-400 disabled:no-underline disabled:cursor-not-allowed"
+            class="text-sm text-blue-300 hover:text-blue-400 font-medium underline disabled:text-gray-400 disabled:no-underline disabled:cursor-not-allowed"
           >
             {{ resendLoading ? 'Sending...' : resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code' }}
           </button>
         </div>
 
         <div class="mt-6 text-center space-y-2">
-          <p class="text-sm text-gray-600">
+          <p class="text-sm text-white">
             Remember your password? 
-            <router-link to="/login" class="text-blue-600 hover:text-blue-500 font-medium">Login</router-link>
+            <router-link to="/login" class="text-blue-300 hover:text-blue-400 font-medium">Login</router-link>
           </p>
-          <p class="text-sm text-gray-600">
+          <p class="text-sm text-white">
             Need to create an account? 
-            <router-link to="/register" class="text-blue-600 hover:text-blue-500 font-medium">Register</router-link>
+            <router-link to="/register" class="text-blue-300 hover:text-blue-400 font-medium">Register</router-link>
           </p>
         </div>
       </div>
@@ -141,8 +141,6 @@ const handleVerification = async () => {
     if (response.ok) {
       message.value = data.message
       messageType.value = 'success'
-      
-      // Redirect to login page after successful verification
       setTimeout(() => {
         router.push('/login')
       }, 2000)
@@ -151,7 +149,6 @@ const handleVerification = async () => {
         message.value = data.error
         messageType.value = 'error'
       } else {
-        // Handle field-specific errors
         Object.keys(data).forEach(key => {
           if (errors.hasOwnProperty(key)) {
             errors[key] = Array.isArray(data[key]) ? data[key][0] : data[key]
@@ -204,14 +201,12 @@ const resendCode = async () => {
   }
 }
 
-// Auto-fill email from query params if available
 onMounted(() => {
   if (route.query.email) {
     form.email = route.query.email
   }
 })
 
-// Cleanup interval on unmount
 onUnmounted(() => {
   if (cooldownInterval) {
     clearInterval(cooldownInterval)

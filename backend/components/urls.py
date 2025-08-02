@@ -1,13 +1,22 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ComponentCategoryViewSet, ManufacturerViewSet, ComponentViewSet, ComponentPriceViewSet
-
-router = DefaultRouter()
-router.register('categories', ComponentCategoryViewSet)
-router.register('manufacturers', ManufacturerViewSet)
-router.register('components', ComponentViewSet)
-router.register('prices', ComponentPriceViewSet)
+from django.urls import path
+from . import views
+from .views import ComponentWithOffersView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path(
+        "categories/",
+        views.ComponentCategoryList.as_view(),
+        name="component-category-list",
+    ),
+    path(
+        "category/<str:category_name>/",
+        views.ComponentListByCategory.as_view(),
+        name="component-list-by-category",
+    ),
+    path("<int:pk>/", views.ComponentDetail.as_view(), name="component-detail"),
+    path(
+        "<int:pk>/offers/",
+        ComponentWithOffersView.as_view(),
+        name="component-with-offers",
+    ),
 ]

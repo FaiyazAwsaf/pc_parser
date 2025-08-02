@@ -13,22 +13,23 @@ import CpuPage from '@/views/CpuPage.vue'
 import MonitorPage from '@/views/MonitorPage.vue'
 import MemoryPage from '@/views/MemoryPage.vue'
 
-
 const routes = [
   { path: '/', component: LandingPage },
   { path: '/components', component: ComponentsPage },
-  { path: '/components/:slug', component: ComponentDetailPage },
-  { path: '/marketplace', component: MarketplacePage },
-  { path: '/login', component: LoginPage },
-  { path: '/register', component: RegisterPage },
-  { path: '/verify-email', component: EmailVerificationPage },
-  { path: '/builder', component: BuildHelperPage },
-  { path: '/about', component: AboutPage },
-  { path: '/sell', component: SellComponents },
+  // Specific component category pages should come BEFORE the generic detail routes
   { path: '/components/cpu', component: CpuPage },
   { path: '/components/monitor', component: MonitorPage },
   { path: '/components/memory', component: MemoryPage },
-
+  // Component detail routes - these should come AFTER specific category routes
+  { path: '/components/:id(\\d+)', component: ComponentDetailPage },
+  { path: '/components/:slug', component: ComponentDetailPage },
+  { path: '/marketplace', component: MarketplacePage },
+  { path: '/builder', component: BuildHelperPage },
+  { path: '/about', component: AboutPage },
+  { path: '/sell', component: SellComponents },
+  { path: '/login', component: LoginPage },
+  { path: '/register', component: RegisterPage },
+  { path: '/verify-email', component: EmailVerificationPage },
 ]
 
 const router = createRouter({

@@ -8,62 +8,90 @@
     <div class="p-6 grid grid-cols-1 lg:grid-cols-5 gap-6">
       <!-- Sidebar Filters -->
       <aside class="lg:col-span-1 space-y-6">
-        <div>
+        <!-- Price Filter -->
+        <div v-if="filterOptions.price_range">
           <label class="font-semibold block mb-1">Price</label>
-          <input type="range" min="0" max="2600" v-model="filters.price" class="w-full">
-          <div class="text-sm text-gray-600">${{ filters.price }}</div>
+          <input 
+            type="range" 
+            :min="filterOptions.price_range.min_price || 0" 
+            :max="filterOptions.price_range.max_price || 5000" 
+            v-model="filters.maxPrice" 
+            class="w-full"
+          >
+          <div class="text-sm text-gray-600">Tk. {{ filters.maxPrice }}</div>
         </div>
 
-        <div>
+        <!-- Manufacturer Filter -->
+        <div v-if="filterOptions.manufacturers && filterOptions.manufacturers.length">
           <label class="font-semibold block mb-1">Manufacturer</label>
           <div class="space-y-1">
-            <label v-for="maker in ['All', 'AMD', 'Intel']" :key="maker" class="flex items-center gap-2">
-              <input type="checkbox" v-model="filters.manufacturer" :value="maker">
-              {{ maker }}
+            <label v-for="manufacturer in filterOptions.manufacturers" :key="manufacturer" class="flex items-center gap-2">
+              <input 
+                type="checkbox" 
+                v-model="filters.selectedManufacturers" 
+                :value="manufacturer"
+              >
+              {{ manufacturer }}
             </label>
           </div>
         </div>
 
-        <div>
-          <label class="font-semibold block mb-1">Rating</label>
-          <div class="space-y-1">
-            <label v-for="star in [5, 4, 3, 2, 1, 0]" :key="star" class="flex items-center gap-2">
-              <input type="checkbox" v-model="filters.rating" :value="star">
-              {{ star === 0 ? 'Unrated' : `${star}★` }}
-            </label>
-          </div>
-        </div>
-
-        <div>
+        <!-- Core Count Filter -->
+        <div v-if="filterOptions.specs && filterOptions.specs.core_counts && filterOptions.specs.core_counts.length">
           <label class="font-semibold block mb-1">Core Count</label>
-          <input type="range" min="1" max="64" v-model="filters.coreCount" class="w-full">
-          <div class="text-sm text-gray-600">{{ filters.coreCount }} Cores</div>
+          <div class="space-y-1">
+            <label v-for="cores in filterOptions.specs.core_counts" :key="cores" class="flex items-center gap-2">
+              <input 
+                type="checkbox" 
+                v-model="filters.selectedCoreCounts" 
+                :value="cores"
+              >
+              {{ cores }} Cores
+            </label>
+          </div>
         </div>
 
-        <div>
+        <!-- Base Frequency Filter -->
+        <div v-if="filterOptions.specs && filterOptions.specs.base_frequencies && filterOptions.specs.base_frequencies.length">
           <label class="font-semibold block mb-1">Base Frequency</label>
-          <input type="range" min="1.1" max="4.7" step="0.1" v-model="filters.baseFreq" class="w-full">
-          <div class="text-sm text-gray-600">{{ filters.baseFreq }} GHz</div>
+          <div class="space-y-1">
+            <label v-for="freq in filterOptions.specs.base_frequencies.slice(0, 10)" :key="freq" class="flex items-center gap-2">
+              <input 
+                type="checkbox" 
+                v-model="filters.selectedBaseFreqs" 
+                :value="freq"
+              >
+              {{ freq }} GHz
+            </label>
+          </div>
         </div>
 
-        <div>
-          <label class="font-semibold block mb-1">Max Frequency</label>
-          <input type="range" min="1.1" max="5.5" step="0.1" v-model="filters.maxFreq" class="w-full">
-          <div class="text-sm text-gray-600">{{ filters.maxFreq }} GHz</div>
-        </div>
-
-        <div>
+        <!-- Cache Filter -->
+        <div v-if="filterOptions.specs && filterOptions.specs.cache_sizes && filterOptions.specs.cache_sizes.length">
           <label class="font-semibold block mb-1">Cache</label>
-          <input type="range" min="0" max="256" v-model="filters.cache" class="w-full">
-          <div class="text-sm text-gray-600">{{ filters.cache }} MB</div>
+          <div class="space-y-1">
+            <label v-for="cache in filterOptions.specs.cache_sizes.slice(0, 10)" :key="cache" class="flex items-center gap-2">
+              <input 
+                type="checkbox" 
+                v-model="filters.selectedCacheSizes" 
+                :value="cache"
+              >
+              {{ cache }} MB
+            </label>
+          </div>
         </div>
 
-        <div>
+        <!-- Integrated Graphics Filter -->
+        <div v-if="filterOptions.specs && filterOptions.specs.graphics_options && filterOptions.specs.graphics_options.length">
           <label class="font-semibold block mb-1">Integrated Graphics</label>
           <div class="space-y-1">
-            <label v-for="option in ['All', 'None', 'Intel UHD Graphics 630', 'Intel UHD Graphics 770', 'Intel Xe', 'Radeon']" :key="option" class="flex items-center gap-2">
-              <input type="checkbox" v-model="filters.graphics" :value="option">
-              {{ option }}
+            <label v-for="graphics in filterOptions.specs.graphics_options.slice(0, 8)" :key="graphics" class="flex items-center gap-2">
+              <input 
+                type="checkbox" 
+                v-model="filters.selectedGraphics" 
+                :value="graphics"
+              >
+              {{ graphics }}
             </label>
           </div>
         </div>
@@ -72,81 +100,232 @@
       <!-- Main Content Table -->
       <main class="lg:col-span-4">
         <div class="flex justify-between items-center mb-4">
-          <input type="text" placeholder="Search CPU" v-model="search" class="border rounded px-4 py-2 w-full max-w-sm">
+          <input 
+            type="text" 
+            placeholder="Search CPU" 
+            v-model="searchQuery" 
+            class="border rounded px-4 py-2 w-full max-w-sm"
+          >
           <button class="ml-4 bg-blue-600 text-white px-4 py-2 rounded">Add From Selection</button>
         </div>
 
-        <table class="w-full table-auto border-collapse">
-          <thead class="bg-gray-100">
-            <tr>
-              <th></th>
-              <th class="text-left px-3 py-2">Name</th>
-              <th class="text-left px-3 py-2">Core Count</th>
-              <th class="text-left px-3 py-2">Base Freq</th>
-              <th class="text-left px-3 py-2">Max Freq</th>
-              <th class="text-left px-3 py-2">Cache</th>
-              <th class="text-left px-3 py-2">Graphics</th>
-              <th class="text-left px-3 py-2">Rating</th>
-              <th class="text-left px-3 py-2">Price</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="cpu in filteredCpus" :key="cpu.name" class="border-b hover:bg-gray-50">
-              <td class="px-2 py-3"><input type="checkbox"></td>
-              <td class="px-3 py-2">{{ cpu.name }}</td>
-              <td class="px-3 py-2">{{ cpu.cores }}</td>
-              <td class="px-3 py-2">{{ cpu.base }} GHz</td>
-              <td class="px-3 py-2">{{ cpu.max }} GHz</td>
-              <td class="px-3 py-2">{{ cpu.cache }} MB</td>
-              <td class="px-3 py-2">{{ cpu.graphics }}</td>
-              <td class="px-3 py-2">{{ cpu.rating }}★</td>
-              <td class="px-3 py-2">${{ cpu.price }}</td>
-              <td class="px-3 py-2"><button class="bg-blue-500 text-white px-3 py-1 rounded">Add</button></td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Loading State -->
+        <div v-if="loading" class="text-center py-8">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <p class="mt-2 text-gray-600">Loading CPUs...</p>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="text-center py-8">
+          <p class="text-red-600">{{ error }}</p>
+          <button @click="fetchData" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">Retry</button>
+        </div>
+
+        <!-- CPUs Table -->
+        <div v-else class="overflow-x-auto">
+          <table class="w-full table-auto border-collapse">
+            <thead class="bg-gray-100">
+              <tr>
+                <th></th>
+                <th class="text-left px-3 py-2">Name</th>
+                <th class="text-left px-3 py-2">Brand</th>
+                <th class="text-left px-3 py-2">Model</th>
+                <th class="text-left px-3 py-2">Core Count</th>
+                <th class="text-left px-3 py-2">Base Clock</th>
+                <th class="text-left px-3 py-2">Boost Clock</th>
+                <th class="text-left px-3 py-2">Cache</th>
+                <th class="text-left px-3 py-2">Graphics</th>
+                <th class="text-left px-3 py-2">Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="cpu in filteredCpus" :key="cpu.id" class="border-b hover:bg-gray-50">
+                <td class="px-2 py-3"><input type="checkbox"></td>
+                <td class="px-3 py-2">{{ cpu.name }}</td>
+                <td class="px-3 py-2">{{ cpu.brand || 'N/A' }}</td>
+                <td class="px-3 py-2">{{ cpu.model || 'N/A' }}</td>
+                <td class="px-3 py-2">{{ getSpecValue(cpu.specs, 'core_count') || 'N/A' }}</td>
+                <td class="px-3 py-2">{{ getSpecValue(cpu.specs, 'base_clock') || 'N/A' }}</td>
+                <td class="px-3 py-2">{{ getSpecValue(cpu.specs, 'boost_clock') || 'N/A' }}</td>
+                <td class="px-3 py-2">{{ getSpecValue(cpu.specs, 'l3_cache') || 'N/A' }}</td>
+                <td class="px-3 py-2">{{ getSpecValue(cpu.specs, 'graphics') || 'None' }}</td>
+                <td class="px-3 py-2">
+                  <span v-if="cpu.lowest_price" class="text-green-600 font-semibold">
+                    ${{ cpu.lowest_price }}
+                  </span>
+                  <span v-else class="text-gray-400">No price</span>
+                </td>
+                <td class="px-3 py-2">
+                  <button 
+                    @click="viewDetails(cpu)" 
+                    class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- No Results -->
+          <div v-if="filteredCpus.length === 0" class="text-center py-8">
+            <p class="text-gray-600">No CPUs found matching your criteria.</p>
+          </div>
+        </div>
       </main>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
-const search = ref('')
+const router = useRouter()
+
+// Data
+const cpus = ref([])
+const filterOptions = ref({})
+const loading = ref(true)
+const error = ref(null)
+const searchQuery = ref('')
+
+// Filters
 const filters = ref({
-  price: 2600,
-  manufacturer: [],
-  rating: [],
-  coreCount: 64,
-  baseFreq: 4.7,
-  maxFreq: 5.5,
-  cache: 256,
-  graphics: []
+  maxPrice: 5000,
+  selectedManufacturers: [],
+  selectedCoreCounts: [],
+  selectedBaseFreqs: [],
+  selectedCacheSizes: [],
+  selectedGraphics: []
 })
 
-const cpuList = ref([
-  {
-    name: 'AMD Ryzen 7 5800X3D', cores: 8, base: 3.4, max: 4.5, cache: 96, graphics: 'None', rating: 5, price: 329
-  },
-  {
-    name: 'Intel Core i7-12700K', cores: 12, base: 3.6, max: 5.0, cache: 25, graphics: 'Intel UHD Graphics 770', rating: 4, price: 419
-  },
-  {
-    name: 'AMD Ryzen 5 7600X', cores: 6, base: 4.7, max: 5.3, cache: 32, graphics: 'Radeon', rating: 4, price: 279
-  }
-])
-
+// Computed filtered CPUs
 const filteredCpus = computed(() => {
-  return cpuList.value.filter(cpu => {
-    return cpu.name.toLowerCase().includes(search.value.toLowerCase())
+  let filtered = cpus.value.filter(cpu => {
+    // Search filter
+    if (searchQuery.value) {
+      const search = searchQuery.value.toLowerCase()
+      if (!cpu.name.toLowerCase().includes(search) && 
+          !cpu.brand?.toLowerCase().includes(search) &&
+          !cpu.model?.toLowerCase().includes(search)) {
+        return false
+      }
+    }
+
+    // Price filter
+    if (cpu.lowest_price && cpu.lowest_price > filters.value.maxPrice) {
+      return false
+    }
+
+    // Manufacturer filter
+    if (filters.value.selectedManufacturers.length > 0 && 
+        !filters.value.selectedManufacturers.includes(cpu.brand)) {
+      return false
+    }
+
+    // Core count filter
+    if (filters.value.selectedCoreCounts.length > 0) {
+      const coreCount = parseInt(getSpecValue(cpu.specs, 'core_count'))
+      if (!coreCount || !filters.value.selectedCoreCounts.includes(coreCount)) {
+        return false
+      }
+    }
+
+    // Base frequency filter
+    if (filters.value.selectedBaseFreqs.length > 0) {
+      const baseFreq = parseFloat(getSpecValue(cpu.specs, 'base_clock')?.replace('GHz', ''))
+      if (!baseFreq || !filters.value.selectedBaseFreqs.some(f => Math.abs(f - baseFreq) < 0.1)) {
+        return false
+      }
+    }
+
+    // Cache filter
+    if (filters.value.selectedCacheSizes.length > 0) {
+      const cache = parseFloat(getSpecValue(cpu.specs, 'l3_cache')?.replace('MB', ''))
+      if (!cache || !filters.value.selectedCacheSizes.includes(cache)) {
+        return false
+      }
+    }
+
+    // Graphics filter
+    if (filters.value.selectedGraphics.length > 0) {
+      const graphics = getSpecValue(cpu.specs, 'graphics')
+      if (!graphics || !filters.value.selectedGraphics.includes(graphics)) {
+        return false
+      }
+    }
+
+    return true
   })
+
+  return filtered
+})
+
+// Helper function to get spec values
+const getSpecValue = (specs, key) => {
+  return specs && specs[key] ? specs[key] : null
+}
+
+// Fetch data from API
+const fetchData = async () => {
+  loading.value = true
+  error.value = null
+  
+  try {
+    const response = await fetch('http://localhost:8000/api/components/category/CPU/')
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    cpus.value = data.results || []
+    filterOptions.value = data.filters || {}
+    
+    // Set initial max price from API data
+    if (filterOptions.value.price_range?.max_price) {
+      filters.value.maxPrice = filterOptions.value.price_range.max_price
+    }
+    
+  } catch (err) {
+    error.value = `Failed to load CPUs: ${err.message}`
+    console.error('Error fetching CPUs:', err)
+  } finally {
+    loading.value = false
+  }
+}
+
+// View CPU details
+const viewDetails = (cpu) => {
+  // Navigate to component detail page
+  router.push(`/components/${cpu.id}`)
+}
+
+// Watch for filter changes and refetch data
+watch([searchQuery, filters], async () => {
+  // You could implement debounced API calls with filters here
+  // For now, we'll filter on the frontend
+}, { deep: true })
+
+// Fetch data on component mount
+onMounted(() => {
+  fetchData()
 })
 </script>
 
 <style scoped>
 th, td {
   font-size: 0.95rem;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 </style>

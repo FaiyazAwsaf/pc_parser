@@ -43,14 +43,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third-party apps
-    'rest_framework',
-    'corsheaders',
-    'django_filters',
-
-    # Project apps 
-    'user',
-    'components',
-    'marketplace',
+    "rest_framework",
+    "corsheaders",
+    "django_filters",
+    # Project apps
+    "user",
+    "components",
+    "marketplace",
 ]
 
 MIDDLEWARE = [
@@ -183,7 +182,7 @@ SIMPLE_JWT = {
 # REST Framework settings
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.AllowAny",  # this is for development, change to IsAuthenticated in production
     ],
     # "DEFAULT_AUTHENTICATION_CLASSES": (
     #     "rest_framework_simplejwt.authentication.JWTAuthentication",

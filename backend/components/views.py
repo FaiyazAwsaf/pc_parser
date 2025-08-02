@@ -1,6 +1,13 @@
-from rest_framework import generics
-from .models import ComponentCategory, Component
-from .serializers import ComponentCategorySerializer, ComponentSerializer
+from rest_framework import generics, status
+from .models import ComponentCategory, Component, RetailerComponentOffer
+from .serializers import (
+    ComponentCategorySerializer,
+    ComponentSerializer,
+    RetailerComponentOfferSerializer,
+)
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class ComponentCategoryList(generics.ListAPIView):
@@ -19,3 +26,19 @@ class ComponentListByCategory(generics.ListAPIView):
 class ComponentDetail(generics.RetrieveAPIView):
     queryset = Component.objects.all()
     serializer_class = ComponentSerializer
+
+
+class ComponentWithOffersView(APIView):
+    def get(self, request, pk):
+        try:
+            component = Component.objects.get(pk=pk)
+        except Component.DoesNotExist:
+            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        offers = RetailerComponentOffer.objects.filter(component=component)
+        return Response(
+            {
+                "component": ComponentSerializer(component).data,
+                "offers": RetailerComponentOfferSerializer(offers, many=True).data,
+            }
+        )

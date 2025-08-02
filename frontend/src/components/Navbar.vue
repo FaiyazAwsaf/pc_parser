@@ -40,10 +40,10 @@
     <ul class="divide-y divide-gray-200">
       <li><router-link to="/components/monitor" class="block px-4 py-2 hover:bg-gray-100">Monitor</router-link></li>
       <li><router-link to="/components/cpu" class="block px-4 py-2 hover:bg-gray-100">CPUs</router-link></li>
+      <li><router-link to="/components/memory" class="block px-4 py-2 hover:bg-gray-100">Memory</router-link></li>
       <li><router-link to="/components/storage" class="block px-4 py-2 hover:bg-gray-100">Storage</router-link></li>
       <li><router-link to="/components/power-supplies" class="block px-4 py-2 hover:bg-gray-100">Power Supplies</router-link></li>
       <li><router-link to="/components/cases" class="block px-4 py-2 hover:bg-gray-100">Cases</router-link></li>
-      <li><router-link to="/components/memory" class="block px-4 py-2 hover:bg-gray-100">Memory</router-link></li>
       <li><router-link to="/components/motherboards" class="block px-4 py-2 hover:bg-gray-100">Motherboards</router-link></li>
       <li><router-link to="/components/gpu" class="block px-4 py-2 hover:bg-gray-100">GPU</router-link></li>
     </ul>

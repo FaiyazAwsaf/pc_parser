@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+  <div 
+    class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col cursor-pointer"
+    @click="handleCardClick"
+  >
     <div class="relative">
       <img 
         :src="product.image || '/placeholder-product.jpg'" 
@@ -42,31 +45,23 @@
           <p class="text-xl font-bold text-blue-700">৳{{ formatPrice(product.price) }}</p>
         </div>
         
-        <div class="flex flex-col space-y-2">
-          <div class="flex space-x-2">
-            <button 
-              @click="$emit('order', product)" 
-              :disabled="!product.is_available"
-              class="px-3 py-1 text-sm rounded transition"
-              :class="product.is_available !== false
-                ? 'bg-green-600 text-white hover:bg-green-700' 
-                : 'bg-gray-400 text-white cursor-not-allowed'"
-            >
-              {{ product.is_available !== false ? 'Order' : 'Sold Out' }}
-            </button>
-            <button 
-              v-if="isAuthenticated"
-              @click="$emit('chat', product)" 
-              class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition"
-            >
-              Chat
-            </button>
-          </div>
+        <div class="flex space-x-2">
           <button 
-            @click="$emit('view-details', product)" 
-            class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition"
+            @click.stop="$emit('order', product)" 
+            :disabled="!product.is_available"
+            class="px-3 py-1 text-sm rounded transition"
+            :class="product.is_available !== false
+              ? 'bg-green-600 text-white hover:bg-green-700' 
+              : 'bg-gray-400 text-white cursor-not-allowed'"
           >
-            View Details
+            {{ product.is_available !== false ? 'Order' : 'Sold Out' }}
+          </button>
+          <button 
+            v-if="isAuthenticated"
+            @click.stop="$emit('chat', product)" 
+            class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition"
+          >
+            Chat
           </button>
         </div>
       </div>
@@ -100,6 +95,10 @@ export default {
     }
   },
   methods: {
+    handleCardClick() {
+      this.$emit('view-details', this.product)
+    },
+    
     formatPrice(price) {
       return new Intl.NumberFormat('en-BD').format(price)
     },

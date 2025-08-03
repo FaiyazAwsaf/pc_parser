@@ -6,3 +6,7 @@ python-dotenv
 psycopg2-binary
 pillow
 django-filter
+requests
+beautifulsoup4
+rapidfuzz
+pandas

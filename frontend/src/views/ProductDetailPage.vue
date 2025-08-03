@@ -99,14 +99,14 @@
 
           <div class="flex space-x-4">
             <button 
-              @click="handleOrder" 
+              @click="handleAddToCart" 
               :disabled="!product.is_available"
               class="flex-1 px-6 py-3 text-lg font-medium rounded-lg transition"
               :class="product.is_available !== false
                 ? 'bg-green-600 text-white hover:bg-green-700' 
                 : 'bg-gray-400 text-white cursor-not-allowed'"
             >
-              {{ product.is_available !== false ? 'Order Now' : 'Sold Out' }}
+              {{ product.is_available !== false ? 'Add to Cart' : 'Sold Out' }}
             </button>
             <button 
               @click="handleChat" 
@@ -123,13 +123,21 @@
         <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ product.description }}</p>
       </div>
     </div>
+
+    <!-- Chat Modal -->
+    <ChatModal
+      v-if="showChatModal"
+      :product="product"
+      @close="showChatModal = false"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+import ChatModal from '../components/ChatModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -137,6 +145,11 @@ const router = useRouter()
 const product = ref(null)
 const loading = ref(true)
 const error = ref('')
+const showChatModal = ref(false)
+
+const isAuthenticated = computed(() => {
+  return localStorage.getItem('access_token') !== null
+})
 
 const fetchProduct = async () => {
   try {
@@ -165,12 +178,21 @@ const fetchProduct = async () => {
   }
 }
 
-const handleOrder = () => {
-  alert('Order functionality would be implemented here')
+const handleAddToCart = () => {
+  if (!isAuthenticated.value) {
+    router.push('/login')
+    return
+  }
+  // Add to cart functionality would be implemented here
+  alert('Product added to cart!')
 }
 
 const handleChat = () => {
-  alert('Chat functionality would be implemented here')
+  if (!isAuthenticated.value) {
+    router.push('/login')
+    return
+  }
+  showChatModal.value = true
 }
 
 const formatPrice = (price) => {

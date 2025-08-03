@@ -1,4 +1,5 @@
 import './assets/main.css'
+import '@vueform/slider/themes/default.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

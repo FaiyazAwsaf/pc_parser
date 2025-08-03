@@ -66,13 +66,23 @@ export default {
       try {
         // Get current user info
         const token = localStorage.getItem('access_token')
+        console.log('Token:', token ? 'Present' : 'Missing')
+        console.log('Full token:', token)
+        
         const userResponse = await fetch('http://localhost:8000/api/auth/profile/', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         })
+        
+        console.log('User response status:', userResponse.status)
+        
         if (userResponse.ok) {
           currentUser.value = await userResponse.json()
+          console.log('Current user:', currentUser.value)
+        } else {
+          console.error('Failed to get user profile:', await userResponse.text())
+          return
         }
         
         // Create or get chat
@@ -84,10 +94,15 @@ export default {
           }
         })
         
+        console.log('Chat response status:', chatResponse.status)
+        
         if (chatResponse.ok) {
           const chatData = await chatResponse.json()
+          console.log('Chat data:', chatData)
           chatId.value = chatData.id
           await loadMessages()
+        } else {
+          console.error('Failed to create/get chat:', await chatResponse.text())
         }
       } catch (error) {
         console.error('Error initializing chat:', error)
@@ -134,9 +149,15 @@ export default {
           })
         })
         
+        console.log('Send message response status:', response.status)
+        
         if (response.ok) {
           newMessage.value = ''
           await loadMessages()
+          console.log('Message sent successfully')
+        } else {
+          const errorText = await response.text()
+          console.error('Failed to send message:', errorText)
         }
       } catch (error) {
         console.error('Error sending message:', error)

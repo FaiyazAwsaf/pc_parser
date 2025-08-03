@@ -1,103 +1,135 @@
 <template>
-  <div class="p-5 max-w-7xl mx-auto">
-    <div class="text-center mb-8">
-      <h1 class="text-gray-800 mb-5 text-3xl font-bold">PC Parts Marketplace</h1>
-      <div class="flex justify-center gap-2.5 mb-5">
-        <input
-          v-model="searchQuery"
-          @input="handleSearch"
-          type="text"
-          placeholder="Search for products..."
-          class="px-3 py-3 border-2 border-gray-300 rounded-lg w-96 text-base focus:outline-none focus:border-blue-500"
-        />
-        <button @click="handleSearch" class="px-6 py-3 bg-blue-500 text-white border-none rounded-lg cursor-pointer text-base hover:bg-blue-600 transition-colors">
-          Search
-        </button>
-      </div>
+  <div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">PC Parts Marketplace</h1>
+      <p class="text-gray-600">Buy and sell used PC components from the community</p>
     </div>
-
-    <div class="flex gap-8 lg:flex-row flex-col">
-      <!-- Sidebar Filters -->
-      <div class="w-full lg:w-64 bg-gray-50 p-5 rounded-lg h-fit">
-        <div class="mb-6">
-          <h3 class="mb-2.5 text-gray-800 text-base font-semibold">Category</h3>
-          <select v-model="selectedCategory" @change="applyFilters" class="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500">
+    
+    <!-- Filters Section -->
+    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+          <input 
+            v-model="searchQuery" 
+            @input="debouncedSearch"
+            type="text" 
+            placeholder="Search products..." 
+            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+          >
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+          <select 
+            v-model="selectedCategory" 
+            @change="applyFilters"
+            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+          >
             <option value="">All Categories</option>
             <option v-for="category in categories" :key="category" :value="category">
               {{ category }}
             </option>
           </select>
         </div>
-
-        <div class="mb-6">
-          <h3 class="mb-2.5 text-gray-800 text-base font-semibold">Condition</h3>
-          <select v-model="selectedCondition" @change="applyFilters" class="w-full p-2 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-500">
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Condition</label>
+          <select 
+            v-model="selectedCondition" 
+            @change="applyFilters"
+            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+          >
             <option value="">All Conditions</option>
             <option v-for="condition in conditions" :key="condition" :value="condition">
               {{ condition }}
             </option>
           </select>
         </div>
-
-        <div class="mb-6">
-          <h3 class="mb-2.5 text-gray-800 text-base font-semibold">Price Range</h3>
-          <div class="flex flex-col gap-2.5">
-            <Slider
-              v-model="priceRange"
-              :min="0"
-              :max="100000"
-              :step="1000"
-              @change="applyFilters"
-            />
-            <div class="flex justify-between text-sm text-gray-600">
-              <span>৳{{ formatPrice(priceRange[0]) }}</span>
-              <span>৳{{ formatPrice(priceRange[1]) }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="isAuthenticated" class="mb-6">
-          <button @click="showAddProductModal = true" class="w-full px-3 py-3 bg-green-500 text-white border-none rounded-lg cursor-pointer text-base hover:bg-green-600 transition-colors">
-            Add Product
-          </button>
-        </div>
-      </div>
-
-      <!-- Product Grid -->
-      <div class="flex-1">
+        
         <div>
-          <div
-            v-for="(productRow, index) in productRows"
-            :key="index"
-            class="flex gap-5 mb-5 flex-wrap"
+          <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+          <select 
+            v-model="sortBy" 
+            @change="applyFilters"
+            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
           >
-            <ProductCard
-              v-for="product in productRow"
-              :key="product.id"
-              :product="product"
-              @order="handleOrder"
-              @chat="handleChat"
-            />
-          </div>
-        </div>
-
-        <!-- No products message -->
-        <div v-if="!loading && products.length === 0" class="text-center py-16 px-5 text-gray-600">
-          <div class="text-6xl mb-5">📦</div>
-          <h3 class="text-2xl text-gray-800 mb-2.5 font-semibold">No products found</h3>
-          <p class="text-base mb-8 max-w-md mx-auto">Try adjusting your search criteria or filters to find what you're looking for.</p>
-        </div>
-
-        <!-- Loading indicator -->
-        <div v-if="loading" class="text-center py-5 text-gray-600">Loading more products...</div>
-
-        <!-- Load more button -->
-        <div v-if="hasMore && !loading && products.length > 0" class="text-center mt-8">
-          <button @click="loadMore" class="px-6 py-3 bg-blue-500 text-white border-none rounded-lg cursor-pointer text-base hover:bg-blue-600 transition-colors">
-            Load More
-          </button>
+            <option value="name">Name</option>
+            <option value="-created_at">Newest First</option>
+            <option value="created_at">Oldest First</option>
+            <option value="price">Price: Low to High</option>
+            <option value="-price">Price: High to Low</option>
+          </select>
         </div>
       </div>
+      
+      <!-- Price Range Filter -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+        <div class="flex flex-col gap-4">
+          <Slider
+            v-model="priceRange"
+            :min="0"
+            :max="100000"
+            :step="1000"
+            @change="applyFilters"
+          />
+          <div class="flex justify-between text-sm text-gray-600">
+            <span>৳{{ formatPrice(priceRange[0]) }}</span>
+            <span>৳{{ formatPrice(priceRange[1]) }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-4 flex justify-between items-center">
+        <button 
+          @click="applyFilters" 
+          class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+        >
+          Apply Filters
+        </button>
+        
+        <button 
+          v-if="isAuthenticated" 
+          @click="showAddProductModal = true" 
+          class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+        >
+          Add Product
+        </button>
+      </div>
+    </div>
+    
+    <!-- Loading State -->
+    <div v-if="loading" class="flex justify-center items-center py-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
+    </div>
+    
+    <!-- Empty State -->
+    <div v-else-if="products.length === 0" class="text-center py-12">
+      <div class="text-6xl mb-4">📦</div>
+      <p class="text-gray-500 text-lg mb-2">No products found matching your criteria.</p>
+      <p class="text-gray-400 text-sm">Try adjusting your search or filters.</p>
+    </div>
+    
+    <!-- Products Grid - 5 products per row -->
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <ProductCard 
+        v-for="product in products" 
+        :key="product.id" 
+        :product="product"
+        @order="handleOrder"
+        @chat="handleChat"
+      />
+    </div>
+    
+    <!-- Load More Button -->
+    <div v-if="hasMore && !loading && products.length > 0" class="mt-8 flex justify-center">
+      <button 
+        @click="loadMore" 
+        class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+      >
+        Load More Products
+      </button>
     </div>
 
     <AddProductModal
@@ -149,6 +181,7 @@ export default {
     const searchQuery = ref('')
     const selectedCategory = ref('')
     const selectedCondition = ref('')
+    const sortBy = ref('name')
     const priceRange = ref([0, 100000])
     
     // Computed
@@ -197,6 +230,10 @@ export default {
           params.append('max_price', priceRange.value[1])
         }
         
+        if (sortBy.value) {
+          params.append('ordering', sortBy.value)
+        }
+        
         const {data} = await axios.get(`http://localhost:8000/api/marketplace/products/?`, {params})
         
         if (reset) {
@@ -235,8 +272,32 @@ export default {
       }
     }
     
+    // Debounce timer for search
+    let searchTimeout = null
+    
     const handleSearch = () => {
       fetchProducts(true)
+    }
+    
+    const debouncedSearch = () => {
+      clearTimeout(searchTimeout)
+      searchTimeout = setTimeout(() => {
+        fetchProducts(true)
+      }, 500) // 500ms delay
+    }
+    
+    const handleMinChange = () => {
+      if (priceRange.value[0] > priceRange.value[1]) {
+        priceRange.value[0] = priceRange.value[1]
+      }
+      applyFilters()
+    }
+    
+    const handleMaxChange = () => {
+      if (priceRange.value[1] < priceRange.value[0]) {
+        priceRange.value[1] = priceRange.value[0]
+      }
+      applyFilters()
     }
     
     const applyFilters = () => {
@@ -295,10 +356,14 @@ export default {
       searchQuery,
       selectedCategory,
       selectedCondition,
+      sortBy,
       priceRange,
       isAuthenticated,
       productRows,
       handleSearch,
+      debouncedSearch,
+      handleMinChange,
+      handleMaxChange,
       applyFilters,
       loadMore,
       handleOrder,
@@ -309,7 +374,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-@import '@vueform/slider/themes/default.css';
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
     <div class="relative">
       <img 
         :src="product.image || '/placeholder-product.jpg'" 
@@ -14,16 +14,18 @@
       </span>
     </div>
     
-    <div class="p-4">
+    <div class="p-4 flex flex-col flex-1">
       <div class="flex items-center justify-between mb-2">
         <span class="text-xs text-gray-500">{{ product.category }}</span>
         <span class="text-xs font-medium text-green-600">{{ product.seller_name || 'Demo Seller' }}</span>
       </div>
       
       <h3 class="text-lg font-semibold text-gray-800 mb-1 truncate">{{ product.name }}</h3>
-      <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ truncateDescription(product.description) }}</p>
+      <div class="flex-1 mb-3">
+        <p class="text-sm text-gray-600 h-10 overflow-hidden">{{ truncateDescription(product.description) }}</p>
+      </div>
       
-      <div class="flex justify-between items-end">
+      <div class="flex justify-between items-end mt-auto">
         <div>
           <p class="text-sm text-gray-500">Price:</p>
           <p class="text-xl font-bold text-blue-700">৳{{ formatPrice(product.price) }}</p>

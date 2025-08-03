@@ -7,25 +7,13 @@
     
     <!-- Search Bar -->
     <div class="bg-white rounded-lg shadow-md p-4 mb-6">
-      <div class="flex justify-between items-center">
-        <div class="flex-1 max-w-2xl">
-          <input 
-            v-model="searchQuery" 
-            @input="debouncedSearch"
-            type="text" 
-            placeholder="Search products..." 
-            class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-          >
-        </div>
-        
-        <button 
-          v-if="isAuthenticated" 
-          @click="showAddProductModal = true" 
-          class="ml-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
-        >
-          Add Product
-        </button>
-      </div>
+      <input 
+        v-model="searchQuery" 
+        @input="debouncedSearch"
+        type="text" 
+        placeholder="Search products..." 
+        class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+      >
     </div>
 
     <!-- Filters Sidebar and Products -->
@@ -98,6 +86,15 @@
               </div>
             </div>
           </div>
+          
+          <!-- Add Product Button -->
+          <button 
+            v-if="isAuthenticated" 
+            @click="showAddProductModal = true" 
+            class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+          >
+            Add Product
+          </button>
         </div>
       </div>
 
@@ -115,8 +112,8 @@
           <p class="text-gray-400 text-sm">Try adjusting your search or filters.</p>
         </div>
         
-        <!-- Products Grid - 5 products per row -->
-        <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <!-- Products Grid - 4 products per row -->
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <ProductCard 
             v-for="product in products" 
             :key="product.id" 

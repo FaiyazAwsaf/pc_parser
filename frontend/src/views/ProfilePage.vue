@@ -317,261 +317,232 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import AddProductModal from '../components/AddProductModal.vue'
 
-export default {
-  name: 'ProfilePage',
-  components: {
-    AddProductModal
-  },
-  setup() {
-    const router = useRouter()
-    const loading = ref(true)
-    const showEditModal = ref(false)
-    const showAddProductModal = ref(false)
-    const activeTab = ref('products')
+const router = useRouter()
+const loading = ref(true)
+const showEditModal = ref(false)
+const showAddProductModal = ref(false)
+const activeTab = ref('products')
+
+const user = ref({})
+const myProducts = ref([])
+const salesHistory = ref([])
+const purchaseHistory = ref([])
+const stats = ref({
+  totalProducts: 0,
+  totalSold: 0,
+  totalRevenue: 0,
+  activeChats: 0
+})
+
+const editForm = reactive({
+  first_name: '',
+  last_name: ''
+})
+
+const tabs = [
+  { id: 'products', name: 'My Products' },
+  { id: 'sales', name: 'Sales History' },
+  { id: 'purchases', name: 'Purchase History' },
+  { id: 'analytics', name: 'Analytics' }
+]
+
+const userInitials = computed(() => {
+  if (user.value.first_name && user.value.last_name) {
+    return user.value.first_name.charAt(0) + user.value.last_name.charAt(0)
+  }
+  return user.value.username ? user.value.username.charAt(0).toUpperCase() : 'U'
+})
+
+const categoryStats = computed(() => {
+  const categories = {}
+  myProducts.value.forEach(product => {
+    categories[product.category] = (categories[product.category] || 0) + 1
+  })
+  
+  const total = myProducts.value.length
+  return Object.entries(categories).map(([name, count]) => ({
+    name,
+    count,
+    percentage: total > 0 ? (count / total) * 100 : 0
+  }))
+})
+
+const monthlyRevenue = computed(() => {
+  const months = {}
+  salesHistory.value.forEach(sale => {
+    const month = new Date(sale.created_at).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short' 
+    })
+    months[month] = (months[month] || 0) + sale.total_price
+  })
+  
+  return Object.entries(months).map(([month, revenue]) => ({
+    month,
+    revenue
+  })).slice(-6)
+})
+
+const fetchUserProfile = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    if (!token) {
+      router.push('/login')
+      return
+    }
     
-    const user = ref({})
-    const myProducts = ref([])
-    const salesHistory = ref([])
-    const purchaseHistory = ref([])
-    const stats = ref({
-      totalProducts: 0,
-      totalSold: 0,
-      totalRevenue: 0,
-      activeChats: 0
+    const response = await fetch('http://localhost:8000/api/auth/profile/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     })
     
-    const editForm = reactive({
-      first_name: '',
-      last_name: ''
-    })
-    
-    const tabs = [
-      { id: 'products', name: 'My Products' },
-      { id: 'sales', name: 'Sales History' },
-      { id: 'purchases', name: 'Purchase History' },
-      { id: 'analytics', name: 'Analytics' }
-    ]
-    
-    const userInitials = computed(() => {
-      if (user.value.first_name && user.value.last_name) {
-        return user.value.first_name.charAt(0) + user.value.last_name.charAt(0)
-      }
-      return user.value.username ? user.value.username.charAt(0).toUpperCase() : 'U'
-    })
-    
-    const categoryStats = computed(() => {
-      const categories = {}
-      myProducts.value.forEach(product => {
-        categories[product.category] = (categories[product.category] || 0) + 1
-      })
-      
-      const total = myProducts.value.length
-      return Object.entries(categories).map(([name, count]) => ({
-        name,
-        count,
-        percentage: total > 0 ? (count / total) * 100 : 0
-      }))
-    })
-    
-    const monthlyRevenue = computed(() => {
-      const months = {}
-      salesHistory.value.forEach(sale => {
-        const month = new Date(sale.created_at).toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'short' 
-        })
-        months[month] = (months[month] || 0) + sale.total_price
-      })
-      
-      return Object.entries(months).map(([month, revenue]) => ({
-        month,
-        revenue
-      })).slice(-6)
-    })
-    
-    const fetchUserProfile = async () => {
-      try {
-        const token = localStorage.getItem('access_token')
-        if (!token) {
-          router.push('/login')
-          return
-        }
-        
-        const response = await fetch('http://localhost:8000/api/auth/profile/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-        
-        if (response.ok) {
-          user.value = await response.json()
-          editForm.first_name = user.value.first_name || ''
-          editForm.last_name = user.value.last_name || ''
-        } else {
-          router.push('/login')
-        }
-      } catch (error) {
-        console.error('Error fetching profile:', error)
-      }
+    if (response.ok) {
+      user.value = await response.json()
+      editForm.first_name = user.value.first_name || ''
+      editForm.last_name = user.value.last_name || ''
+    } else {
+      router.push('/login')
     }
-    
-    const fetchMyProducts = async () => {
-      try {
-        const token = localStorage.getItem('access_token')
-        const response = await fetch('http://localhost:8000/api/marketplace/products/my/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-        
-        if (response.ok) {
-          const data = await response.json()
-          myProducts.value = Array.isArray(data) ? data : (data.results || [])
-          stats.value.totalProducts = myProducts.value.length
-        }
-      } catch (error) {
-        console.error('Error fetching products:', error)
-        myProducts.value = []
-      }
-    }
-    
-    const fetchSalesHistory = async () => {
-      try {
-        const token = localStorage.getItem('access_token')
-        const response = await fetch('http://localhost:8000/api/marketplace/orders/my/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-        
-        if (response.ok) {
-          const data = await response.json()
-          salesHistory.value = Array.isArray(data) ? data : (data.results || [])
-          stats.value.totalSold = salesHistory.value.filter(sale => sale.status === 'completed').length
-          stats.value.totalRevenue = salesHistory.value
-            .filter(sale => sale.status === 'completed')
-            .reduce((sum, sale) => sum + (sale.total_price || 0), 0)
-        }
-      } catch (error) {
-        console.error('Error fetching sales:', error)
-        salesHistory.value = []
-      }
-    }
-    
-    const fetchPurchaseHistory = async () => {
-      try {
-        const token = localStorage.getItem('access_token')
-        const response = await fetch('http://localhost:8000/api/marketplace/orders/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-        
-        if (response.ok) {
-          const data = await response.json()
-          purchaseHistory.value = Array.isArray(data) ? data : (data.results || [])
-        }
-      } catch (error) {
-        console.error('Error fetching purchases:', error)
-        purchaseHistory.value = []
-      }
-    }
-    
-    const fetchChats = async () => {
-      try {
-        const token = localStorage.getItem('access_token')
-        const response = await fetch('http://localhost:8000/api/marketplace/chats/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
-        
-        if (response.ok) {
-          const data = await response.json()
-          const chats = Array.isArray(data) ? data : (data.results || [])
-          stats.value.activeChats = chats.length
-        }
-      } catch (error) {
-        console.error('Error fetching chats:', error)
-        stats.value.activeChats = 0
-      }
-    }
-    
-    const updateProfile = async () => {
-      try {
-        const token = localStorage.getItem('access_token')
-        const response = await fetch('http://localhost:8000/api/auth/profile/', {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(editForm)
-        })
-        
-        if (response.ok) {
-          const updatedUser = await response.json()
-          user.value = updatedUser.user || updatedUser
-          showEditModal.value = false
-        }
-      } catch (error) {
-        console.error('Error updating profile:', error)
-      }
-    }
-    
-    const formatPrice = (price) => {
-      return new Intl.NumberFormat('en-BD').format(price)
-    }
-    
-    const formatDate = (dateString) => {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      })
-    }
-    
-    const handleProductAdded = () => {
-      showAddProductModal.value = false
-      fetchMyProducts()
-    }
-    
-    onMounted(async () => {
-      await Promise.all([
-        fetchUserProfile(),
-        fetchMyProducts(),
-        fetchSalesHistory(),
-        fetchPurchaseHistory(),
-        fetchChats()
-      ])
-      loading.value = false
-    })
-    
-    return {
-      loading,
-      showEditModal,
-      showAddProductModal,
-      activeTab,
-      user,
-      myProducts,
-      salesHistory,
-      purchaseHistory,
-      stats,
-      editForm,
-      tabs,
-      userInitials,
-      categoryStats,
-      monthlyRevenue,
-      updateProfile,
-      handleProductAdded,
-      formatPrice,
-      formatDate
-    }
+  } catch (error) {
+    console.error('Error fetching profile:', error)
   }
 }
+
+const fetchMyProducts = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const response = await fetch('http://localhost:8000/api/marketplace/products/my/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      myProducts.value = Array.isArray(data) ? data : (data.results || [])
+      stats.value.totalProducts = myProducts.value.length
+    }
+  } catch (error) {
+    console.error('Error fetching products:', error)
+    myProducts.value = []
+  }
+}
+
+const fetchSalesHistory = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const response = await fetch('http://localhost:8000/api/marketplace/orders/my/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      salesHistory.value = Array.isArray(data) ? data : (data.results || [])
+      stats.value.totalSold = salesHistory.value.filter(sale => sale.status === 'completed').length
+      stats.value.totalRevenue = salesHistory.value
+        .filter(sale => sale.status === 'completed')
+        .reduce((sum, sale) => sum + (sale.total_price || 0), 0)
+    }
+  } catch (error) {
+    console.error('Error fetching sales:', error)
+    salesHistory.value = []
+  }
+}
+
+const fetchPurchaseHistory = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const response = await fetch('http://localhost:8000/api/marketplace/orders/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      purchaseHistory.value = Array.isArray(data) ? data : (data.results || [])
+    }
+  } catch (error) {
+    console.error('Error fetching purchases:', error)
+    purchaseHistory.value = []
+  }
+}
+
+const fetchChats = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const response = await fetch('http://localhost:8000/api/marketplace/chats/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      const chats = Array.isArray(data) ? data : (data.results || [])
+      stats.value.activeChats = chats.length
+    }
+  } catch (error) {
+    console.error('Error fetching chats:', error)
+    stats.value.activeChats = 0
+  }
+}
+
+const updateProfile = async () => {
+  try {
+    const token = localStorage.getItem('access_token')
+    const response = await fetch('http://localhost:8000/api/auth/profile/', {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(editForm)
+    })
+    
+    if (response.ok) {
+      const updatedUser = await response.json()
+      user.value = updatedUser.user || updatedUser
+      showEditModal.value = false
+    }
+  } catch (error) {
+    console.error('Error updating profile:', error)
+  }
+}
+
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('en-BD').format(price)
+}
+
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })
+}
+
+const handleProductAdded = () => {
+  showAddProductModal.value = false
+  fetchMyProducts()
+}
+
+onMounted(async () => {
+  await Promise.all([
+    fetchUserProfile(),
+    fetchMyProducts(),
+    fetchSalesHistory(),
+    fetchPurchaseHistory(),
+    fetchChats()
+  ])
+  loading.value = false
+})
 </script>

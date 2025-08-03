@@ -7,13 +7,41 @@
     
     <!-- Search Bar -->
     <div class="bg-white rounded-lg shadow-md p-4 mb-6">
-      <input 
-        v-model="searchQuery" 
-        @input="debouncedSearch"
-        type="text" 
-        placeholder="Search products..." 
-        class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-      >
+      <SearchWithSuggestions
+        v-model="searchQuery"
+        @search="handleSearch"
+        @suggestion-selected="handleSuggestionSelected"
+      />
+      
+      <!-- Search Tags -->
+      <div v-if="searchTags.length > 0" class="mt-4">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-medium text-gray-700">Active Filters:</span>
+          <button 
+            @click="clearAllSearchTags"
+            class="text-xs text-red-600 hover:text-red-800 underline"
+          >
+            Clear All
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span 
+            v-for="(tag, index) in searchTags" 
+            :key="index"
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800 border border-blue-200"
+          >
+            {{ tag }}
+            <button 
+              @click="removeSearchTag(index)"
+              class="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
+            >
+              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </span>
+        </div>
+      </div>
     </div>
 
     <!-- Filters Sidebar and Products -->
@@ -326,297 +354,270 @@
   </div>
 </template>
 
-<script>
-import { ref, reactive, computed, onMounted, watch } from 'vue'
+<script setup>
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import Slider from '@vueform/slider'
 import ProductCard from '../components/ProductCard.vue'
 import AddProductModal from '../components/AddProductModal.vue'
 import ChatModal from '../components/ChatModal.vue'
+import SearchWithSuggestions from '../components/SearchWithSuggestions.vue'
 
-export default {
-  name: 'MarketplacePage',
-  components: {
-    Slider,
-    ProductCard,
-    AddProductModal,
-    ChatModal
-  },
-  setup() {
-    const router = useRouter()
-    
-    // Reactive data
-    const products = ref([])
-    const categories = ref([])
-    const conditions = ref([])
-    const loading = ref(false)
-    const hasMore = ref(true)
-    const nextCursor = ref(null)
-    const showAddProductModal = ref(false)
-    const showChatModal = ref(false)
-    const selectedProduct = ref(null)
-    
-    // Filters
-    const searchQuery = ref('')
-    const selectedCategory = ref('')
-    const selectedCondition = ref('')
-    const selectedAge = ref('')
-    const selectedDistance = ref('')
-    const selectedSellerRating = ref('')
-    const selectedWarranty = ref('')
-    const selectedBoxAccessories = ref('')
-    const selectedPriceType = ref('')
-    const selectedAvailability = ref('')
-    const selectedListingAge = ref('')
-    const selectedBrand = ref('')
-    const selectedCompatibility = ref('')
-    const selectedPerformanceTier = ref('')
-    const sortBy = ref('name')
-    const priceRange = ref([0, 100000])
-    
-    // Computed
-    const isAuthenticated = computed(() => {
-      return localStorage.getItem('access_token') !== null
-    })
-    
-    const productRows = computed(() => {
-      const rows = []
-      for (let i = 0; i < products.value.length; i += 5) {
-        rows.push(products.value.slice(i, i + 5))
-      }
-      return rows
-    })
-    
-    // Methods
-    const fetchProducts = async (reset = false) => {
-      if (loading.value) return
-      
-      loading.value = true
-      
-      try {
-        const params = new URLSearchParams()
-        
-        if (!reset && nextCursor.value) {
-          params.append('cursor', nextCursor.value)
-        }
-        
-        if (searchQuery.value) {
-          params.append('search', searchQuery.value)
-        }
-        
-        if (selectedCategory.value) {
-          params.append('category', selectedCategory.value)
-        }
-        
-        if (selectedCondition.value) {
-          params.append('condition', selectedCondition.value)
-        }
+const router = useRouter()
 
-        if (selectedAge.value) {
-          params.append('age', selectedAge.value)
-        }
+// Reactive data
+const products = ref([])
+const categories = ref([])
+const conditions = ref([])
+const loading = ref(false)
+const hasMore = ref(true)
+const nextCursor = ref(null)
+const showAddProductModal = ref(false)
+const showChatModal = ref(false)
+const selectedProduct = ref(null)
 
-        if (selectedDistance.value) {
-          params.append('distance', selectedDistance.value)
-        }
+// Filters
+const searchQuery = ref('')
+const selectedCategory = ref('')
+const selectedCondition = ref('')
+const selectedAge = ref('')
+const selectedDistance = ref('')
+const selectedSellerRating = ref('')
+const selectedWarranty = ref('')
+const selectedBoxAccessories = ref('')
+const selectedPriceType = ref('')
+const selectedAvailability = ref('')
+const selectedListingAge = ref('')
+const selectedBrand = ref('')
+const selectedCompatibility = ref('')
+const selectedPerformanceTier = ref('')
+const sortBy = ref('name')
+const priceRange = ref([0, 100000])
 
-        if (selectedSellerRating.value) {
-          params.append('seller_rating', selectedSellerRating.value)
-        }
+const isAuthenticated = computed(() => {
+  return localStorage.getItem('access_token') !== null
+})
 
-        if (selectedWarranty.value) {
-          params.append('warranty', selectedWarranty.value)
-        }
+const productRows = computed(() => {
+  const rows = []
+  for (let i = 0; i < products.value.length; i += 5) {
+    rows.push(products.value.slice(i, i + 5))
+  }
+  return rows
+})
 
-        if (selectedBoxAccessories.value) {
-          params.append('box_accessories', selectedBoxAccessories.value)
-        }
+const fetchProducts = async (reset = false) => {
+  if (loading.value) return
+  
+  loading.value = true
+  
+  try {
+    const params = new URLSearchParams()
+    
+    if (!reset && nextCursor.value) {
+      params.append('cursor', nextCursor.value)
+    }
+    
+    // Use search tags for search instead of single query
+    if (searchTags.value.length > 0) {
+      params.append('search', searchTags.value.join(' '))
+    }
+    
+    if (selectedCategory.value) {
+      params.append('category', selectedCategory.value)
+    }
+    
+    if (selectedCondition.value) {
+      params.append('condition', selectedCondition.value)
+    }
 
-        if (selectedPriceType.value) {
-          params.append('price_type', selectedPriceType.value)
-        }
+    if (selectedAge.value) {
+      params.append('age', selectedAge.value)
+    }
 
-        if (selectedAvailability.value) {
-          params.append('availability', selectedAvailability.value)
-        }
+    if (selectedDistance.value) {
+      params.append('distance', selectedDistance.value)
+    }
 
-        if (selectedListingAge.value) {
-          params.append('listing_age', selectedListingAge.value)
-        }
+    if (selectedSellerRating.value) {
+      params.append('seller_rating', selectedSellerRating.value)
+    }
 
-        if (selectedBrand.value) {
-          params.append('brand', selectedBrand.value)
-        }
+    if (selectedWarranty.value) {
+      params.append('warranty', selectedWarranty.value)
+    }
 
-        if (selectedCompatibility.value) {
-          params.append('compatibility', selectedCompatibility.value)
-        }
+    if (selectedBoxAccessories.value) {
+      params.append('box_accessories', selectedBoxAccessories.value)
+    }
 
-        if (selectedPerformanceTier.value) {
-          params.append('performance_tier', selectedPerformanceTier.value)
-        }
-        
-        if (priceRange.value[0] > 0) {
-          params.append('min_price', priceRange.value[0])
-        }
-        
-        if (priceRange.value[1] < 100000) {
-          params.append('max_price', priceRange.value[1])
-        }
-        
-        if (sortBy.value) {
-          params.append('ordering', sortBy.value)
-        }
-        
-        const {data} = await axios.get(`http://localhost:8000/api/marketplace/products/?`, {params})
-        
-        if (reset) {
-          products.value = data.results
-        } else {
-          products.value.push(...data.results)
-        }
-        
-        nextCursor.value = data.next ? new URL(data.next).searchParams.get('cursor') : null
-        hasMore.value = !!data.next
-        
-      } catch (error) {
-        console.error('Error fetching products:', error)
-      } finally {
-        loading.value = false
-      }
+    if (selectedPriceType.value) {
+      params.append('price_type', selectedPriceType.value)
+    }
+
+    if (selectedAvailability.value) {
+      params.append('availability', selectedAvailability.value)
+    }
+
+    if (selectedListingAge.value) {
+      params.append('listing_age', selectedListingAge.value)
+    }
+
+    if (selectedBrand.value) {
+      params.append('brand', selectedBrand.value)
+    }
+
+    if (selectedCompatibility.value) {
+      params.append('compatibility', selectedCompatibility.value)
+    }
+
+    if (selectedPerformanceTier.value) {
+      params.append('performance_tier', selectedPerformanceTier.value)
     }
     
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/marketplace/categories/')
-        const data = await response.json()
-        categories.value = data.categories
-      } catch (error) {
-        console.error('Error fetching categories:', error)
-      }
+    if (priceRange.value[0] > 0) {
+      params.append('min_price', priceRange.value[0])
     }
     
-    const fetchConditions = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/marketplace/conditions/')
-        const data = await response.json()
-        conditions.value = data.conditions
-      } catch (error) {
-        console.error('Error fetching conditions:', error)
-      }
+    if (priceRange.value[1] < 100000) {
+      params.append('max_price', priceRange.value[1])
     }
     
-    // Debounce timer for search
-    let searchTimeout = null
-    
-    const handleSearch = () => {
-      fetchProducts(true)
+    if (sortBy.value) {
+      params.append('ordering', sortBy.value)
     }
     
-    const debouncedSearch = () => {
-      clearTimeout(searchTimeout)
-      searchTimeout = setTimeout(() => {
-        fetchProducts(true)
-      }, 500) // 500ms delay
+    const {data} = await axios.get(`http://localhost:8000/api/marketplace/products/?`, {params})
+    
+    if (reset) {
+      products.value = data.results
+    } else {
+      products.value.push(...data.results)
     }
     
-    const handleMinChange = () => {
-      if (priceRange.value[0] > priceRange.value[1]) {
-        priceRange.value[0] = priceRange.value[1]
-      }
-      applyFilters()
-    }
+    nextCursor.value = data.next ? new URL(data.next).searchParams.get('cursor') : null
+    hasMore.value = !!data.next
     
-    const handleMaxChange = () => {
-      if (priceRange.value[1] < priceRange.value[0]) {
-        priceRange.value[1] = priceRange.value[0]
-      }
-      applyFilters()
-    }
-    
-    const applyFilters = () => {
-      fetchProducts(true)
-    }
-    
-    const loadMore = () => {
-      fetchProducts(false)
-    }
-    
-    const handleOrder = (product) => {
-      if (!isAuthenticated.value) {
-        router.push('/login')
-        return
-      }
-      // Handle order logic
-      console.log('Order product:', product)
-    }
-    
-    const handleChat = (product) => {
-      if (!isAuthenticated.value) {
-        router.push('/login')
-        return
-      }
-      console.log('Opening chat for product:', product)
-      selectedProduct.value = product
-      showChatModal.value = true
-      console.log('Chat modal should be visible:', showChatModal.value)
-    }
-    
-    const handleProductAdded = () => {
-      showAddProductModal.value = false
-      fetchProducts(true)
-    }
-    
-    const formatPrice = (price) => {
-      return new Intl.NumberFormat('en-BD').format(price)
-    }
-    
-    // Lifecycle
-    onMounted(() => {
-      fetchProducts(true)
-      fetchCategories()
-      fetchConditions()
-    })
-    
-    return {
-      products,
-      categories,
-      conditions,
-      loading,
-      hasMore,
-      showAddProductModal,
-      showChatModal,
-      selectedProduct,
-      searchQuery,
-      selectedCategory,
-      selectedCondition,
-      selectedAge,
-      selectedDistance,
-      selectedSellerRating,
-      selectedWarranty,
-      selectedBoxAccessories,
-      selectedPriceType,
-      selectedAvailability,
-      selectedListingAge,
-      selectedBrand,
-      selectedCompatibility,
-      selectedPerformanceTier,
-      sortBy,
-      priceRange,
-      isAuthenticated,
-      productRows,
-      handleSearch,
-      debouncedSearch,
-      handleMinChange,
-      handleMaxChange,
-      applyFilters,
-      loadMore,
-      handleOrder,
-      handleChat,
-      handleProductAdded,
-      formatPrice
-    }
+  } catch (error) {
+    console.error('Error fetching products:', error)
+  } finally {
+    loading.value = false
   }
 }
+
+const fetchCategories = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/marketplace/categories/')
+    const data = await response.json()
+    categories.value = data.categories
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+  }
+}
+
+const fetchConditions = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/marketplace/conditions/')
+    const data = await response.json()
+    conditions.value = data.conditions
+  } catch (error) {
+    console.error('Error fetching conditions:', error)
+  }
+}
+
+// Search tags/filters
+const searchTags = ref([])
+
+const handleSearch = (query) => {
+  // If query is provided, add it as a search tag
+  if (query && query.trim()) {
+    addSearchTag(query.trim())
+    searchQuery.value = '' // Clear the search input
+  }
+  fetchProducts(true)
+}
+
+const handleSuggestionSelected = (suggestion) => {
+  // Add the selected suggestion as a search tag
+  addSearchTag(suggestion.text)
+  searchQuery.value = '' // Clear the search input
+  fetchProducts(true)
+}
+
+const addSearchTag = (tag) => {
+  // Avoid duplicate tags
+  if (!searchTags.value.includes(tag)) {
+    searchTags.value.push(tag)
+  }
+}
+
+const removeSearchTag = (index) => {
+  searchTags.value.splice(index, 1)
+  fetchProducts(true)
+}
+
+const clearAllSearchTags = () => {
+  searchTags.value = []
+  searchQuery.value = ''
+  fetchProducts(true)
+}
+
+const handleMinChange = () => {
+  if (priceRange.value[0] > priceRange.value[1]) {
+    priceRange.value[0] = priceRange.value[1]
+  }
+  applyFilters()
+}
+
+const handleMaxChange = () => {
+  if (priceRange.value[1] < priceRange.value[0]) {
+    priceRange.value[1] = priceRange.value[0]
+  }
+  applyFilters()
+}
+
+const applyFilters = () => {
+  fetchProducts(true)
+}
+
+const loadMore = () => {
+  fetchProducts(false)
+}
+
+const handleOrder = (product) => {
+  if (!isAuthenticated.value) {
+    router.push('/login')
+    return
+  }
+  // Handle order logic
+  console.log('Order product:', product)
+}
+
+const handleChat = (product) => {
+  if (!isAuthenticated.value) {
+    router.push('/login')
+    return
+  }
+  console.log('Opening chat for product:', product)
+  selectedProduct.value = product
+  showChatModal.value = true
+  console.log('Chat modal should be visible:', showChatModal.value)
+}
+
+const handleProductAdded = () => {
+  showAddProductModal.value = false
+  fetchProducts(true)
+}
+
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('en-BD').format(price)
+}
+
+// Lifecycle
+onMounted(() => {
+  fetchProducts(true)
+  fetchCategories()
+  fetchConditions()
+})
 </script>

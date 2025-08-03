@@ -141,45 +141,113 @@ class MessageCreateView(generics.CreateAPIView):
         )
         serializer.save(sender=self.request.user, chat=chat)
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def create_chat(request, product_id):
-    try:
-        product = Product.objects.get(id=product_id)
-        
-        # Don't allow seller to chat with themselves
-        if product.seller == request.user:
-            return Response(
-                {'error': 'You cannot chat about your own product'}, 
-                status=status.HTTP_400_BAD_REQUEST
+class CreateChatView(generics.CreateAPIView):
+    serializer_class = ChatSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def create(self, request, product_id):
+        try:
+            product = Product.objects.get(id=product_id)
+            
+            # Don't allow seller to chat with themselves
+            if product.seller == request.user:
+                return Response(
+                    {'error': 'You cannot chat about your own product'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Get or create chat
+            chat, created = Chat.objects.get_or_create(
+                product=product,
+                buyer=request.user,
+                seller=product.seller
             )
-        
-        # Get or create chat
-        chat, created = Chat.objects.get_or_create(
-            product=product,
-            buyer=request.user,
-            seller=product.seller
-        )
-        
-        serializer = ChatSerializer(chat)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-    except Product.DoesNotExist:
-        return Response(
-            {'error': 'Product not found'}, 
-            status=status.HTTP_404_NOT_FOUND
-        )
+            
+            serializer = ChatSerializer(chat)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+        except Product.DoesNotExist:
+            return Response(
+                {'error': 'Product not found'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def product_categories(request):
-    """Get all available product categories"""
-    categories = [choice[0] for choice in Product.CATEGORY_CHOICES]
-    return Response({'categories': categories})
+class ProductCategoriesView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    
+    def get(self, request):
+        """Get all available product categories"""
+        categories = [choice[0] for choice in Product.CATEGORY_CHOICES]
+        return Response({'categories': categories})
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def product_conditions(request):
-    """Get all available product conditions"""
-    conditions = [choice[0] for choice in Product.CONDITION_CHOICES]
-    return Response({'conditions': conditions})
+class ProductConditionsView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    
+    def get(self, request):
+        """Get all available product conditions"""
+        conditions = [choice[0] for choice in Product.CONDITION_CHOICES]
+        return Response({'conditions': conditions})
+
+class SearchSuggestionsView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    
+    def get(self, request):
+        """Get search suggestions based on query"""
+        query = request.query_params.get('q', '').strip()
+        
+        if len(query) < 2:
+            return Response({'suggestions': []})
+        
+        # Limit to 10 suggestions for performance
+        products = Product.objects.filter(
+            Q(name__icontains=query) | Q(description__icontains=query),
+            is_available=True
+        ).values('name', 'category', 'brand').distinct()[:10]
+        
+        suggestions = []
+        seen = set()
+        
+        for product in products:
+            # Add product name suggestions
+            name = product['name']
+            if name not in seen and query.lower() in name.lower():
+                suggestions.append({
+                    'text': name,
+                    'type': 'product',
+                    'category': product['category'],
+                    'brand': product['brand']
+                })
+                seen.add(name)
+        
+        # Add brand suggestions
+        brands = Product.objects.filter(
+            brand__icontains=query,
+            is_available=True
+        ).values_list('brand', flat=True).distinct()[:5]
+        
+        for brand in brands:
+            brand_display = dict(Product.BRAND_CHOICES).get(brand, brand)
+            if brand_display not in seen:
+                suggestions.append({
+                    'text': brand_display,
+                    'type': 'brand',
+                    'value': brand
+                })
+                seen.add(brand_display)
+        
+        # Add category suggestions
+        categories = Product.objects.filter(
+            category__icontains=query,
+            is_available=True
+        ).values_list('category', flat=True).distinct()[:3]
+        
+        for category in categories:
+            if category not in seen:
+                suggestions.append({
+                    'text': category,
+                    'type': 'category',
+                    'value': category
+                })
+                seen.add(category)
+        
+        return Response({'suggestions': suggestions[:10]})

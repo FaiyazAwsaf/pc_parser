@@ -18,9 +18,10 @@ urlpatterns = [
     path('chats/<int:pk>/', views.ChatDetailView.as_view(), name='chat-detail'),
     path('chats/<int:chat_id>/messages/', views.MessageListView.as_view(), name='message-list'),
     path('chats/<int:chat_id>/messages/create/', views.MessageCreateView.as_view(), name='message-create'),
-    path('products/<int:product_id>/chat/', views.create_chat, name='create-chat'),
+    path('products/<int:product_id>/chat/', views.CreateChatView.as_view(), name='create-chat'),
     
     # Utility URLs
-    path('categories/', views.product_categories, name='product-categories'),
-    path('conditions/', views.product_conditions, name='product-conditions'),
+    path('categories/', views.ProductCategoriesView.as_view(), name='product-categories'),
+    path('conditions/', views.ProductConditionsView.as_view(), name='product-conditions'),
+    path('search-suggestions/', views.SearchSuggestionsView.as_view(), name='search-suggestions'),
 ]

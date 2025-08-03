@@ -306,7 +306,8 @@
                 :min="0"
                 :max="100000"
                 :step="1000"
-                @change="applyFilters"
+                @change="handlePriceRangeChange"
+                @update="handlePriceRangeChange"
               />
               <div class="flex justify-between text-sm text-gray-600">
                 <span>৳{{ formatPrice(priceRange[0]) }}</span>
@@ -525,19 +526,21 @@ const fetchProducts = async (reset = false) => {
       params.append('performance_tier', selectedPerformanceTier.value)
     }
     
-    if (priceRange.value[0] > 0) {
-      params.append('min_price', priceRange.value[0])
-    }
-    
-    if (priceRange.value[1] < 100000) {
-      params.append('max_price', priceRange.value[1])
-    }
+    // Always send price range parameters
+    console.log('Sending price range to API:', {
+      min_price: priceRange.value[0],
+      max_price: priceRange.value[1]
+    })
+    params.append('min_price', priceRange.value[0])
+    params.append('max_price', priceRange.value[1])
     
     if (sortBy.value) {
       params.append('ordering', sortBy.value)
     }
     
+    console.log('API URL with params:', `http://localhost:8000/api/marketplace/products/?${params.toString()}`)
     const {data} = await axios.get(`http://localhost:8000/api/marketplace/products/?`, {params})
+    console.log('Received products:', data.results?.length, 'products')
     
     if (reset) {
       products.value = data.results
@@ -612,18 +615,22 @@ const clearAllSearchTags = () => {
   fetchProducts(true)
 }
 
-const handleMinChange = () => {
-  if (priceRange.value[0] > priceRange.value[1]) {
-    priceRange.value[0] = priceRange.value[1]
-  }
-  applyFilters()
-}
+// Debounce function to prevent too many API calls
+let priceRangeTimeout = null
 
-const handleMaxChange = () => {
-  if (priceRange.value[1] < priceRange.value[0]) {
-    priceRange.value[1] = priceRange.value[0]
+const handlePriceRangeChange = () => {
+  console.log('Price range changed:', priceRange.value)
+  console.log('Min price:', priceRange.value[0], 'Max price:', priceRange.value[1])
+  
+  // Clear existing timeout
+  if (priceRangeTimeout) {
+    clearTimeout(priceRangeTimeout)
   }
-  applyFilters()
+  
+  // Set new timeout to debounce the API call
+  priceRangeTimeout = setTimeout(() => {
+    applyFilters()
+  }, 500) // Wait 500ms after user stops dragging
 }
 
 const applyFilters = () => {

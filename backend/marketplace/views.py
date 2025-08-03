@@ -30,10 +30,29 @@ class ProductListView(generics.ListAPIView):
         min_price = self.request.query_params.get('min_price')
         max_price = self.request.query_params.get('max_price')
         
+        print(f"Price filtering - min_price: {min_price}, max_price: {max_price}")
+        
         if min_price:
-            queryset = queryset.filter(price__gte=min_price)
+            try:
+                min_price_val = float(min_price)
+                queryset = queryset.filter(price__gte=min_price_val)
+                print(f"Applied min_price filter: {min_price_val}")
+            except (ValueError, TypeError):
+                print(f"Invalid min_price value: {min_price}")
+                
         if max_price:
-            queryset = queryset.filter(price__lte=max_price)
+            try:
+                max_price_val = float(max_price)
+                queryset = queryset.filter(price__lte=max_price_val)
+                print(f"Applied max_price filter: {max_price_val}")
+            except (ValueError, TypeError):
+                print(f"Invalid max_price value: {max_price}")
+        
+        # Debug: Print the final query and count
+        print(f"Final queryset count: {queryset.count()}")
+        if queryset.exists():
+            prices = list(queryset.values_list('price', flat=True)[:10])
+            print(f"Sample prices from results: {prices}")
         
         # Additional filters that require custom logic
         seller_rating = self.request.query_params.get('seller_rating')

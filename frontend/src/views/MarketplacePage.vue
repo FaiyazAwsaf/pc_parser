@@ -5,131 +5,138 @@
       <p class="text-gray-600">Buy and sell used PC components from the community</p>
     </div>
     
-    <!-- Filters Section -->
+    <!-- Search Bar -->
     <div class="bg-white rounded-lg shadow-md p-4 mb-6">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+      <div class="flex justify-between items-center">
+        <div class="flex-1 max-w-2xl">
           <input 
             v-model="searchQuery" 
             @input="debouncedSearch"
             type="text" 
             placeholder="Search products..." 
-            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
           >
         </div>
-        
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-          <select 
-            v-model="selectedCategory" 
-            @change="applyFilters"
-            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            <option value="">All Categories</option>
-            <option v-for="category in categories" :key="category" :value="category">
-              {{ category }}
-            </option>
-          </select>
-        </div>
-        
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Condition</label>
-          <select 
-            v-model="selectedCondition" 
-            @change="applyFilters"
-            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            <option value="">All Conditions</option>
-            <option v-for="condition in conditions" :key="condition" :value="condition">
-              {{ condition }}
-            </option>
-          </select>
-        </div>
-        
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
-          <select 
-            v-model="sortBy" 
-            @change="applyFilters"
-            class="w-full px-4 py-3 border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            <option value="name">Name</option>
-            <option value="-created_at">Newest First</option>
-            <option value="created_at">Oldest First</option>
-            <option value="price">Price: Low to High</option>
-            <option value="-price">Price: High to Low</option>
-          </select>
-        </div>
-      </div>
-      
-      <!-- Price Range Filter -->
-      <div class="mt-4">
-        <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
-        <div class="flex flex-col gap-4">
-          <Slider
-            v-model="priceRange"
-            :min="0"
-            :max="100000"
-            :step="1000"
-            @change="applyFilters"
-          />
-          <div class="flex justify-between text-sm text-gray-600">
-            <span>৳{{ formatPrice(priceRange[0]) }}</span>
-            <span>৳{{ formatPrice(priceRange[1]) }}</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mt-4 flex justify-between items-center">
-        <button 
-          @click="applyFilters" 
-          class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-        >
-          Apply Filters
-        </button>
         
         <button 
           v-if="isAuthenticated" 
           @click="showAddProductModal = true" 
-          class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+          class="ml-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
         >
           Add Product
         </button>
       </div>
     </div>
-    
-    <!-- Loading State -->
-    <div v-if="loading" class="flex justify-center items-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
-    </div>
-    
-    <!-- Empty State -->
-    <div v-else-if="products.length === 0" class="text-center py-12">
-      <div class="text-6xl mb-4">📦</div>
-      <p class="text-gray-500 text-lg mb-2">No products found matching your criteria.</p>
-      <p class="text-gray-400 text-sm">Try adjusting your search or filters.</p>
-    </div>
-    
-    <!-- Products Grid - 5 products per row -->
-    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-      <ProductCard 
-        v-for="product in products" 
-        :key="product.id" 
-        :product="product"
-        @order="handleOrder"
-        @chat="handleChat"
-      />
-    </div>
-    
-    <!-- Load More Button -->
-    <div v-if="hasMore && !loading && products.length > 0" class="mt-8 flex justify-center">
-      <button 
-        @click="loadMore" 
-        class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-      >
-        Load More Products
-      </button>
+
+    <!-- Filters Sidebar and Products -->
+    <div class="flex gap-6">
+      <!-- Left Sidebar Filters -->
+      <div class="w-80 flex-shrink-0">
+        <div class="bg-white rounded-lg shadow-md p-4 sticky top-4">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Filters</h3>
+          
+          <!-- Category Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+            <select 
+              v-model="selectedCategory" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">All Categories</option>
+              <option v-for="category in categories" :key="category" :value="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+          
+          <!-- Condition Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Condition</label>
+            <select 
+              v-model="selectedCondition" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">All Conditions</option>
+              <option v-for="condition in conditions" :key="condition" :value="condition">
+                {{ condition }}
+              </option>
+            </select>
+          </div>
+          
+          <!-- Sort By Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
+            <select 
+              v-model="sortBy" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="name">Name</option>
+              <option value="-created_at">Newest First</option>
+              <option value="created_at">Oldest First</option>
+              <option value="price">Price: Low to High</option>
+              <option value="-price">Price: High to Low</option>
+            </select>
+          </div>
+          
+          <!-- Price Range Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+            <div class="flex flex-col gap-4">
+              <Slider
+                v-model="priceRange"
+                :min="0"
+                :max="100000"
+                :step="1000"
+                @change="applyFilters"
+              />
+              <div class="flex justify-between text-sm text-gray-600">
+                <span>৳{{ formatPrice(priceRange[0]) }}</span>
+                <span>৳{{ formatPrice(priceRange[1]) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="flex-1">
+        <!-- Loading State -->
+        <div v-if="loading" class="flex justify-center items-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
+        </div>
+        
+        <!-- Empty State -->
+        <div v-else-if="products.length === 0" class="text-center py-12">
+          <div class="text-6xl mb-4">📦</div>
+          <p class="text-gray-500 text-lg mb-2">No products found matching your criteria.</p>
+          <p class="text-gray-400 text-sm">Try adjusting your search or filters.</p>
+        </div>
+        
+        <!-- Products Grid - 5 products per row -->
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <ProductCard 
+            v-for="product in products" 
+            :key="product.id" 
+            :product="product"
+            :isAuthenticated="isAuthenticated"
+            @order="handleOrder"
+            @chat="handleChat"
+          />
+        </div>
+        
+        <!-- Load More Button -->
+        <div v-if="hasMore && !loading && products.length > 0" class="mt-8 flex justify-center">
+          <button 
+            @click="loadMore" 
+            class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+          >
+            Load More Products
+          </button>
+        </div>
+      </div>
     </div>
 
     <AddProductModal

@@ -41,6 +41,7 @@
             {{ product.is_available !== false ? 'Order' : 'Sold Out' }}
           </button>
           <button 
+            v-if="isAuthenticated"
             @click="$emit('chat', product)" 
             class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition"
           >
@@ -59,6 +60,10 @@ export default {
     product: {
       type: Object,
       required: true
+    },
+    isAuthenticated: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['order', 'chat'],

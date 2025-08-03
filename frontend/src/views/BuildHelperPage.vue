@@ -64,6 +64,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import axios from 'axios'
 
 const userInput = ref('')
 const messages = ref([
@@ -77,12 +78,18 @@ const suggestions = [
   'Best budget GPU for 1080p gaming'
 ]
 
-const sendMessage = () => {
+const sendMessage = async () => {
   if (!userInput.value.trim()) return
   messages.value.push({ type: 'user', text: userInput.value })
-  setTimeout(() => {
-    messages.value.push({ type: 'ai', text: 'This is a placeholder response. Connect AI backend for real response.' })
-  }, 500)
+
+  try {
+    const res = await axios.post('/api/builder/llmchat/', {
+      message: userInput.value
+    })
+    messages.value.push({ type: 'ai', text: res.data.response })
+  } catch (error) {
+    messages.value.push({ type: 'ai', text: 'Error connecting to AI backend.' })
+  }
   userInput.value = ''
 }
 </script>

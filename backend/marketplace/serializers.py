@@ -12,13 +12,16 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'name', 'price', 'category', 'condition', 'description', 
                  'image', 'is_available', 'created_at', 'updated_at', 'seller', 
-                 'seller_name', 'seller_email']
+                 'seller_name', 'seller_email', 'age', 'warranty', 'box_accessories',
+                 'price_type', 'availability', 'brand', 'compatibility', 'performance_tier']
         read_only_fields = ['seller', 'created_at', 'updated_at']
 
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['name', 'price', 'category', 'condition', 'description', 'image']
+        fields = ['name', 'price', 'category', 'condition', 'description', 'image',
+                 'age', 'warranty', 'box_accessories', 'price_type', 'availability',
+                 'brand', 'compatibility', 'performance_tier']
 
 class OrderSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.name', read_only=True)

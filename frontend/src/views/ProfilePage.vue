@@ -110,12 +110,12 @@
           <div v-if="activeTab === 'products'">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-lg font-medium text-gray-900">My Products</h3>
-              <router-link 
-                to="/marketplace"
+              <button 
+                @click="showAddProductModal = true"
                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
               >
                 Add Product
-              </router-link>
+              </button>
             </div>
             
             <div v-if="myProducts.length === 0" class="text-center py-8">
@@ -308,19 +308,30 @@
         </form>
       </div>
     </div>
+
+    <AddProductModal
+      v-if="showAddProductModal"
+      @close="showAddProductModal = false"
+      @product-added="handleProductAdded"
+    />
   </div>
 </template>
 
 <script>
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import AddProductModal from '../components/AddProductModal.vue'
 
 export default {
   name: 'ProfilePage',
+  components: {
+    AddProductModal
+  },
   setup() {
     const router = useRouter()
     const loading = ref(true)
     const showEditModal = ref(false)
+    const showAddProductModal = ref(false)
     const activeTab = ref('products')
     
     const user = ref({})
@@ -525,6 +536,11 @@ export default {
       })
     }
     
+    const handleProductAdded = () => {
+      showAddProductModal.value = false
+      fetchMyProducts()
+    }
+    
     onMounted(async () => {
       await Promise.all([
         fetchUserProfile(),
@@ -539,6 +555,7 @@ export default {
     return {
       loading,
       showEditModal,
+      showAddProductModal,
       activeTab,
       user,
       myProducts,
@@ -551,6 +568,7 @@ export default {
       categoryStats,
       monthlyRevenue,
       updateProfile,
+      handleProductAdded,
       formatPrice,
       formatDate
     }

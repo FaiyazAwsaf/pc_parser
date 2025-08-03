@@ -20,7 +20,7 @@
     <div class="flex gap-6">
       <!-- Left Sidebar Filters -->
       <div class="w-80 flex-shrink-0">
-        <div class="bg-white rounded-lg shadow-md p-4 sticky top-4">
+        <div class="bg-white rounded-lg shadow-md p-4 sticky top-4 max-h-screen overflow-y-auto">
           <h3 class="text-lg font-semibold text-gray-800 mb-4">Filters</h3>
           
           <!-- Category Filter -->
@@ -50,6 +50,182 @@
               <option v-for="condition in conditions" :key="condition" :value="condition">
                 {{ condition }}
               </option>
+            </select>
+          </div>
+
+          <!-- Age/Usage Duration Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Age/Usage</label>
+            <select 
+              v-model="selectedAge" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any Age</option>
+              <option value="0-6months">Less than 6 months</option>
+              <option value="6-12months">6-12 months</option>
+              <option value="1-2years">1-2 years</option>
+              <option value="2plus">2+ years</option>
+            </select>
+          </div>
+
+          <!-- Distance Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Distance</label>
+            <select 
+              v-model="selectedDistance" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Anywhere</option>
+              <option value="5km">Within 5km</option>
+              <option value="10km">Within 10km</option>
+              <option value="25km">Within 25km</option>
+            </select>
+          </div>
+
+          <!-- Seller Rating Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Seller Rating</label>
+            <select 
+              v-model="selectedSellerRating" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any Rating</option>
+              <option value="4plus">4+ stars</option>
+              <option value="3plus">3+ stars</option>
+              <option value="new">New sellers</option>
+            </select>
+          </div>
+
+          <!-- Warranty Status Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Warranty</label>
+            <select 
+              v-model="selectedWarranty" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any Warranty</option>
+              <option value="under">Under warranty</option>
+              <option value="expired">Warranty expired</option>
+              <option value="none">No warranty info</option>
+            </select>
+          </div>
+
+          <!-- Box/Accessories Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Box & Accessories</label>
+            <select 
+              v-model="selectedBoxAccessories" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any</option>
+              <option value="box">Has original box</option>
+              <option value="accessories">Has all accessories</option>
+              <option value="missing">Missing items</option>
+            </select>
+          </div>
+
+          <!-- Price Type Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Price Type</label>
+            <select 
+              v-model="selectedPriceType" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any</option>
+              <option value="fixed">Fixed price</option>
+              <option value="negotiable">Price negotiable</option>
+            </select>
+          </div>
+
+          <!-- Availability Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Availability</label>
+            <select 
+              v-model="selectedAvailability" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any</option>
+              <option value="now">Available now</option>
+              <option value="soon">Available soon</option>
+            </select>
+          </div>
+
+          <!-- Listing Age Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Listed</label>
+            <select 
+              v-model="selectedListingAge" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Anytime</option>
+              <option value="today">Posted today</option>
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+            </select>
+          </div>
+
+          <!-- Brand Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Brand</label>
+            <select 
+              v-model="selectedBrand" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any Brand</option>
+              <option value="intel">Intel</option>
+              <option value="amd">AMD</option>
+              <option value="nvidia">NVIDIA</option>
+              <option value="asus">ASUS</option>
+              <option value="msi">MSI</option>
+              <option value="corsair">Corsair</option>
+              <option value="gigabyte">Gigabyte</option>
+              <option value="evga">EVGA</option>
+              <option value="samsung">Samsung</option>
+              <option value="western-digital">Western Digital</option>
+            </select>
+          </div>
+
+          <!-- Compatibility Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Compatibility</label>
+            <select 
+              v-model="selectedCompatibility" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any</option>
+              <option value="lga1700">LGA1700</option>
+              <option value="am4">AM4</option>
+              <option value="am5">AM5</option>
+              <option value="ddr4">DDR4</option>
+              <option value="ddr5">DDR5</option>
+              <option value="atx">ATX</option>
+              <option value="micro-atx">Micro-ATX</option>
+              <option value="mini-itx">Mini-ITX</option>
+            </select>
+          </div>
+
+          <!-- Performance Tier Filter -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Performance Tier</label>
+            <select 
+              v-model="selectedPerformanceTier" 
+              @change="applyFilters"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              <option value="">Any Tier</option>
+              <option value="entry">Entry level</option>
+              <option value="mid">Mid-range</option>
+              <option value="high">High-end</option>
             </select>
           </div>
           
@@ -185,6 +361,17 @@ export default {
     const searchQuery = ref('')
     const selectedCategory = ref('')
     const selectedCondition = ref('')
+    const selectedAge = ref('')
+    const selectedDistance = ref('')
+    const selectedSellerRating = ref('')
+    const selectedWarranty = ref('')
+    const selectedBoxAccessories = ref('')
+    const selectedPriceType = ref('')
+    const selectedAvailability = ref('')
+    const selectedListingAge = ref('')
+    const selectedBrand = ref('')
+    const selectedCompatibility = ref('')
+    const selectedPerformanceTier = ref('')
     const sortBy = ref('name')
     const priceRange = ref([0, 100000])
     
@@ -224,6 +411,50 @@ export default {
         
         if (selectedCondition.value) {
           params.append('condition', selectedCondition.value)
+        }
+
+        if (selectedAge.value) {
+          params.append('age', selectedAge.value)
+        }
+
+        if (selectedDistance.value) {
+          params.append('distance', selectedDistance.value)
+        }
+
+        if (selectedSellerRating.value) {
+          params.append('seller_rating', selectedSellerRating.value)
+        }
+
+        if (selectedWarranty.value) {
+          params.append('warranty', selectedWarranty.value)
+        }
+
+        if (selectedBoxAccessories.value) {
+          params.append('box_accessories', selectedBoxAccessories.value)
+        }
+
+        if (selectedPriceType.value) {
+          params.append('price_type', selectedPriceType.value)
+        }
+
+        if (selectedAvailability.value) {
+          params.append('availability', selectedAvailability.value)
+        }
+
+        if (selectedListingAge.value) {
+          params.append('listing_age', selectedListingAge.value)
+        }
+
+        if (selectedBrand.value) {
+          params.append('brand', selectedBrand.value)
+        }
+
+        if (selectedCompatibility.value) {
+          params.append('compatibility', selectedCompatibility.value)
+        }
+
+        if (selectedPerformanceTier.value) {
+          params.append('performance_tier', selectedPerformanceTier.value)
         }
         
         if (priceRange.value[0] > 0) {
@@ -360,6 +591,17 @@ export default {
       searchQuery,
       selectedCategory,
       selectedCondition,
+      selectedAge,
+      selectedDistance,
+      selectedSellerRating,
+      selectedWarranty,
+      selectedBoxAccessories,
+      selectedPriceType,
+      selectedAvailability,
+      selectedListingAge,
+      selectedBrand,
+      selectedCompatibility,
+      selectedPerformanceTier,
       sortBy,
       priceRange,
       isAuthenticated,

@@ -17,7 +17,8 @@ class ProductListView(generics.ListAPIView):
     permission_classes = [AllowAny]
     pagination_class = CursorPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category', 'condition']
+    filterset_fields = ['category', 'condition', 'age', 'warranty', 'box_accessories', 
+                       'price_type', 'availability', 'brand', 'compatibility', 'performance_tier']
     search_fields = ['name', 'description']
     ordering_fields = ['price', 'created_at']
     ordering = ['-created_at']
@@ -33,6 +34,28 @@ class ProductListView(generics.ListAPIView):
             queryset = queryset.filter(price__gte=min_price)
         if max_price:
             queryset = queryset.filter(price__lte=max_price)
+        
+        # Additional filters that require custom logic
+        seller_rating = self.request.query_params.get('seller_rating')
+        distance = self.request.query_params.get('distance')
+        listing_age = self.request.query_params.get('listing_age')
+        
+        # Note: These filters would require additional implementation
+        # For now, they are placeholders for future enhancement
+        # seller_rating would need a rating system
+        # distance would need location data
+        # listing_age can be implemented with date filtering
+        
+        if listing_age:
+            from datetime import datetime, timedelta
+            if listing_age == 'today':
+                queryset = queryset.filter(created_at__date=datetime.now().date())
+            elif listing_age == 'week':
+                week_ago = datetime.now() - timedelta(days=7)
+                queryset = queryset.filter(created_at__gte=week_ago)
+            elif listing_age == 'month':
+                month_ago = datetime.now() - timedelta(days=30)
+                queryset = queryset.filter(created_at__gte=month_ago)
             
         return queryset
 

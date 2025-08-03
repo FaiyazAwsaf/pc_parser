@@ -1,8 +1,32 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">PC Parts Marketplace</h1>
-      <p class="text-gray-600">Buy and sell used PC components from the community</p>
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-800 mb-2">PC Parts Marketplace</h1>
+          <p class="text-gray-600">Buy and sell used PC components from the community</p>
+        </div>
+        <div v-if="isAuthenticated" class="flex gap-3">
+          <router-link 
+            to="/chats"
+            class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            My Messages
+          </router-link>
+          <button 
+            @click="showAddProductModal = true" 
+            class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Sell Product
+          </button>
+        </div>
+      </div>
     </div>
     
     <!-- Search Bar -->
@@ -291,14 +315,27 @@
             </div>
           </div>
           
-          <!-- Add Product Button -->
-          <button 
-            v-if="isAuthenticated" 
-            @click="showAddProductModal = true" 
-            class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
-          >
-            Add Product
-          </button>
+          <!-- Quick Actions -->
+          <div v-if="isAuthenticated" class="space-y-2">
+            <router-link 
+              to="/chats"
+              class="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+              My Messages
+            </router-link>
+            <button 
+              @click="showAddProductModal = true" 
+              class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              Add Product
+            </button>
+          </div>
         </div>
       </div>
 

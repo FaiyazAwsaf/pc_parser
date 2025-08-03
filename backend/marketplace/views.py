@@ -5,10 +5,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from django.db.models import Q
-from .models import Product, Order, Chat, Message, ProductRating
+from .models import Product, Order, Chat, Message, ProductRating, SellerRating
 from .serializers import (
     ProductSerializer, ProductCreateSerializer, OrderSerializer,
-    ChatSerializer, MessageSerializer, ProductRatingSerializer
+    ChatSerializer, MessageSerializer, ProductRatingSerializer, SellerRatingSerializer
 )
 from .pagination import CursorPagination
 
@@ -374,3 +374,59 @@ class CanUserRateProductView(generics.GenericAPIView):
                 {'error': 'Product not found'}, 
                 status=status.HTTP_404_NOT_FOUND
             )
+
+class SellerRatingCreateView(generics.CreateAPIView):
+    serializer_class = SellerRatingSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, seller_id):
+        try:
+            from django.contrib.auth import get_user_model
+            User = get_user_model()
+            seller = User.objects.get(id=seller_id)
+            
+            # Don't allow seller to rate themselves
+            if seller == request.user:
+                return Response(
+                    {'error': 'You cannot rate yourself'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Check if user has already rated this seller
+            existing_rating = SellerRating.objects.filter(
+                seller=seller, 
+                rater=request.user
+            ).first()
+            
+            if existing_rating:
+                # Update existing rating
+                serializer = SellerRatingSerializer(
+                    existing_rating, 
+                    data=request.data, 
+                    partial=True
+                )
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                # Create new rating
+                serializer = SellerRatingSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save(rater=request.user, seller=seller)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
+        except User.DoesNotExist:
+            return Response(
+                {'error': 'Seller not found'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+class SellerRatingListView(generics.ListAPIView):
+    serializer_class = SellerRatingSerializer
+    permission_classes = [AllowAny]
+    
+    def get_queryset(self):
+        seller_id = self.kwargs['seller_id']
+        return SellerRating.objects.filter(seller_id=seller_id)

@@ -90,9 +90,26 @@
               <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
                 {{ getSellerInitial(product.seller_name) }}
               </div>
-              <div>
+              <div class="flex-1">
                 <p class="font-medium text-gray-900">{{ product.seller_name || 'Demo Seller' }}</p>
                 <p class="text-sm text-gray-500">Member since {{ formatDate(product.created_at) }}</p>
+                <div class="mt-2">
+                  <StarRating 
+                    :modelValue="product.seller_rating || 0"
+                    :count="product.seller_rating_count || 0"
+                    :interactive="false"
+                    :showText="true"
+                  />
+                </div>
+              </div>
+              <div class="text-right">
+                <button 
+                  v-if="canRateSeller"
+                  @click="showRatingModal = true" 
+                  class="px-3 py-1 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600 transition"
+                >
+                  {{ userSellerRating ? 'Update' : 'Rate Seller' }}
+                </button>
               </div>
             </div>
           </div>
@@ -123,112 +140,6 @@
         <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ product.description }}</p>
       </div>
 
-      <!-- Ratings and Reviews Section -->
-      <div class="bg-white rounded-lg shadow-md p-6">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-2xl font-bold text-gray-900">Ratings & Reviews</h2>
-          <button 
-            v-if="canRate"
-            @click="showRatingModal = true" 
-            class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
-          >
-            {{ userRating ? 'Update Rating' : 'Write a Review' }}
-          </button>
-        </div>
-
-        <!-- Rating Summary -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <!-- Overall Rating -->
-          <div class="text-center">
-            <div class="text-5xl font-bold text-gray-900 mb-2">
-              {{ product.average_rating ? product.average_rating.toFixed(1) : '0.0' }}
-            </div>
-            <StarRating 
-              :modelValue="product.average_rating || 0"
-              :interactive="false"
-              :showText="false"
-            />
-            <p class="text-gray-600 mt-2">
-              Based on {{ product.rating_count || 0 }} {{ (product.rating_count || 0) === 1 ? 'review' : 'reviews' }}
-            </p>
-          </div>
-
-          <!-- Rating Distribution -->
-          <div class="space-y-2">
-            <div v-for="star in [5, 4, 3, 2, 1]" :key="star" class="flex items-center space-x-2">
-              <span class="text-sm font-medium text-gray-700 w-8">{{ star }}★</span>
-              <div class="flex-1 bg-gray-200 rounded-full h-2">
-                <div 
-                  class="bg-yellow-400 h-2 rounded-full transition-all duration-300"
-                  :style="{ width: getRatingPercentage(star) + '%' }"
-                ></div>
-              </div>
-              <span class="text-sm text-gray-600 w-8">{{ getRatingCount(star) }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reviews List -->
-        <div class="border-t pt-6">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-gray-900">Reviews</h3>
-            <div class="flex items-center space-x-2">
-              <label class="text-sm text-gray-600">Sort by:</label>
-              <select 
-                v-model="reviewSort" 
-                @change="sortReviews"
-                class="text-sm border border-gray-300 rounded px-2 py-1"
-              >
-                <option value="newest">Newest First</option>
-                <option value="oldest">Oldest First</option>
-                <option value="highest">Highest Rating</option>
-                <option value="lowest">Lowest Rating</option>
-              </select>
-            </div>
-          </div>
-
-          <div v-if="loadingRatings" class="text-center py-8">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700 mx-auto"></div>
-          </div>
-
-          <div v-else-if="displayedRatings.length === 0" class="text-center py-8">
-            <div class="text-4xl mb-4">📝</div>
-            <p class="text-gray-500">No reviews yet. Be the first to review this product!</p>
-          </div>
-
-          <div v-else class="space-y-6">
-            <div v-for="rating in displayedRatings" :key="rating.id" class="border-b border-gray-200 pb-6 last:border-b-0">
-              <div class="flex items-start space-x-4">
-                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-                  {{ rating.user_name ? rating.user_name.charAt(0).toUpperCase() : 'U' }}
-                </div>
-                <div class="flex-1">
-                  <div class="flex items-center space-x-2 mb-2">
-                    <span class="font-medium text-gray-900">{{ rating.user_name }}</span>
-                    <StarRating 
-                      :modelValue="rating.rating"
-                      :interactive="false"
-                      :showText="false"
-                    />
-                    <span class="text-sm text-gray-500">{{ formatDate(rating.created_at) }}</span>
-                  </div>
-                  <p v-if="rating.review" class="text-gray-700 leading-relaxed">{{ rating.review }}</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Load More Reviews -->
-            <div v-if="ratings.length > displayedRatings.length" class="text-center pt-4">
-              <button 
-                @click="loadMoreReviews"
-                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
-              >
-                Load More Reviews ({{ ratings.length - displayedRatings.length }} remaining)
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- Rating Modal -->
@@ -236,7 +147,7 @@
       v-if="showRatingModal"
       :show="showRatingModal"
       :product="product"
-      :existingRating="userRating"
+      :existingRating="userSellerRating"
       @close="showRatingModal = false"
       @rating-submitted="handleRatingSubmitted"
     />
@@ -262,23 +173,17 @@ const route = useRoute()
 const router = useRouter()
 
 const product = ref(null)
-const ratings = ref([])
-const userRating = ref(null)
+const userSellerRating = ref(null)
 const loading = ref(true)
-const loadingRatings = ref(false)
 const error = ref('')
 const showRatingModal = ref(false)
 const showChatModal = ref(false)
-const reviewSort = ref('newest')
-const displayedRatings = ref([])
-const reviewsPerPage = 5
-const currentReviewPage = ref(1)
 
 const isAuthenticated = computed(() => {
   return localStorage.getItem('access_token') !== null
 })
 
-const canRate = computed(() => {
+const canRateSeller = computed(() => {
   if (!isAuthenticated.value || !product.value) {
     return false
   }
@@ -301,8 +206,7 @@ const fetchProduct = async () => {
     
     if (response.data) {
       product.value = response.data
-      userRating.value = response.data.user_rating || null
-      await fetchRatings()
+      userSellerRating.value = response.data.user_seller_rating || null
     } else {
       error.value = 'Product not found'
     }
@@ -318,72 +222,9 @@ const fetchProduct = async () => {
   }
 }
 
-const fetchRatings = async () => {
-  try {
-    loadingRatings.value = true
-    const productId = route.params.id
-    
-    const response = await axios.get(
-      `http://localhost:8000/api/marketplace/products/${productId}/ratings/`
-    )
-    
-    ratings.value = response.data
-    sortReviews()
-  } catch (err) {
-    console.error('Error fetching ratings:', err)
-  } finally {
-    loadingRatings.value = false
-  }
-}
-
 const handleRatingSubmitted = () => {
   showRatingModal.value = false
   fetchProduct()
-}
-
-const getRatingCount = (stars) => {
-  if (!product.value?.rating_distribution) return 0
-  return product.value.rating_distribution[stars] || 0
-}
-
-const getRatingPercentage = (stars) => {
-  const count = getRatingCount(stars)
-  const total = product.value?.rating_count || 0
-  return total > 0 ? (count / total) * 100 : 0
-}
-
-const sortReviews = () => {
-  let sortedRatings = [...ratings.value]
-  
-  switch (reviewSort.value) {
-    case 'newest':
-      sortedRatings.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-      break
-    case 'oldest':
-      sortedRatings.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
-      break
-    case 'highest':
-      sortedRatings.sort((a, b) => b.rating - a.rating)
-      break
-    case 'lowest':
-      sortedRatings.sort((a, b) => a.rating - b.rating)
-      break
-  }
-  
-  ratings.value = sortedRatings
-  currentReviewPage.value = 1
-  updateDisplayedRatings()
-}
-
-const updateDisplayedRatings = () => {
-  const startIndex = 0
-  const endIndex = currentReviewPage.value * reviewsPerPage
-  displayedRatings.value = ratings.value.slice(startIndex, endIndex)
-}
-
-const loadMoreReviews = () => {
-  currentReviewPage.value++
-  updateDisplayedRatings()
 }
 
 const handleAddToCart = () => {

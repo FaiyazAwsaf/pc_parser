@@ -31,4 +31,8 @@ urlpatterns = [
     path('products/<int:product_id>/ratings/create/', views.ProductRatingCreateView.as_view(), name='create-rating'),
     path('products/<int:product_id>/can-rate/', views.CanUserRateProductView.as_view(), name='can-rate-product'),
     path('ratings/<int:pk>/', views.ProductRatingDetailView.as_view(), name='rating-detail'),
+    
+    # Seller Rating URLs
+    path('sellers/<int:seller_id>/ratings/', views.SellerRatingListView.as_view(), name='seller-ratings'),
+    path('sellers/<int:seller_id>/ratings/create/', views.SellerRatingCreateView.as_view(), name='create-seller-rating'),
 ]

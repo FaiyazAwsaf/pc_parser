@@ -8,6 +8,7 @@ import EmailVerificationPage from '@/views/EmailVerificationPage.vue'
 import MarketplacePage from '@/views/MarketplacePage.vue'
 import ProductDetailPage from '@/views/ProductDetailPage.vue'
 import ProfilePage from '@/views/ProfilePage.vue'
+import ChatListPage from '@/views/ChatListPage.vue'
 import BuildHelperPage from '@/views/BuildHelperPage.vue'
 import AboutPage from '@/views/AboutPage.vue' 
 import SellComponents from '@/views/SellComponents.vue'
@@ -28,6 +29,7 @@ const routes = [
   { path: '/marketplace', component: MarketplacePage },
   { path: '/marketplace/product/:id', component: ProductDetailPage },
   { path: '/profile', component: ProfilePage },
+  { path: '/chats', component: ChatListPage },
   { path: '/builder', component: BuildHelperPage },
   { path: '/about', component: AboutPage },
   { path: '/sell', component: SellComponents },

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Order, Chat, Message, ProductRating
+from .models import Product, Order, Chat, Message, ProductRating, SellerRating
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -12,13 +12,26 @@ class ProductRatingSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'user_name', 'rating', 'review', 'created_at', 'updated_at']
         read_only_fields = ['user', 'created_at', 'updated_at']
 
+class SellerRatingSerializer(serializers.ModelSerializer):
+    rater_name = serializers.CharField(source='rater.username', read_only=True)
+    seller_name = serializers.CharField(source='seller.username', read_only=True)
+    
+    class Meta:
+        model = SellerRating
+        fields = ['id', 'seller', 'rater', 'rater_name', 'seller_name', 'rating', 'review', 'created_at', 'updated_at']
+        read_only_fields = ['rater', 'created_at', 'updated_at']
+
 class ProductSerializer(serializers.ModelSerializer):
     seller_name = serializers.CharField(source='seller.username', read_only=True)
     seller_email = serializers.CharField(source='seller.email', read_only=True)
     average_rating = serializers.ReadOnlyField()
     rating_count = serializers.ReadOnlyField()
     rating_distribution = serializers.ReadOnlyField()
+    seller_rating = serializers.ReadOnlyField()
+    seller_rating_count = serializers.ReadOnlyField()
+    seller_rating_distribution = serializers.ReadOnlyField()
     user_rating = serializers.SerializerMethodField()
+    user_seller_rating = serializers.SerializerMethodField()
     
     class Meta:
         model = Product
@@ -26,7 +39,8 @@ class ProductSerializer(serializers.ModelSerializer):
                  'image', 'is_available', 'created_at', 'updated_at', 'seller', 
                  'seller_name', 'seller_email', 'age', 'warranty', 'box_accessories',
                  'price_type', 'availability', 'brand', 'compatibility', 'performance_tier',
-                 'average_rating', 'rating_count', 'rating_distribution', 'user_rating']
+                 'average_rating', 'rating_count', 'rating_distribution', 'user_rating',
+                 'seller_rating', 'seller_rating_count', 'seller_rating_distribution', 'user_seller_rating']
         read_only_fields = ['seller', 'created_at', 'updated_at']
     
     def get_user_rating(self, obj):
@@ -41,6 +55,21 @@ class ProductSerializer(serializers.ModelSerializer):
                     'created_at': rating.created_at
                 }
             except ProductRating.DoesNotExist:
+                return None
+        return None
+
+    def get_user_seller_rating(self, obj):
+        """Get the current user's rating for this seller"""
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            try:
+                rating = obj.seller.seller_ratings.get(rater=request.user)
+                return {
+                    'rating': rating.rating,
+                    'review': rating.review,
+                    'created_at': rating.created_at
+                }
+            except SellerRating.DoesNotExist:
                 return None
         return None
 

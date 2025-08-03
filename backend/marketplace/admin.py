@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order, Chat, Message, ProductRating
+from .models import Product, Order, Chat, Message, ProductRating, SellerRating
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -33,4 +33,11 @@ class ProductRatingAdmin(admin.ModelAdmin):
     list_display = ['id', 'product', 'user', 'rating', 'created_at']
     list_filter = ['rating', 'created_at']
     search_fields = ['product__name', 'user__username', 'review']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(SellerRating)
+class SellerRatingAdmin(admin.ModelAdmin):
+    list_display = ['id', 'seller', 'rater', 'rating', 'created_at']
+    list_filter = ['rating', 'created_at']
+    search_fields = ['seller__username', 'rater__username', 'review']
     readonly_fields = ['created_at', 'updated_at']

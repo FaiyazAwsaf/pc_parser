@@ -23,7 +23,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
-            Sell Product
+            Add Product
           </button>
         </div>
       </div>
@@ -316,27 +316,6 @@
             </div>
           </div>
           
-          <!-- Quick Actions -->
-          <div v-if="isAuthenticated" class="space-y-2">
-            <router-link 
-              to="/chats"
-              class="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition flex items-center justify-center gap-2"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-              </svg>
-              My Messages
-            </router-link>
-            <button 
-              @click="showAddProductModal = true" 
-              class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center justify-center gap-2"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-              Add Product
-            </button>
-          </div>
         </div>
       </div>
 
@@ -527,10 +506,6 @@ const fetchProducts = async (reset = false) => {
     }
     
     // Always send price range parameters
-    console.log('Sending price range to API:', {
-      min_price: priceRange.value[0],
-      max_price: priceRange.value[1]
-    })
     params.append('min_price', priceRange.value[0])
     params.append('max_price', priceRange.value[1])
     
@@ -538,9 +513,7 @@ const fetchProducts = async (reset = false) => {
       params.append('ordering', sortBy.value)
     }
     
-    console.log('API URL with params:', `http://localhost:8000/api/marketplace/products/?${params.toString()}`)
     const {data} = await axios.get(`http://localhost:8000/api/marketplace/products/?`, {params})
-    console.log('Received products:', data.results?.length, 'products')
     
     if (reset) {
       products.value = data.results
@@ -619,9 +592,6 @@ const clearAllSearchTags = () => {
 let priceRangeTimeout = null
 
 const handlePriceRangeChange = () => {
-  console.log('Price range changed:', priceRange.value)
-  console.log('Min price:', priceRange.value[0], 'Max price:', priceRange.value[1])
-  
   // Clear existing timeout
   if (priceRangeTimeout) {
     clearTimeout(priceRangeTimeout)

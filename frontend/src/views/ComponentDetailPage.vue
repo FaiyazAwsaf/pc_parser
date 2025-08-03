@@ -14,18 +14,6 @@
 
     <!-- Component Details -->
     <div v-else-if="component" class="max-w-6xl mx-auto px-4 py-8">
-      <!-- Breadcrumb -->
-      <nav class="mb-6">
-        <ol class="flex items-center space-x-2 text-sm text-gray-500">
-          <li><router-link to="/" class="hover:text-blue-600">Home</router-link></li>
-          <li>/</li>
-          <li><router-link to="/components" class="hover:text-blue-600">Components</router-link></li>
-          <li>/</li>
-          <li>{{ component.category.name }}</li>
-          <li>/</li>
-          <li class="text-gray-900">{{ component.name }}</li>
-        </ol>
-      </nav>
 
       <!-- Component Header -->
       <div class="bg-white rounded-lg shadow-md p-6 mb-6">

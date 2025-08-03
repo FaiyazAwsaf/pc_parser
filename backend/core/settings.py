@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "user",
     "components",
     "marketplace",
+    "llmchat",
 ]
 
 MIDDLEWARE = [

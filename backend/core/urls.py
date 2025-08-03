@@ -21,10 +21,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/auth/', include('user.urls')),
-    path('api/components/', include('components.urls')),
-    path('api/marketplace/', include('marketplace.urls')),
+    path("admin/", admin.site.urls),
+    path("api/auth/", include("user.urls")),
+    path("api/components/", include("components.urls")),
+    path("api/marketplace/", include("marketplace.urls")),
+    path("api/builder/", include("llmchat.urls")),
 ]
 
 # Serve media files in development

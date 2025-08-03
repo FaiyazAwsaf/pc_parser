@@ -152,7 +152,7 @@
                 <td class="px-3 py-2">{{ getSpecValue(cpu.specs, 'graphics') || 'None' }}</td>
                 <td class="px-3 py-2">
                   <span v-if="cpu.lowest_price" class="text-green-600 font-semibold">
-                    ${{ cpu.lowest_price }}
+                    Tk. {{ cpu.lowest_price }}
                   </span>
                   <span v-else class="text-gray-400">No price</span>
                 </td>

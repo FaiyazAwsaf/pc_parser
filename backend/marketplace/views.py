@@ -5,10 +5,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from django.db.models import Q
-from .models import Product, Order, Chat, Message
+from .models import Product, Order, Chat, Message, ProductRating
 from .serializers import (
     ProductSerializer, ProductCreateSerializer, OrderSerializer,
-    ChatSerializer, MessageSerializer
+    ChatSerializer, MessageSerializer, ProductRatingSerializer
 )
 from .pagination import CursorPagination
 
@@ -66,7 +66,17 @@ class ProductCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(seller=self.request.user)
 
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+class ProductDetailView(generics.RetrieveAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+    queryset = Product.objects.filter(is_available=True)
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
+class MyProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
     
@@ -251,3 +261,116 @@ class SearchSuggestionsView(generics.GenericAPIView):
                 seen.add(category)
         
         return Response({'suggestions': suggestions[:10]})
+
+class ProductRatingListView(generics.ListAPIView):
+    serializer_class = ProductRatingSerializer
+    permission_classes = [AllowAny]
+    
+    def get_queryset(self):
+        product_id = self.kwargs['product_id']
+        return ProductRating.objects.filter(product_id=product_id)
+
+class ProductRatingCreateView(generics.CreateAPIView):
+    serializer_class = ProductRatingSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def create(self, request, product_id):
+        try:
+            product = Product.objects.get(id=product_id)
+            
+            # Don't allow seller to rate their own product
+            if product.seller == request.user:
+                return Response(
+                    {'error': 'You cannot rate your own product'}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Check if user has already rated this product
+            existing_rating = ProductRating.objects.filter(
+                product=product, 
+                user=request.user
+            ).first()
+            
+            if existing_rating:
+                # Update existing rating
+                serializer = ProductRatingSerializer(
+                    existing_rating, 
+                    data=request.data, 
+                    partial=True
+                )
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                # Create new rating
+                serializer = ProductRatingSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save(user=request.user, product=product)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
+        except Product.DoesNotExist:
+            return Response(
+                {'error': 'Product not found'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+class ProductRatingDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ProductRatingSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return ProductRating.objects.filter(user=self.request.user)
+
+class CanUserRateProductView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, product_id):
+        """Check if the current user can rate this product"""
+        try:
+            product = Product.objects.get(id=product_id)
+            
+            # User cannot rate their own product
+            if product.seller == request.user:
+                return Response({
+                    'can_rate': False,
+                    'reason': 'Cannot rate your own product'
+                })
+            
+            # Check if user has purchased this product (optional - you can remove this check)
+            # has_purchased = Order.objects.filter(
+            #     buyer=request.user,
+            #     product=product,
+            #     status='delivered'
+            # ).exists()
+            
+            # For now, allow any authenticated user to rate (except seller)
+            has_purchased = True
+            
+            if not has_purchased:
+                return Response({
+                    'can_rate': False,
+                    'reason': 'You must purchase this product before rating it'
+                })
+            
+            # Check if user has already rated
+            existing_rating = ProductRating.objects.filter(
+                product=product,
+                user=request.user
+            ).first()
+            
+            return Response({
+                'can_rate': True,
+                'has_rated': existing_rating is not None,
+                'existing_rating': {
+                    'rating': existing_rating.rating,
+                    'review': existing_rating.review
+                } if existing_rating else None
+            })
+            
+        except Product.DoesNotExist:
+            return Response(
+                {'error': 'Product not found'}, 
+                status=status.HTTP_404_NOT_FOUND
+            )

@@ -325,6 +325,7 @@
             :isAuthenticated="isAuthenticated"
             @order="handleOrder"
             @chat="handleChat"
+            @view-details="handleViewDetails"
           />
         </div>
         
@@ -351,6 +352,15 @@
       :product="selectedProduct"
       @close="showChatModal = false"
     />
+
+    <RatingModal
+      v-if="showRatingModal"
+      :show="showRatingModal"
+      :product="selectedProduct"
+      :existingRating="selectedProduct?.user_rating"
+      @close="showRatingModal = false"
+      @rating-submitted="handleRatingSubmitted"
+    />
   </div>
 </template>
 
@@ -363,6 +373,7 @@ import ProductCard from '../components/ProductCard.vue'
 import AddProductModal from '../components/AddProductModal.vue'
 import ChatModal from '../components/ChatModal.vue'
 import SearchWithSuggestions from '../components/SearchWithSuggestions.vue'
+import RatingModal from '../components/RatingModal.vue'
 
 const router = useRouter()
 
@@ -375,6 +386,7 @@ const hasMore = ref(true)
 const nextCursor = ref(null)
 const showAddProductModal = ref(false)
 const showChatModal = ref(false)
+const showRatingModal = ref(false)
 const selectedProduct = ref(null)
 
 // Filters
@@ -603,6 +615,25 @@ const handleChat = (product) => {
   selectedProduct.value = product
   showChatModal.value = true
   console.log('Chat modal should be visible:', showChatModal.value)
+}
+
+const handleRate = (product) => {
+  if (!isAuthenticated.value) {
+    router.push('/login')
+    return
+  }
+  selectedProduct.value = product
+  showRatingModal.value = true
+}
+
+const handleViewDetails = (product) => {
+  router.push(`/marketplace/product/${product.id}`)
+}
+
+const handleRatingSubmitted = () => {
+  showRatingModal.value = false
+  // Refresh products to get updated ratings
+  fetchProducts(true)
 }
 
 const handleProductAdded = () => {

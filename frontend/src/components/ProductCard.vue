@@ -21,6 +21,17 @@
       </div>
       
       <h3 class="text-lg font-semibold text-gray-800 mb-1 truncate">{{ product.name }}</h3>
+      
+      <!-- Rating Display -->
+      <div class="mb-2">
+        <StarRating 
+          :modelValue="product.average_rating || 0"
+          :count="product.rating_count || 0"
+          :interactive="false"
+          :showText="true"
+        />
+      </div>
+      
       <div class="flex-1 mb-3">
         <p class="text-sm text-gray-600 h-10 overflow-hidden">{{ truncateDescription(product.description) }}</p>
       </div>
@@ -31,23 +42,31 @@
           <p class="text-xl font-bold text-blue-700">৳{{ formatPrice(product.price) }}</p>
         </div>
         
-        <div class="flex space-x-2">
+        <div class="flex flex-col space-y-2">
+          <div class="flex space-x-2">
+            <button 
+              @click="$emit('order', product)" 
+              :disabled="!product.is_available"
+              class="px-3 py-1 text-sm rounded transition"
+              :class="product.is_available !== false
+                ? 'bg-green-600 text-white hover:bg-green-700' 
+                : 'bg-gray-400 text-white cursor-not-allowed'"
+            >
+              {{ product.is_available !== false ? 'Order' : 'Sold Out' }}
+            </button>
+            <button 
+              v-if="isAuthenticated"
+              @click="$emit('chat', product)" 
+              class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition"
+            >
+              Chat
+            </button>
+          </div>
           <button 
-            @click="$emit('order', product)" 
-            :disabled="!product.is_available"
-            class="px-3 py-1 text-sm rounded transition"
-            :class="product.is_available !== false
-              ? 'bg-green-600 text-white hover:bg-green-700' 
-              : 'bg-gray-400 text-white cursor-not-allowed'"
+            @click="$emit('view-details', product)" 
+            class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition"
           >
-            {{ product.is_available !== false ? 'Order' : 'Sold Out' }}
-          </button>
-          <button 
-            v-if="isAuthenticated"
-            @click="$emit('chat', product)" 
-            class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition"
-          >
-            Chat
+            View Details
           </button>
         </div>
       </div>
@@ -56,8 +75,13 @@
 </template>
 
 <script>
+import StarRating from './StarRating.vue'
+
 export default {
   name: 'ProductCard',
+  components: {
+    StarRating
+  },
   props: {
     product: {
       type: Object,
@@ -68,7 +92,13 @@ export default {
       default: false
     }
   },
-  emits: ['order', 'chat'],
+  emits: ['order', 'chat', 'view-details'],
+  computed: {
+    canRate() {
+      // User can rate if they are authenticated (we'll check seller restriction in the backend)
+      return this.isAuthenticated
+    }
+  },
   methods: {
     formatPrice(price) {
       return new Intl.NumberFormat('en-BD').format(price)

@@ -7,6 +7,7 @@ urlpatterns = [
     path('products/create/', views.ProductCreateView.as_view(), name='product-create'),
     path('products/my/', views.MyProductsView.as_view(), name='my-products'),
     path('products/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'),
+    path('products/my/<int:pk>/', views.MyProductDetailView.as_view(), name='my-product-detail'),
     
     # Order URLs
     path('orders/', views.OrderListView.as_view(), name='order-list'),
@@ -24,4 +25,10 @@ urlpatterns = [
     path('categories/', views.ProductCategoriesView.as_view(), name='product-categories'),
     path('conditions/', views.ProductConditionsView.as_view(), name='product-conditions'),
     path('search-suggestions/', views.SearchSuggestionsView.as_view(), name='search-suggestions'),
+    
+    # Rating URLs
+    path('products/<int:product_id>/ratings/', views.ProductRatingListView.as_view(), name='product-ratings'),
+    path('products/<int:product_id>/ratings/create/', views.ProductRatingCreateView.as_view(), name='create-rating'),
+    path('products/<int:product_id>/can-rate/', views.CanUserRateProductView.as_view(), name='can-rate-product'),
+    path('ratings/<int:pk>/', views.ProductRatingDetailView.as_view(), name='rating-detail'),
 ]

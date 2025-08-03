@@ -61,4 +61,4 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ['id', 'chat', 'sender', 'sender_name', 'content', 
                  'created_at', 'is_read']
-        read_only_fields = ['sender', 'created_at']
+        read_only_fields = ['chat', 'sender', 'created_at']

@@ -98,6 +98,8 @@ const handleLogin = async () => {
   loading.value = true
 
   try {
+    console.log('Login attempt with:', form)
+    
     const response = await fetch('http://localhost:8000/api/auth/login/', {
       method: 'POST',
       headers: {
@@ -106,7 +108,9 @@ const handleLogin = async () => {
       body: JSON.stringify(form)
     })
 
+    console.log('Login response status:', response.status)
     const data = await response.json()
+    console.log('Login response data:', data)
 
     if (response.ok) {
       // Store tokens in localStorage
@@ -131,6 +135,9 @@ const handleLogin = async () => {
         router.push('/')
       }, 1500)
     } else {
+      console.error('Login failed:', data)
+      
+      // Handle different types of error responses
       if (data.error) {
         message.value = data.error
         messageType.value = 'error'
@@ -140,15 +147,41 @@ const handleLogin = async () => {
             router.push('/verify-email')
           }, 2000)
         }
+      } else if (data.non_field_errors) {
+        // Handle authentication errors
+        message.value = Array.isArray(data.non_field_errors) 
+          ? data.non_field_errors[0] 
+          : data.non_field_errors
+        messageType.value = 'error'
+      } else if (data.detail) {
+        // Handle detail errors
+        message.value = data.detail
+        messageType.value = 'error'
       } else {
+        // Handle field-specific errors
+        let hasFieldErrors = false
         Object.keys(data).forEach(key => {
           if (errors.hasOwnProperty(key)) {
             errors[key] = Array.isArray(data[key]) ? data[key][0] : data[key]
+            hasFieldErrors = true
           }
         })
+        
+        // If no field errors, show generic message
+        if (!hasFieldErrors) {
+          if (response.status === 400) {
+            message.value = 'Invalid email or password. Please check your credentials and try again.'
+          } else if (response.status === 401) {
+            message.value = 'Invalid email or password.'
+          } else {
+            message.value = 'Login failed. Please try again.'
+          }
+          messageType.value = 'error'
+        }
       }
     }
   } catch (error) {
+    console.error('Network error:', error)
     message.value = 'Network error. Please try again.'
     messageType.value = 'error'
   } finally {

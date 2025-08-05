@@ -218,8 +218,8 @@ python startech_scraper.py
 ```
 
 ### 2. Populate Retailer Offers Table (Backend, venv activated)
-# From backend directory, venv activated:
 ```sh
+# From backend directory, venv activated:
 python manage.py import_retailer_offers D:\Programming\Projects\Hackathons\pc_parser\scraper\data\startech_products.json
 ```
 ### 3. Match Scraped Data to Global Products Table

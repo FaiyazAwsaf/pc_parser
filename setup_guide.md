@@ -209,5 +209,27 @@ For the best developer experience, install these extensions in VS Code:
     ```
 
 ---
+## 🛠️ Common Project Commands
 
+### 1. Scrape Data (Startech Example)
+```sh
+# Run from your scraper directory:
+python startech_scraper.py
+```
+
+### 2. Populate Retailer Offers Table (Backend, venv activated)
+# From backend directory, venv activated:
+```sh
+python manage.py import_retailer_offers D:\Programming\Projects\Hackathons\pc_parser\scraper\data\startech_products.json
+```
+### 3. Match Scraped Data to Global Products Table
+```sh
+python manage.py match_products
+```
+
+### 4. Populate/Update Global Component Specs (from docyx/pc-part-dataset)
+```sh
+python manage.py import_pcparts data
+# 'data' is the folder containing the docyx json files (cpu.json, gpu.json, etc)
+```
 

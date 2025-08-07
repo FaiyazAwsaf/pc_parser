@@ -45,3 +45,24 @@ class User(AbstractUser):
             self.save()
             return True
         return False
+
+    @property
+    def seller_rating(self):
+       
+        ratings = self.seller_ratings.all()
+        if ratings.exists():
+            total = sum(rating.rating for rating in ratings)
+            return round(total / ratings.count(), 1)
+        return 0
+
+    @property
+    def seller_rating_count(self):
+        return self.seller_ratings.count()
+
+    @property
+    def seller_rating_distribution(self):
+        ratings = self.seller_ratings.all()
+        distribution = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+        for rating in ratings:
+            distribution[rating.rating] += 1
+        return distribution

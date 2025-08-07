@@ -1,8 +1,32 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">PC Parts Marketplace</h1>
-      <p class="text-gray-600">Buy and sell used PC components from the community</p>
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-800 mb-2">PC Parts Marketplace</h1>
+          <p class="text-gray-600">Buy and sell used PC components from the community</p>
+        </div>
+        <div v-if="isAuthenticated" class="flex gap-3">
+          <router-link 
+            to="/chats"
+            class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            My Messages
+          </router-link>
+          <button 
+            @click="showAddProductModal = true" 
+            class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Add Product
+          </button>
+        </div>
+      </div>
     </div>
     
     <!-- Search Bar -->
@@ -282,7 +306,8 @@
                 :min="0"
                 :max="100000"
                 :step="1000"
-                @change="applyFilters"
+                @change="handlePriceRangeChange"
+                @update="handlePriceRangeChange"
               />
               <div class="flex justify-between text-sm text-gray-600">
                 <span>৳{{ formatPrice(priceRange[0]) }}</span>
@@ -291,14 +316,6 @@
             </div>
           </div>
           
-          <!-- Add Product Button -->
-          <button 
-            v-if="isAuthenticated" 
-            @click="showAddProductModal = true" 
-            class="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
-          >
-            Add Product
-          </button>
         </div>
       </div>
 
@@ -325,6 +342,7 @@
             :isAuthenticated="isAuthenticated"
             @order="handleOrder"
             @chat="handleChat"
+            @view-details="handleViewDetails"
           />
         </div>
         
@@ -351,6 +369,15 @@
       :product="selectedProduct"
       @close="showChatModal = false"
     />
+
+    <RatingModal
+      v-if="showRatingModal"
+      :show="showRatingModal"
+      :product="selectedProduct"
+      :existingRating="selectedProduct?.user_rating"
+      @close="showRatingModal = false"
+      @rating-submitted="handleRatingSubmitted"
+    />
   </div>
 </template>
 
@@ -363,6 +390,7 @@ import ProductCard from '../components/ProductCard.vue'
 import AddProductModal from '../components/AddProductModal.vue'
 import ChatModal from '../components/ChatModal.vue'
 import SearchWithSuggestions from '../components/SearchWithSuggestions.vue'
+import RatingModal from '../components/RatingModal.vue'
 
 const router = useRouter()
 
@@ -375,6 +403,7 @@ const hasMore = ref(true)
 const nextCursor = ref(null)
 const showAddProductModal = ref(false)
 const showChatModal = ref(false)
+const showRatingModal = ref(false)
 const selectedProduct = ref(null)
 
 // Filters
@@ -476,13 +505,9 @@ const fetchProducts = async (reset = false) => {
       params.append('performance_tier', selectedPerformanceTier.value)
     }
     
-    if (priceRange.value[0] > 0) {
-      params.append('min_price', priceRange.value[0])
-    }
-    
-    if (priceRange.value[1] < 100000) {
-      params.append('max_price', priceRange.value[1])
-    }
+    // Always send price range parameters
+    params.append('min_price', priceRange.value[0])
+    params.append('max_price', priceRange.value[1])
     
     if (sortBy.value) {
       params.append('ordering', sortBy.value)
@@ -563,18 +588,19 @@ const clearAllSearchTags = () => {
   fetchProducts(true)
 }
 
-const handleMinChange = () => {
-  if (priceRange.value[0] > priceRange.value[1]) {
-    priceRange.value[0] = priceRange.value[1]
-  }
-  applyFilters()
-}
+// Debounce function to prevent too many API calls
+let priceRangeTimeout = null
 
-const handleMaxChange = () => {
-  if (priceRange.value[1] < priceRange.value[0]) {
-    priceRange.value[1] = priceRange.value[0]
+const handlePriceRangeChange = () => {
+  // Clear existing timeout
+  if (priceRangeTimeout) {
+    clearTimeout(priceRangeTimeout)
   }
-  applyFilters()
+  
+  // Set new timeout to debounce the API call
+  priceRangeTimeout = setTimeout(() => {
+    applyFilters()
+  }, 500) // Wait 500ms after user stops dragging
 }
 
 const applyFilters = () => {
@@ -603,6 +629,25 @@ const handleChat = (product) => {
   selectedProduct.value = product
   showChatModal.value = true
   console.log('Chat modal should be visible:', showChatModal.value)
+}
+
+const handleRate = (product) => {
+  if (!isAuthenticated.value) {
+    router.push('/login')
+    return
+  }
+  selectedProduct.value = product
+  showRatingModal.value = true
+}
+
+const handleViewDetails = (product) => {
+  router.push(`/marketplace/product/${product.id}`)
+}
+
+const handleRatingSubmitted = () => {
+  showRatingModal.value = false
+  // Refresh products to get updated ratings
+  fetchProducts(true)
 }
 
 const handleProductAdded = () => {

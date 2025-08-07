@@ -106,6 +106,38 @@ class Product(models.Model):
     
     def __str__(self):
         return f"{self.name} - {self.seller.username}"
+    
+    @property
+    def average_rating(self):
+        ratings = self.ratings.all()
+        if ratings.exists():
+            total = sum(rating.rating for rating in ratings)
+            return round(total / ratings.count(), 1)
+        return 0
+    
+    @property
+    def rating_count(self):
+        return self.ratings.count()
+    
+    @property
+    def rating_distribution(self):
+        ratings = self.ratings.all()
+        distribution = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+        for rating in ratings:
+            distribution[rating.rating] += 1
+        return distribution
+
+    @property
+    def seller_rating(self):
+        return self.seller.seller_rating
+
+    @property
+    def seller_rating_count(self):
+        return self.seller.seller_rating_count
+
+    @property
+    def seller_rating_distribution(self):
+        return self.seller.seller_rating_distribution
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -156,3 +188,35 @@ class Message(models.Model):
     
     def __str__(self):
         return f"Message from {self.sender.username} in {self.chat}"
+
+class ProductRating(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ratings')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_ratings')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='rating', null=True, blank=True)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    review = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ['product', 'user']  # One rating per user per product
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.user.username} rated {self.product.name} - {self.rating} stars"
+
+class SellerRating(models.Model):
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_ratings')
+    rater = models.ForeignKey(User, on_delete=models.CASCADE, related_name='given_seller_ratings')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='seller_rating', null=True, blank=True)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    review = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ['seller', 'rater']  # One rating per rater per seller
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.rater.username} rated seller {self.seller.username} - {self.rating} stars"

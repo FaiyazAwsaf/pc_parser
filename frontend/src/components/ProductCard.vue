@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+  <div 
+    class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col cursor-pointer"
+    @click="handleCardClick"
+  >
     <div class="relative">
       <img 
         :src="product.image || '/placeholder-product.jpg'" 
@@ -21,6 +24,17 @@
       </div>
       
       <h3 class="text-lg font-semibold text-gray-800 mb-1 truncate">{{ product.name }}</h3>
+      
+      <!-- Rating Display -->
+      <div class="mb-2">
+        <StarRating 
+          :modelValue="product.average_rating || 0"
+          :count="product.rating_count || 0"
+          :interactive="false"
+          :showText="true"
+        />
+      </div>
+      
       <div class="flex-1 mb-3">
         <p class="text-sm text-gray-600 h-10 overflow-hidden">{{ truncateDescription(product.description) }}</p>
       </div>
@@ -33,7 +47,7 @@
         
         <div class="flex space-x-2">
           <button 
-            @click="$emit('order', product)" 
+            @click.stop="$emit('order', product)" 
             :disabled="!product.is_available"
             class="px-3 py-1 text-sm rounded transition"
             :class="product.is_available !== false
@@ -44,7 +58,7 @@
           </button>
           <button 
             v-if="isAuthenticated"
-            @click="$emit('chat', product)" 
+            @click.stop="$emit('chat', product)" 
             class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition"
           >
             Chat
@@ -56,8 +70,13 @@
 </template>
 
 <script>
+import StarRating from './StarRating.vue'
+
 export default {
   name: 'ProductCard',
+  components: {
+    StarRating
+  },
   props: {
     product: {
       type: Object,
@@ -68,8 +87,18 @@ export default {
       default: false
     }
   },
-  emits: ['order', 'chat'],
+  emits: ['order', 'chat', 'view-details'],
+  computed: {
+    canRate() {
+      // User can rate if they are authenticated (we'll check seller restriction in the backend)
+      return this.isAuthenticated
+    }
+  },
   methods: {
+    handleCardClick() {
+      this.$emit('view-details', this.product)
+    },
+    
     formatPrice(price) {
       return new Intl.NumberFormat('en-BD').format(price)
     },

@@ -2,10 +2,16 @@
   <div class="min-h-screen bg-gradient-to-br from-slate-900 to-blue-800 text-white flex flex-col">
     <!-- Hero Section -->
     <section class="flex-1 flex flex-col justify-center items-center text-center pt-16 pb-16">
-      <div class="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between px-6 gap-10">
+      <div
+        class="max-w-6xl w-full flex flex-col lg:flex-row items-center justify-between px-6 gap-10"
+      >
         <!-- Image in the middle -->
         <div class="flex-1 flex justify-center lg:justify-center">
-          <img src="@/assets/Images/Pcbuild.png" alt="PC Build Visual" class="w-full max-w-md rounded-xl shadow-2xl" />
+          <img
+            src="@/assets/Images/Pcbuild.png"
+            alt="PC Build Visual"
+            class="w-full max-w-md rounded-xl shadow-2xl"
+          />
         </div>
 
         <!-- Writeup on the right -->
@@ -53,38 +59,76 @@
             class="bg-gradient-to-tr from-blue-50 to-blue-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300 cursor-pointer"
             @click="toggleProductDropdown"
           >
-            <svg class="mx-auto mb-4 w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 17v-2a4 4 0 014-4h14" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-2a4 4 0 014-4h14" />
+            <svg
+              class="mx-auto mb-4 w-12 h-12 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 17v-2a4 4 0 014-4h14"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 21v-2a4 4 0 014-4h14"
+              />
               <circle cx="7" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none" />
             </svg>
             <h3 class="font-semibold text-xl mb-2">Live Price Comparison</h3>
             <p class="text-gray-600 group-hover:text-blue-600">
-              Track and compare the latest prices on new &amp; used PC components from all major vendors in Bangladesh.
+              Track and compare the latest prices on new &amp; used PC components from all major
+              vendors in Bangladesh.
             </p>
           </div>
 
           <!-- Feature: Build Assistant -->
-          <div @click="router.push('/builder')" class="bg-gradient-to-tr from-green-50 to-green-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300 cursor-pointer">
-            <svg class="mx-auto mb-4 w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          <div
+            @click="router.push('/builder')"
+            class="bg-gradient-to-tr from-green-50 to-green-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300 cursor-pointer"
+          >
+            <svg
+              class="mx-auto mb-4 w-12 h-12 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"
+              />
             </svg>
-            <h3 class="font-semibold text-xl mb-2">AI Build Helper</h3>
+            <h3 class="font-semibold text-xl mb-2">PC Build Helper</h3>
             <p class="text-gray-600 group-hover:text-green-600">
-              Tell us your budget &amp; needs. Instantly get compatible, optimized builds for gaming, work, or study powered by AI!
+              Tell us your budget &amp; needs. Instantly get compatible, optimized builds for
+              gaming, work, or study powered by AI!
             </p>
           </div>
 
           <!-- Feature: Second-hand Marketplace -->
-          <div class="bg-gradient-to-tr from-purple-50 to-purple-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300">
-            <svg class="mx-auto mb-4 w-12 h-12 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div
+            class="bg-gradient-to-tr from-purple-50 to-purple-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300"
+          >
+            <svg
+              class="mx-auto mb-4 w-12 h-12 text-purple-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h8" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8" />
             </svg>
             <h3 class="font-semibold text-xl mb-2">Trusted Used Market</h3>
             <p class="text-gray-600 group-hover:text-purple-600">
-              Browse verified, trustworthy second-hand parts buy and sell with confidence, no more marketplace scams.
+              Browse verified, trustworthy second-hand parts buy and sell with confidence, no more
+              marketplace scams.
             </p>
           </div>
         </div>
@@ -152,19 +196,19 @@ const productItems = [
   { label: 'Memory', image: memoryImg },
   { label: 'Storage', image: storageImg },
   { label: 'GPU', image: gpuImg },
-  { label: 'Cases', image: caseImg }
+  { label: 'Cases', image: caseImg },
 ]
 
 const getRouteForItem = (label) => {
   const routes = {
-    'CPUs': '/components/cpu',
-    'Monitor': '/components/monitor',
-    'Motherboards': '/components/motherboards',
+    CPUs: '/components/cpu',
+    Monitor: '/components/monitor',
+    Motherboards: '/components/motherboards',
     'Power Supplies': '/components/power-supplies',
-    'Memory': '/components/memory',
-    'Storage': '/components/storage',
-    'GPU': '/components/gpu',
-    'Cases': '/components/cases',
+    Memory: '/components/memory',
+    Storage: '/components/storage',
+    GPU: '/components/gpu',
+    Cases: '/components/cases',
   }
   return routes[label] || '/'
 }
@@ -199,10 +243,12 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: all 0.3s ease;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
   transform: scale(0.95);
 }

@@ -10,3 +10,4 @@ requests
 beautifulsoup4
 rapidfuzz
 pandas
+groq

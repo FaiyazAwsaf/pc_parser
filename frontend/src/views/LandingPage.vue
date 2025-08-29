@@ -113,6 +113,7 @@
 
           <!-- Feature: Second-hand Marketplace -->
           <div
+            @click="router.push('/marketplace')"
             class="bg-gradient-to-tr from-purple-50 to-purple-100 rounded-2xl shadow-xl p-8 text-center group hover:scale-105 transition-transform duration-300"
           >
             <svg

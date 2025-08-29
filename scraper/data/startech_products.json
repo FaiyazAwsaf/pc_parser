@@ -12,7 +12,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Intel Pentium Gold G6400 10th gen Coffee Lake Processor",
-    "price": 6800,
+    "price": 5700,
     "url": "https://www.startech.com.bd/intel-pentium-gold-g6400-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/g6400/g6400-228x228.jpg",
     "availability": "Out of Stock",
@@ -21,13 +21,13 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "AMD Ryzen 5 2400G Desktop Processor with Radeon RX Vega 11 Graphics",
-    "price": 6800,
-    "url": "https://www.startech.com.bd/amd-ryzen-5-2400g-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-2400g/ryzen-5-2400g-001-228x228.webp",
+    "retailer_name": "Intel 10th Gen Core i3 10100F Processor",
+    "price": 6900,
+    "url": "https://www.startech.com.bd/intel-10th-gen-core-i3-10100f-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i3-10100/i3-10100-228x228.jpg",
     "availability": "Out of Stock",
     "category": "CPU",
-    "model": "Ryzen 5 2400G (Tray Box)"
+    "model": "Core i3 10100F (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -38,16 +38,6 @@
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Ryzen 5 3400G (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Intel 10th Gen Core i3 10100F Processor",
-    "price": 7200,
-    "url": "https://www.startech.com.bd/intel-10th-gen-core-i3-10100f-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i3-10100/i3-10100-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i3 10100F (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -81,6 +71,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "Intel 10th Gen Core i5-10400F Processor",
+    "price": 8900,
+    "url": "https://www.startech.com.bd/intel-core-i5-10400f-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i5-10400/i5-10400-1-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i5-10400F (Tray Box)"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "AMD Ryzen 3 4100 Processor",
     "price": 9300,
     "url": "https://www.startech.com.bd/amd-ryzen-3-4100-processor",
@@ -98,6 +98,16 @@
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Ryzen Threadripper 1900X (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Intel 11th Gen Core i5-11400F Rocket Lake Processor",
+    "price": 9500,
+    "url": "https://www.startech.com.bd/intel-core-i5-11400f-11th-gen-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i5-11400f/core-i5-11400f-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i5-11400F (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -121,26 +131,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Intel 10th Gen Core i5-10400F Processor",
-    "price": 9900,
-    "url": "https://www.startech.com.bd/intel-core-i5-10400f-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i5-10400/i5-10400-1-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i5-10400F (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Intel 11th Gen Core i5-11400F Rocket Lake Processor",
-    "price": 10200,
-    "url": "https://www.startech.com.bd/intel-core-i5-11400f-11th-gen-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i5-11400f/core-i5-11400f-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i5-11400F (Tray Box)"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Intel 10th Gen Core i3 10100 Processor",
     "price": 10600,
     "url": "https://www.startech.com.bd/intel-core-i3-10100-processor",
@@ -148,26 +138,6 @@
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core i3 10100 (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Intel Core i3-12100 12th Gen Alder Lake Processor",
-    "price": 11450,
-    "url": "https://www.startech.com.bd/intel-core-i3-12100-12th-gen-alder-lake-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i3-12100/i3-12100-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i3-12100 (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "AMD Ryzen 5 5600 Processor",
-    "price": 11500,
-    "url": "https://www.startech.com.bd/amd-ryzen-5-5600-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/5600x/5600x-001-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 5 5600 (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -181,23 +151,13 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "AMD Ryzen 5 Pro 4650G Processor with Radeon Graphics",
-    "price": 11500,
-    "url": "https://www.startech.com.bd/amd-ryzen-5-pro-4650g-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-pro-4650g/ryzen-5-pro-4650g-228x228.jpg",
+    "retailer_name": "Intel Core i3-12100 12th Gen Alder Lake Processor",
+    "price": 11450,
+    "url": "https://www.startech.com.bd/intel-core-i3-12100-12th-gen-alder-lake-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i3-12100/i3-12100-228x228.jpg",
     "availability": "Out of Stock",
     "category": "CPU",
-    "model": "Ryzen 5 Pro 4650G (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Intel Core i3 10105 10th Gen Comet Lake Processor",
-    "price": 10400,
-    "url": "https://www.startech.com.bd/intel-core-i3-10105-10th-gen-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-i3-10105/core-i3-10105-001-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Intel Core i3 10105 (Tray Box)"
+    "model": "Core i3-12100 (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -211,6 +171,26 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "AMD Ryzen 5 5600 Processor",
+    "price": 11500,
+    "url": "https://www.startech.com.bd/amd-ryzen-5-5600-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/5600x/5600x-001-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Ryzen 5 5600 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Intel Core i3 10105 10th Gen Comet Lake Processor",
+    "price": 10400,
+    "url": "https://www.startech.com.bd/intel-core-i3-10105-10th-gen-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-i3-10105/core-i3-10105-001-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Intel Core i3 10105 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "AMD Ryzen 5 5600X Processor",
     "price": 12500,
     "url": "https://www.startech.com.bd/amd-ryzen-5-5600x-processor",
@@ -218,6 +198,16 @@
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Ryzen 5 5600X (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Intel 13th Gen Core i3-13100 Raptor Lake Processor",
+    "price": 12500,
+    "url": "https://www.startech.com.bd/intel-core-i3-13100-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-i3-13100/core-i3-13100-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i3-13100 (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -231,23 +221,23 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "AMD Ryzen 5 3600 Processor",
+    "price": 11900,
+    "url": "https://www.startech.com.bd/amd-ryzen-5-3600-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-3600x/ryzen-5-3600-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Ryzen 5 3600 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Intel 11th Gen Core i5-11500 Rocket Lake Processor",
-    "price": 12500,
+    "price": 13000,
     "url": "https://www.startech.com.bd/intel-core-i5-11500-11th-gen-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i5-11500/core-i5-11500-228x228.jpg",
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core i5-11500 (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Intel 13th Gen Core i3-13100 Raptor Lake Processor",
-    "price": 12900,
-    "url": "https://www.startech.com.bd/intel-core-i3-13100-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-i3-13100/core-i3-13100-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i3-13100 (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -332,7 +322,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Intel 13th Gen Core i5 13400F Raptor Lake Processor",
-    "price": 15000,
+    "price": 14500,
     "url": "https://www.startech.com.bd/intel-13th-gen-core-i5-13400f-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i5-13600k/Core i5 13600K-01-228x228.webp",
     "availability": "Out of Stock",
@@ -372,7 +362,7 @@
   {
     "retailer": "startech",
     "retailer_name": "AMD Ryzen 5 7500F Processor",
-    "price": 16200,
+    "price": 15800,
     "url": "https://www.startech.com.bd/amd-ryzen-5-7500f-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-7600/ryzen-5-7600-01-228x228.webp",
     "availability": "Out of Stock",
@@ -402,22 +392,12 @@
   {
     "retailer": "startech",
     "retailer_name": "AMD Ryzen 5 7600 Gaming Processor",
-    "price": 18700,
+    "price": null,
     "url": "https://www.startech.com.bd/amd-ryzen-5-7600-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-7600/ryzen-5-7600-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Ryzen 5 7600 (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "AMD Ryzen 7 5700G Processor with Radeon Graphics (Global)",
-    "price": null,
-    "url": "https://www.startech.com.bd/amd-ryzen-7-5700g-processor-global",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-7-5700ge/ryzen-7-5700g-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 7 5700G"
   },
   {
     "retailer": "startech",
@@ -461,16 +441,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Intel Core i5 14500 14th Gen Raptor Lake Processor (Tray With Fan)",
-    "price": null,
-    "url": "https://www.startech.com.bd/intel-core-i5-14500-14th-gen-processor-tray",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-14500/i5-14500-tray-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i5 14500 (Tray)"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Intel 13th Gen Core i5 13500 Raptor Lake Processor",
     "price": 23500,
     "url": "https://www.startech.com.bd/intel-13th-gen-core-i5-13500-processor",
@@ -478,6 +448,26 @@
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core i5 13500 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Intel Core Ultra 5 225 Arrow Lake Processor",
+    "price": null,
+    "url": "https://www.startech.com.bd/intel-core-ultra-5-225-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-ultra-5-225/core-ultra-5-225-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core Ultra 5 225 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Intel 12th Gen Core i5-12600K Alder Lake Processor",
+    "price": 25000,
+    "url": "https://www.startech.com.bd/intel-12th-gen-i5-12600k-alder-lake-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-12600k/i5-12600k-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i5-12600K (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -511,16 +501,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Intel 12th Gen Core i5-12600K Alder Lake Processor",
-    "price": null,
-    "url": "https://www.startech.com.bd/intel-12th-gen-i5-12600k-alder-lake-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-12600k/i5-12600k-01-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i5-12600K (Tray Box)"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "AMD Ryzen 7 5700X3D Processor",
     "price": 27500,
     "url": "https://www.startech.com.bd/amd-ryzen-7-5700x3d-processor",
@@ -541,18 +521,18 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Intel 11th Gen Core i7-11700 Rocket Lake Processor",
-    "price": 27400,
-    "url": "https://www.startech.com.bd/intel-core-i7-11700-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/i7-11700/i7-11700-228x228.jpg",
+    "retailer_name": "Intel 13th Gen Core i5 13600K Raptor Lake Processor",
+    "price": 28000,
+    "url": "https://www.startech.com.bd/intel-13th-gen-core-i5-13600k-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i5-13600k/Core i5 13600K-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
-    "model": "Core i7-11700 (Tray Box)"
+    "model": "Core i5 13600K (Tray Box)"
   },
   {
     "retailer": "startech",
     "retailer_name": "Intel 12th Gen Core i7-12700K Alder Lake Processor",
-    "price": 30500,
+    "price": 30200,
     "url": "https://www.startech.com.bd/intel-12th-gen-core-i7-12700k-alder-lake-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i7-12700k/i7-12700k-01-228x228.jpg",
     "availability": "Out of Stock",
@@ -561,13 +541,13 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Intel 12th Gen Core i7-12700 Alder Lake Processor",
-    "price": 30500,
-    "url": "https://www.startech.com.bd/intel-12th-gen-core-i7-12700-alder-lake-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i7-12700/i7-12700-01-228x228.jpg",
+    "retailer_name": "AMD Ryzen 9 5900X Processor",
+    "price": 29900,
+    "url": "https://www.startech.com.bd/amd-ryzen-9-5900x-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-5900x/ryzen-9-5900x-001-228x228.jpg",
     "availability": "Out of Stock",
     "category": "CPU",
-    "model": "Core i7-12700 (Tray Box)"
+    "model": "Ryzen 9 5900X (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -581,23 +561,23 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "Intel 12th Gen Core i7-12700 Alder Lake Processor",
+    "price": null,
+    "url": "https://www.startech.com.bd/intel-12th-gen-core-i7-12700-alder-lake-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i7-12700/i7-12700-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i7-12700 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Intel Core i5 14600K 14th Gen Raptor Lake Processor",
-    "price": 28500,
+    "price": 28000,
     "url": "https://www.startech.com.bd/intel-14th-gen-core-i5-14600k-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i5-14600k/core-i5-14600k-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core i5 14600K (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "AMD Ryzen 7 9700X AM5 Desktop Gaming Processor",
-    "price": 32499,
-    "url": "https://www.startech.com.bd/amd-ryzen-7-9700x-gaming-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-7-9700x/ryzen-7-9700x-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 7 9700X (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -611,26 +591,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "AMD Ryzen 5 7600X3D Processor",
-    "price": 33000,
-    "url": "https://www.startech.com.bd/amd-ryzen-5-7600x3d-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-7600x3d/ryzen-5-7600x3d-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 5 7600X3D (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "AMD Ryzen 9 5900X Processor",
-    "price": 32900,
-    "url": "https://www.startech.com.bd/amd-ryzen-9-5900x-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-5900x/ryzen-9-5900x-001-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 9 5900X (Tray Box)"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Intel Core Ultra 5 245K Arrow Lake Processor",
     "price": 33500,
     "url": "https://www.startech.com.bd/intel-core-ultra-5-245k-processor",
@@ -638,6 +598,16 @@
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core Ultra 5 245K (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Intel 13th Gen Core i7 13700 Raptor Lake Processor",
+    "price": 37900,
+    "url": "https://www.startech.com.bd/intel-13th-gen-core-i7-13700-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i7-13700k/core-i7-13700k-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i7-13700 (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -661,18 +631,18 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Intel 13th Gen Core i7 13700 Raptor Lake Processor",
-    "price": 39000,
-    "url": "https://www.startech.com.bd/intel-13th-gen-core-i7-13700-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i7-13700k/core-i7-13700k-01-228x228.webp",
+    "retailer_name": "Intel 13th Gen Core i7 13700KF Raptor Lake Processor",
+    "price": 41600,
+    "url": "https://www.startech.com.bd/intel-13th-gen-core-i7-13700kf-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i7-13700kf/core-i7-13700kf-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
-    "model": "Core i7-13700 (Tray Box)"
+    "model": "Core i7 13700KF (Tray Box)"
   },
   {
     "retailer": "startech",
     "retailer_name": "Intel 13th Gen Core i7 13700K Raptor Lake Processor",
-    "price": 41500,
+    "price": 40500,
     "url": "https://www.startech.com.bd/intel-13th-gen-core-i7-13700k-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i7-13700k/core-i7-13700k-01-228x228.webp",
     "availability": "Out of Stock",
@@ -682,12 +652,22 @@
   {
     "retailer": "startech",
     "retailer_name": "Intel Core i7 14700 14th Gen Raptor Lake Processor",
-    "price": 39700,
+    "price": 38500,
     "url": "https://www.startech.com.bd/intel-core-i7-14700-14th-gen-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i7-14700/i7-14700-02-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core i7 14700 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "AMD Ryzen 9 5950X Processor",
+    "price": 41000,
+    "url": "https://www.startech.com.bd/amd-ryzen-9-5950x-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-5950x/ryzen-9-5950x-1-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Ryzen 9 5950X (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -712,32 +692,12 @@
   {
     "retailer": "startech",
     "retailer_name": "Intel Core i7 14700K 14th Gen Raptor Lake Processor",
-    "price": 42000,
+    "price": 41500,
     "url": "https://www.startech.com.bd/intel-14th-gen-core-i7-14700k-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/Intel/core-i7-14700k/core-i7-14700k-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core i7 14700K (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "AMD Ryzen 9 5950X Processor",
-    "price": 42000,
-    "url": "https://www.startech.com.bd/amd-ryzen-9-5950x-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-5950x/ryzen-9-5950x-1-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 9 5950X (Tray Box)"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Intel 12th Gen Core i9-12900K Alder Lake Processor",
-    "price": 41850,
-    "url": "https://www.startech.com.bd/intel-12th-gen-i9-12900k-alder-lake-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i9-12900k/i9-12900k-01-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Core i9-12900K (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -751,6 +711,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "Intel 12th Gen Core i9-12900K Alder Lake Processor",
+    "price": 41850,
+    "url": "https://www.startech.com.bd/intel-12th-gen-i9-12900k-alder-lake-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i9-12900k/i9-12900k-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i9-12900K (Tray Box)"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "AMD Ryzen 9 7900X3D Gaming Processor",
     "price": 48500,
     "url": "https://www.startech.com.bd/amd-ryzen-9-7900x3d-gaming-processor",
@@ -758,6 +728,16 @@
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Ryzen 9 7900X3D (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "AMD Ryzen 9 7950X Processor",
+    "price": 52500,
+    "url": "https://www.startech.com.bd/amd-ryzen-9-7950x-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-7950x/ryzen-9-7950x-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Ryzen 9 7950X (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -772,7 +752,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Intel Core i9 14900K 14th Gen Raptor Lake Processor",
-    "price": 55500,
+    "price": 53000,
     "url": "https://www.startech.com.bd/intel-14th-gen-core-i9-14900k-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-i9-14900k/core-i9-14900k-01-228x228.webp",
     "availability": "Out of Stock",
@@ -781,23 +761,23 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "AMD Ryzen 9 7950X Processor",
-    "price": 52500,
-    "url": "https://www.startech.com.bd/amd-ryzen-9-7950x-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-7950x/ryzen-9-7950x-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 9 7950X (Tray Box)"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "AMD Ryzen 7 9800X3D Gaming Processor",
-    "price": 59000,
+    "price": 58500,
     "url": "https://www.startech.com.bd/amd-ryzen-7-9800x3d-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-7-9800x3d/ryzen-7-9800x3d-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Ryzen 7 9800X3D (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "AMD Ryzen 9 9950X Gaming Processor",
+    "price": 60000,
+    "url": "https://www.startech.com.bd/amd-ryzen-9-9950x-gaming-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-9950x/ryzen-9-9950x-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Ryzen 9 9950X (Tray Box)"
   },
   {
     "retailer": "startech",
@@ -811,18 +791,8 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "AMD Ryzen 9 9950X Gaming Processor",
-    "price": 65500,
-    "url": "https://www.startech.com.bd/amd-ryzen-9-9950x-gaming-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-9950x/ryzen-9-9950x-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "CPU",
-    "model": "Ryzen 9 9950X (Tray Box)"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "AMD Ryzen 9 7950X3D Gaming Processor",
-    "price": 71000,
+    "price": 70200,
     "url": "https://www.startech.com.bd/amd-ryzen-9-7950x3d-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-7950x3d/ryzen-9-7950x3d-228x228.webp",
     "availability": "Out of Stock",
@@ -844,7 +814,7 @@
     "retailer_name": "Intel Core Ultra 9 285K Arrow Lake Processor",
     "price": 70500,
     "url": "https://www.startech.com.bd/intel-core-ultra-9-285k-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-ultra-9-285k/intel-core-ultra-9-285k-processor-228x228.webp",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/core-ultra-9-285k/core-ultra-9-001-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
     "model": "Core Ultra 9 285K (Tray Box)"
@@ -852,7 +822,7 @@
   {
     "retailer": "startech",
     "retailer_name": "AMD Ryzen 9 9950X3D Gaming Processor",
-    "price": 85000,
+    "price": 83500,
     "url": "https://www.startech.com.bd/amd-ryzen-9-9950x3d-processor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-9-9950x3d/ryzen-9-9950x3d-01-228x228.webp",
     "availability": "Out of Stock",
@@ -971,6 +941,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "AMD Ryzen 5 2400G Desktop Processor with Radeon RX Vega 11 Graphics",
+    "price": null,
+    "url": "https://www.startech.com.bd/amd-ryzen-5-2400g-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-2400g/ryzen-5-2400g-001-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Ryzen 5 2400G (Tray Box)"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Intel Core i3 10105F 10th Gen Processor",
     "price": null,
     "url": "https://www.startech.com.bd/intel-core-i3-10105f-processor",
@@ -991,13 +971,33 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "AMD Ryzen 5 3600 Processor",
+    "retailer_name": "Intel Core i5 14400F 14th Gen Raptor Lake Processor",
     "price": null,
-    "url": "https://www.startech.com.bd/amd-ryzen-5-3600-processor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-5-3600x/ryzen-5-3600-228x228.jpg",
+    "url": "https://www.startech.com.bd/intel-core-i5-14400f-14th-gen-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-14400/i5-14400-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "CPU",
-    "model": "Ryzen 5 3600 (Tray Box)"
+    "model": "Core i5 14400F (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Intel 12th Gen Core i5-12500 Alder Lake Processor",
+    "price": null,
+    "url": "https://www.startech.com.bd/intel-12th-gen-core-i5-12500-alder-lake-processor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/intel/i5-12500/i5-12500-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Core i5-12500 (Tray Box)"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "AMD Ryzen 7 5700G Processor with Radeon Graphics (Global)",
+    "price": null,
+    "url": "https://www.startech.com.bd/amd-ryzen-7-5700g-processor-global",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/processor/amd/ryzen-7-5700ge/ryzen-7-5700g-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "CPU",
+    "model": "Ryzen 7 5700G"
   },
   {
     "retailer": "startech",
@@ -1011,6 +1011,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "Netac Shadow II 8GB DDR4 3200MHz Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/netac-shadow-ii-8gb-ddr4-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/netac/shadow-ii/shadow-ii-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Shadow II"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Netac Basic 4GB DDR4 2666MHZ Desktop RAM",
     "price": null,
     "url": "https://www.startech.com.bd/netac-basic-4gb-ddr4-2666mhz-desktop-ram",
@@ -1018,36 +1028,6 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "Basic"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "G.SKILL Value 4GB DDR3 1600Mhz Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/g-skill-value-4gb-ddr3-1600mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/value-ddr3/value-ddr3-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Value DDR3"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "G.SKILL Aegis 8GB DDR4 3200Mhz Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/g-skill-aegis-8gb-ddr4-3200mhz-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/Aegis/Aegis-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Aegis"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "OCPC XT II DDR4 3200MHz 8GB Desktop RAM White",
-    "price": null,
-    "url": "https://www.startech.com.bd/ocpc-xt-ii-ddr4-3200mhz-8gb-ram-white",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/xt-ii-ddr4-3200-8gb/xt-ii-ddr4-3200-8gb-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "XT II DDR4 3200 8GB WHITE"
   },
   {
     "retailer": "startech",
@@ -1061,23 +1041,13 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Corsair Vengeance LPX 8GB DDR4 2400MHz RAM",
+    "retailer_name": "OCPC XT II DDR4 3200MHz 8GB Desktop RAM White",
     "price": null,
-    "url": "https://www.startech.com.bd/Corsair-Vengeance-LPX-8GB",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/RAM/VENG_LPX_BLK_01-228x228.png",
+    "url": "https://www.startech.com.bd/ocpc-xt-ii-ddr4-3200mhz-8gb-ram-white",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/xt-ii-ddr4-3200-8gb/xt-ii-ddr4-3200-8gb-228x228.webp",
     "availability": "Out of Stock",
     "category": "RAM",
-    "model": "Corsair Vengeance LPX 8GB"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Team Vulcan Z 8GB DDR4 3200MHz Gaming RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-vulcan-z-8gb-3200mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-z/vulcan-z-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Team Vulcan Z"
+    "model": "XT II DDR4 3200 8GB WHITE"
   },
   {
     "retailer": "startech",
@@ -1091,48 +1061,18 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Team T-Force VULCAN Z Red 8GB DDR4 3200MHz Desktop Gaming RAM",
+    "retailer_name": "G.SKILL Aegis 8GB DDR4 3200Mhz Desktop RAM",
     "price": null,
-    "url": "https://www.startech.com.bd/team-t-force-vulcan-z-red-8gb-ddr4-3200mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-z/vulcan-z-228x228.jpg",
+    "url": "https://www.startech.com.bd/g-skill-aegis-8gb-ddr4-3200mhz-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/Aegis/Aegis-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "RAM",
-    "model": "T-Force VULCAN Z"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Team T-Force Vulcan Z 8GB DDR4 3200MHz CL16 Gaming RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-t-force-vulcan-z-8gb-ddr4-3200mhz-cl16-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-z/vulcan-z-0001-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Vulcan Z"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "OCPC X3 RGB DDR4 3200MHz 8GB Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/ocpc-x3-rgb-ddr4-3200mhz-8gb-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/x3-rgb-ddr4/x3-rgb-ddr4-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "X3 RGB DDR4 3200 8GB"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "OCPC X3 RGB DDR4 3200MHz 8GB Desktop RAM White",
-    "price": null,
-    "url": "https://www.startech.com.bd/ocpc-x3-rgb-ddr4-3200mhz-8gb-ram-white",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/x3-rgb-ddr4-white/x3-rgb-ddr4-white-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "X3 RGB DDR4 3200 8GB WHITE"
+    "model": "Aegis"
   },
   {
     "retailer": "startech",
     "retailer_name": "OCPC XT II DDR4 3200MHz 8GB Desktop RAM",
-    "price": null,
+    "price": 3300,
     "url": "https://www.startech.com.bd/ocpc-xt-ii-ddr4-3200mhz-8gb-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/xt-ii-ddr4/xt-ii-228x228.webp",
     "availability": "Out of Stock",
@@ -1141,18 +1081,8 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "CORSAIR VENGEANCE RGB RS 8GB DDR4 3200MHz RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/corsair-vengeance-rgb-rs-8gb-ddr4-3200mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance-rgb-rs/vengeance-rgb-rs-01-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "VENGEANCE RGB RS"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Kingston FURY Beast 8GB 3200MHz DDR4 Desktop RAM",
-    "price": null,
+    "price": 3300,
     "url": "https://www.startech.com.bd/kingston-fury-beast-8gb-3200mhz-ddr4-desktop-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/kingston/fury-beast/fury-beast-01-228x228.jpg",
     "availability": "Out of Stock",
@@ -1191,13 +1121,23 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "CORSAIR VENGEANCE RGB RS 8GB DDR4 3600MHz RAM",
+    "retailer_name": "Team T-Force Vulcan Z 8GB DDR4 3200MHz CL16 Gaming RAM",
     "price": null,
-    "url": "https://www.startech.com.bd/corsair-vengeance-rgb-rs-8gb-ddr4-3600mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance-rgb-rs/vengeance-rgb-rs-01-228x228.webp",
+    "url": "https://www.startech.com.bd/team-t-force-vulcan-z-8gb-ddr4-3200mhz-cl16-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-z/vulcan-z-0001-228x228.jpg",
     "availability": "Out of Stock",
     "category": "RAM",
-    "model": "VENGEANCE RGB RS"
+    "model": "Vulcan Z"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Team T-CREATE CLASSIC 8GB DDR4 3200MHz Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-t-create-classic-8gb-ddr4-3200mhz-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/t-create-classic-ddr4/t-create-classic-ddr4-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "T-CREATE CLASSIC DDR4"
   },
   {
     "retailer": "startech",
@@ -1221,6 +1161,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "TEAM VULCAN RED 8GB DDR5 6000MHz Gaming Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-vulcan-red-8gb-ddr5-6000mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-red-16gb-kit/vulcan-red-16gb-kit-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "VULCAN DDR5"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Kingston FURY Beast 8GB DDR5 5600Mhz Desktop RAM",
     "price": null,
     "url": "https://www.startech.com.bd/kingston-fury-beast-8gb-ddr5-5600mhz-ram",
@@ -1241,13 +1191,33 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Team T-Force Delta 8GB 3200MHz DDR4 RGB White Desktop Gaming RAM",
+    "retailer_name": "OCPC X3 RGB DDR4 3200MHz 8GB Desktop RAM",
     "price": null,
-    "url": "https://www.startech.com.bd/team-delta-rgb-8gb-3200mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta/delta-00010-228x228.jpg",
+    "url": "https://www.startech.com.bd/ocpc-x3-rgb-ddr4-3200mhz-8gb-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/x3-rgb-ddr4/x3-rgb-ddr4-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "RAM",
-    "model": "Delta"
+    "model": "X3 RGB DDR4 3200 8GB"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "OCPC X3 RGB DDR4 3200MHz 8GB Desktop RAM White",
+    "price": null,
+    "url": "https://www.startech.com.bd/ocpc-x3-rgb-ddr4-3200mhz-8gb-ram-white",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/x3-rgb-ddr4-white/x3-rgb-ddr4-white-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "X3 RGB DDR4 3200 8GB WHITE"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Team T-Force VULCAN Z Red 8GB DDR4 3200MHz Desktop Gaming RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-t-force-vulcan-z-red-8gb-ddr4-3200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-z/vulcan-z-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "T-Force VULCAN Z"
   },
   {
     "retailer": "startech",
@@ -1258,6 +1228,26 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "FURY Beast"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Team T-CREATE EXPERT 8GB DDR4 3200MHz Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-t-create-expert-8gb-ddr4-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/t-create-expert-8gb-ddr4/t-create-expert-8gb-ddr4-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "T-CREATE EXPERT 8GB DDR4"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "TEAM Delta RGB 8GB DDR5 5200MHz Gaming Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-delta-rgb-8gb-ddr5-5200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-rgb/delta-rgb-black-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Delta RGB DDR5"
   },
   {
     "retailer": "startech",
@@ -1292,22 +1282,12 @@
   {
     "retailer": "startech",
     "retailer_name": "Corsair Vengeance LPX 8GB 3200MHz DDR4 Desktop RAM",
-    "price": 3500,
+    "price": 3800,
     "url": "https://www.startech.com.bd/corsair-vengeance-lpx-8gb-3200mhz",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/RAM/VENG_LPX_BLK_01-228x228.png",
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "Vengeance LPX 8GB"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "G.Skill Trident Z NEO RGB 8GB 3600MHz Gaming Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/g-skill-trident-z-neo-rgb-8gb-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z-neo/trident-z-neo-001-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Trident Z NEO"
   },
   {
     "retailer": "startech",
@@ -1321,6 +1301,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "Team Delta RGB 8GB 3200MHz DDR4 CL16 Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-delta-rgb-8gb-3200mhz-ddr4-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-rgb-ddr4/delta-rgb-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Delta RGB"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Kingston FURY Beast RGB 8GB DDR5 5600Mhz Desktop RAM",
     "price": null,
     "url": "https://www.startech.com.bd/kingston-fury-beast-rgb-8gb-5600mhz-ram",
@@ -1331,6 +1321,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "Team T-Force Delta 8GB 3200MHz DDR4 RGB White Desktop Gaming RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-delta-rgb-8gb-3200mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta/delta-00010-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Delta"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "TEAM T-FORCE DELTA RGB White 8GB 6000MHz DDR5 Gaming RAM",
     "price": null,
     "url": "https://www.startech.com.bd/team-t-force-delta-rgb-white-8gb-6000mhz-desktop-ram",
@@ -1338,16 +1338,6 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "T-FORCE DELTA RGB DDR5"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Lexar THOR 16GB DDR4 3200Mhz Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/lexar-thor-16gb-ddr4-3200mhz-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/lexar/8gb/thor-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "THOR 16 GB DDR4"
   },
   {
     "retailer": "startech",
@@ -1402,7 +1392,7 @@
   {
     "retailer": "startech",
     "retailer_name": "OCPC X3 RGB DDR4 3200MHz 16GB Desktop RAM",
-    "price": null,
+    "price": 5300,
     "url": "https://www.startech.com.bd/ocpc-x3-rgb-ddr4-3200mhz-16gb-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/x3-rgb-ddr4/x3-rgb-ddr4-01-228x228.webp",
     "availability": "Out of Stock",
@@ -1412,7 +1402,7 @@
   {
     "retailer": "startech",
     "retailer_name": "OCPC X3 RGB DDR4 3200MHz 16GB Desktop RAM White",
-    "price": null,
+    "price": 5200,
     "url": "https://www.startech.com.bd/ocpc-x3-rgb-ddr4-3200mhz-16gb-ram-white",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/x3-rgb-ddr4-white/x3-rgb-ddr4-white-228x228.webp",
     "availability": "Out of Stock",
@@ -1422,7 +1412,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Lexar 16GB DDR4 3200Mhz Desktop RAM",
-    "price": null,
+    "price": 5300,
     "url": "https://www.startech.com.bd/lexar-16gb-ddr4-3200mhz-desktop-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/lexar/8gb-ddr4-3200mhz/8gb-ddr4-3200mhz-01-228x228.webp",
     "availability": "Out of Stock",
@@ -1432,22 +1422,12 @@
   {
     "retailer": "startech",
     "retailer_name": "OCPC XT II DDR4 3200MHz 16GB Desktop RAM",
-    "price": null,
+    "price": 5100,
     "url": "https://www.startech.com.bd/ocpc-xt-ii-ddr4-3200mhz-16gb-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/xt-ii-ddr4-3200-16gb/xt-ii-ddr4-3200-16gb-228x228.webp",
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "XT II DDR4 3200 16GB"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "CORSAIR VENGEANCE LPX 16GB DDR4 3600MHz RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/corsair-vengeance-lpx-16gb-ddr4-3600mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance-lpx/vengeance-lpx-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "VENGEANCE LPX"
   },
   {
     "retailer": "startech",
@@ -1461,18 +1441,8 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "CORSAIR VENGEANCE RGB RS 16GB DDR4 3600MHz RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/corsair-vengeance-rgb-rs-16gb-ddr4-3600mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance-rgb-rs/vengeance-rgb-rs-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "VENGEANCE RGB RS"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Kingston FURY Beast RGB 16GB 3200MHz DDR4 Heatsink Desktop RAM",
-    "price": null,
+    "price": 6000,
     "url": "https://www.startech.com.bd/kingston-fury-beast-rgb-16gb-3200mhz-ddr4-desktop-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/kingston/fury-beast-rgb/fury-beast-rgb-ddr4-01-228x228.webp",
     "availability": "Out of Stock",
@@ -1492,7 +1462,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Corsair Vengeance LPX 16GB DDR4 DRAM 3200MHz RAM",
-    "price": 5800,
+    "price": 6000,
     "url": "https://www.startech.com.bd/corsair-16gb-3200mhz-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance-16gb-ddr4/16gb-ddr4-228x228.jpg",
     "availability": "Out of Stock",
@@ -1521,13 +1491,13 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "G.SKILL Trident Z Royal RGB 8GB DDR4 4600MHz Desktop RAM",
-    "price": 6100,
-    "url": "https://www.startech.com.bd/g-skill-trident-z-royal-8gb-4600mhz-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z-royal/trident-z-royal-001-228x228.jpg",
+    "retailer_name": "PNY XLR8 RGB 16GB DDR4 3200MHz Desktop RAM White",
+    "price": null,
+    "url": "https://www.startech.com.bd/pny-xlr8-rgb-16gb-ddr4-ram-white",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/pny/xlr8-rgb-8gb/xlr8-8gb-rgb-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "RAM",
-    "model": "Trident Z Royal"
+    "model": "XLR8 RGB"
   },
   {
     "retailer": "startech",
@@ -1551,28 +1521,8 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Team T-Force VULCAN RED 16GB DDR5 6000MHz CL38 Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-t-force-vulcan-red-16gb-ddr5-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/t-force-vulcan-red-16gb-ddr5/t-force-vulcan-red-16gb-ddr5-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "T-Force VULCAN RED 16GB DDR5"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "TEAM T-Force DELTA RGB White 16GB 3200MHz DDR4 CL16 Gaming RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-t-force-delta-rgb-white-16gb-3200mhz-ddr4-cl16-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-rgb-16gb/delta-white-10-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "T-Force DELTA RGB"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Corsair VENGEANCE 16GB DDR5 5600MHz CL40 Desktop RAM",
-    "price": null,
+    "price": 6800,
     "url": "https://www.startech.com.bd/corsair-vengeance-16gb-ddr5-5600mhz-cl40-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/corsair/vengeance-ddr5/vengeance-ddr5-01-228x228.webp",
     "availability": "Out of Stock",
@@ -1582,7 +1532,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Corsair VENGEANCE 16GB DDR5 6000MHz CL36 Desktop RAM",
-    "price": null,
+    "price": 7050,
     "url": "https://www.startech.com.bd/corsair-vengeance-16gb-ddr5-6000mhz-cl36-desktop-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance/vengeance-03-228x228.webp",
     "availability": "Out of Stock",
@@ -1612,32 +1562,12 @@
   {
     "retailer": "startech",
     "retailer_name": "OCPC PISTA 16GB DDR5 6000MHz CL38 RGB Desktop RAM",
-    "price": null,
+    "price": 6900,
     "url": "https://www.startech.com.bd/ocpc-pista-16gb-ddr5-6000mhz-cl38-rgb-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/ocpc/pista/pista-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "PISTA"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Team T-Force VULCAN 16GB 6000MHz DDR5 CL38 Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-t-force-vulcan-16gb-6000mhz-ddr5-cl38-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-black-8gb/vulcan-red-8gb-black-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "VULCAN DDR5"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Corsair VENGEANCE 16GB DDR5 6000MHz CL30 Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/corsair-vengeance-16gb-ddr5-6000mhz-cl30-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance/vengeance-03-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "VENGEANCE"
   },
   {
     "retailer": "startech",
@@ -1662,7 +1592,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Corsair VENGEANCE RGB 16GB DDR5 6000MHz CL36 Desktop RAM",
-    "price": null,
+    "price": 7400,
     "url": "https://www.startech.com.bd/corsair-vengeance-rgb-16gb-ddr5-6000mhz-cl36-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/vengeance-rgb/vengeance-rgb-03-228x228.webp",
     "availability": "Out of Stock",
@@ -1691,6 +1621,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "TEAM DELTA TUF Gaming Alliance RGB 16GB 6000MHz DDR5 Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-delta-tuf-gaming-alliance-rgb-16gb-ddr5-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-tuf-gaming-alliance-rgb/delta-tuf-gaming-alliance-rgb-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "DELTA TUF Gaming Alliance RGB DDR5"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "G.Skill Trident Z5 Neo RGB 16GB DDR5 5600Mhz Desktop RAM",
     "price": 7300,
     "url": "https://www.startech.com.bd/g-skill-trident-z5-neo-rgb-16gb-ddr5-desktop-ram",
@@ -1698,16 +1638,6 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "Trident Z5 Neo"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "TEAM Delta RGB 16GB (2x8GB) DDR5 5200MHz Gaming Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-delta-rgb-16gb-ddr5-5200mhz-ram-kit",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-rgb/delta-rgb-kit-002-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Delta RGB DDR5"
   },
   {
     "retailer": "startech",
@@ -1731,16 +1661,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "G.Skill Trident Z5 RGB 16GB DDR5 6000MHz CL32 Desktop RAM Silver",
-    "price": 7800,
-    "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-16gb-ddr5-6000mhz-cl32-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/z5-rgb-16gb-ddr5/trident-z5-rgb-01-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Trident Z5 RGB"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "TEAM Delta RGB 16GB DDR5 6000MHz CL30 Gaming Desktop RAM",
     "price": null,
     "url": "https://www.startech.com.bd/team-delta-rgb-16gb-ddr5-6000mhz-cl30-desktop-ram",
@@ -1748,6 +1668,16 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "Delta RGB DDR5"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 RGB 16GB DDR5 6000MHz CL32 Desktop RAM Silver",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-16gb-ddr5-6000mhz-cl32-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/z5-rgb-16gb-ddr5/trident-z5-rgb-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident Z5 RGB"
   },
   {
     "retailer": "startech",
@@ -1811,16 +1741,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "G.Skill Trident Z5 RGB 16GB DDR5 7200MHz Desktop RAM",
-    "price": 8700,
-    "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-16gb-ddr5-7200mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z5-rgb/trident-z5-rgb-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Trident Z5 RGB"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Kingston FURY Renegade 16GB DDR5 6800MHz Desktop RAM",
     "price": null,
     "url": "https://www.startech.com.bd/kingston-fury-renegade-16gb-ddr5-6800mhz-desktop-ram",
@@ -1828,16 +1748,6 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "FURY Renegade"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "TEAM T-FORCE DELTA RGB 16GB 6400MHz DDR5 Gaming RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-t-force-delta-rgb-16gb-6400mhz-ddr5-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-rgb-16gb-kit/delta-rgb-16gb-kit-02-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "T-FORCE DELTA RGB DDR5"
   },
   {
     "retailer": "startech",
@@ -1852,22 +1762,12 @@
   {
     "retailer": "startech",
     "retailer_name": "G.Skill Trident Z5 RGB 32GB DDR5 5600MHz Desktop RAM",
-    "price": 12800,
+    "price": 11500,
     "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-32gb-ddr5-5600mhz-ram",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-tz5k-rgb/trident-tz5k-rgb-01-228x228.jpg",
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "Trident Z5 RGB"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "G.Skill Trident Z5 Neo RGB 32GB DDR5 6000Mhz Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/g-skill-trident-z5-neo-rgb-32gb-ddr5-6000mhz-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z5-neo/trident-z5-neo-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Trident Z5 Neo RGB"
   },
   {
     "retailer": "startech",
@@ -1878,16 +1778,6 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "DELTA RGB DDR5"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Corsair DOMINATOR PLATINUM RGB 16GB DDR5 7200MHz Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/corsair-dominator-platinum-rgb-16gb-ddr5-7200mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/dominator-platinum-rgb-ddr5/dominator-platinum-rgb-ddr5-04-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "DOMINATOR PLATINUM RGB DDR5"
   },
   {
     "retailer": "startech",
@@ -1911,16 +1801,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "G.Skill Trident Z5 RGB 32GB DDR5 6000MHz Desktop RAM",
-    "price": 13500,
-    "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-32gb-ddr5-6000mhz-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z5-rgb/trident-z5-rgb-32gb-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "Trident Z5 RGB"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Corsair VENGEANCE RGB 24GB DDR5 7200MHz Desktop RAM",
     "price": null,
     "url": "https://www.startech.com.bd/corsair-vengeance-rgb-24gb-ddr5-7200mhz-ram",
@@ -1941,6 +1821,26 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 Neo RGB 32GB DDR5 6000Mhz Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-neo-rgb-32gb-ddr5-6000mhz-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z5-neo/trident-z5-neo-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident Z5 Neo RGB"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 RGB 32GB DDR5 6000MHz Desktop RAM",
+    "price": 14000,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-32gb-ddr5-6000mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z5-rgb/trident-z5-rgb-32gb-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident Z5 RGB"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Kingston FURY Beast 32GB DDR5 6000MHz CL30 RGB Desktop RAM",
     "price": null,
     "url": "https://www.startech.com.bd/kingston-fury-beast-32gb-ddr5-6000mhz-cl30-rgb-ram",
@@ -1948,26 +1848,6 @@
     "availability": "Out of Stock",
     "category": "RAM",
     "model": "FURY Beast"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "TEAM T-FORCE DELTA RGB 16GB 8000MHz DDR5 Gaming RAM White",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-t-force-delta-rgb-16gb-8000mhz-ddr5-gaming-ram-white",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-rgb/delta-rgb-05-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "DELTA RGB DDR5"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "TEAM DELTA TUF Gaming Alliance RGB 32GB (2x 16GB) 6000MHz DDR5 Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-delta-tuf-gaming-alliance-rgb-32gb-ddr5-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/delta-tuf-gaming-alliance-rgb/delta-tuf-gaming-alliance-rgb-04-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "DELTA TUF Gaming Alliance RGB DDR5"
   },
   {
     "retailer": "startech",
@@ -1981,16 +1861,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "TEAM XTREEM 16GB DDR5 8000MHz Desktop RAM",
-    "price": null,
-    "url": "https://www.startech.com.bd/team-xtreem-32gb-ddr5-8000mhz-desktop-ram",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/xtreem-ddr5/xtreem-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "RAM",
-    "model": "XTREEM"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Kingston FURY Renegade RGB 48GB DDR5 6000MHz CL32 Desktop RAM",
     "price": 23999,
     "url": "https://www.startech.com.bd/kingston-fury-renegade-rgb-48gb-ddr5-6000mhz-ram",
@@ -2001,8 +1871,138 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Gigasonic RDA-1705M 17 Inch HDMI LED Square Monitor",
+    "retailer_name": "Kingston FURY Renegade RGB 48GB DDR5 6400MHz CL32 Desktop RAM",
+    "price": 24999,
+    "url": "https://www.startech.com.bd/kingston-fury-renegade-rgb-48gb-ddr5-6400mhz-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/kingston/fury-renegade/fury-renegade-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "FURY Renegade RGB"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Adata XPG GAMMIX D10 8GB DDR4 2666 MHz Desktop RAM",
     "price": null,
+    "url": "https://www.startech.com.bd/adata-xpg-gammix-d10-8gb-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/component/ram/adata/Adata Desktop RAM/adata-xpg-gammix-d10-8gb-ram/adata-xpg-gammix-d10-8gb-ram-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Adata XPG GAMMIX D10"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 16GB DDR5 5600MHz CL36 Desktop RAM Black",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-16gb-ddr5-5600mhz-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-tz5k/trident-tz5k-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident Z5"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 16GB 5600MHz DDR5 CL40 Desktop RAM Silver",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-16gb-5600mhz-ddr5-desktop-ram-silver",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-tz5s/trident-tz5s-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident Z5"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 16GB 5600MHz DDR5 CL40 Desktop RAM Black",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-16gb-5600mhz-ddr5-desktop-ram-black",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-tz5k/trident-tz5k-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident TZ5K"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Adata 32GB DDR5 4800MHz U-DIMM Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/adata-32gb-ddr5-4800mhz-u-dimm-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/adata/ddr5-4800mhz/adata-ddr5-4800mhz-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "DDR5 4800MHz U-DIMM"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 RGB 16GB DDR5 5600MHz CL40 Desktop RAM Silver",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-16gb-ddr5-5600mhz-desktop-ram-silver",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z5-rgb/trident-z5-rgb-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident Z5 RGB"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Trident Z5 RGB 16GB DDR5 5600MHz CL36 Desktop RAM Silver",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-trident-z5-rgb-16gb-5600mhz-ddr5-desktop-ram-silver",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/trident-z5-rgb/trident-z5-rgb-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Trident Z5 RGB"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Ripjaws S5 16GB DDR5 5200MHz CL40 Desktop RAM White",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-ripjaws-s5-16gb-ddr5-5200mhz-ram-white",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/ripjaws-s5/ripjaws-s5-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Ripjaws S5"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "G.Skill Ripjaws S5 16GB DDR5 5200MHz CL36 Desktop RAM White",
+    "price": null,
+    "url": "https://www.startech.com.bd/g-skill-ripjaws-s5-16gb-5200mhz-ddr5-ram-black",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/gskill/ripjaws-s5/ripjaws-s5-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "Ripjaws S5"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Team T-Force VULCAN 16GB 6000MHz DDR5 Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/team-t-force-vulcan-16gb-6000mhz-ddr5-desktop-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/team/vulcan-black-8gb/vulcan-red-8gb-black-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "VULCAN DDR5"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Corsair DOMINATOR PLATINUM RGB 16GB (2x8GB) DDR4 3600MHz C18 RAM Kit",
+    "price": null,
+    "url": "https://www.startech.com.bd/corsair-dominator-platinum-rgb-16gb-ddr4-3600mhz-c18-ram-kit",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/cosair/dominator-platinum-rgb/corsair-dominator-platinum-rgb-32gb-c16-ram-kit-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "DOMINATOR PLATINUM RGB"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Adata 8GB DDR5 4800MHz U-DIMM Desktop RAM",
+    "price": null,
+    "url": "https://www.startech.com.bd/adata-8gb-ddr5-4800mhz-u-dimm-ram",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/ram/adata/ddr5-4800mhz/adata-ddr5-4800mhz-01-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "RAM",
+    "model": "DDR5 4800MHz U-DIMM"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Gigasonic RDA-1705M 17 Inch HDMI LED Square Monitor",
+    "price": 4500,
     "url": "https://www.startech.com.bd/gigasonic-rda-1705m-17-inch-led-square-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/gigasonic/rda-1705m/rda-1705m-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2041,6 +2041,16 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "Walton WDF13C22I 21.45\" 100Hz FHD IPS Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/walton-wdf13c22i-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/walton/wdf13c22i/wdf13c22i-y-shape-stand-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "WDF13C22I"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Gigasonic GS-21.5FHD500S8 21.5\" 100Hz FHD IPS Gaming Monitor",
     "price": null,
     "url": "https://www.startech.com.bd/gigasonic-gs-21-5fhd500s8-gaming-monitor",
@@ -2071,26 +2081,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "PC Power PCGM-King22 21.45\" IPS FHD 100Hz Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/pc-power-pcgm-king22-ips-fhd-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/pc-power/pcgm-king22/pcgm-king22-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "PCGM-King22"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Walton WDF13C22I 21.45\" 100Hz FHD IPS Monitor",
-    "price": 8500,
-    "url": "https://www.startech.com.bd/walton-wdf13c22i-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/walton/wdf13c22i/wdf13c22i-y-shape-stand-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "WDF13C22I"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Hikvision DS-D5022F2-2P2/CBD 21.5\" 100Hz Full HD IPS Monitor",
     "price": null,
     "url": "https://www.startech.com.bd/hikvision-ds-d5022f2-2p2-monitor",
@@ -2112,7 +2102,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Walton WD215I10 21.45\" 100Hz FHD IPS Monitor",
-    "price": 8600,
+    "price": 8450,
     "url": "https://www.startech.com.bd/walton-wd215i10-100hz-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/walton/wd215i10/wd215i10-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2121,8 +2111,18 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "PC Power PCGM-King22 21.45\" IPS FHD 100Hz Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/pc-power-pcgm-king22-ips-fhd-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/pc-power/pcgm-king22/pcgm-king22-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "PCGM-King22"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "Lenovo D19-10 18.5 Inch HD HDMI VGA Monitor",
-    "price": 9700,
+    "price": 9200,
     "url": "https://www.startech.com.bd/lenovo-d19-10-wled-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lenovo/d19-10/d19-10-001-228x228.webp",
     "availability": "Out of Stock",
@@ -2162,7 +2162,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Dell 20 E2020H 19.5-inch 60Hz HD+ Monitor",
-    "price": 9400,
+    "price": null,
     "url": "https://www.startech.com.bd/dell-20-e2020h-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/dell/e2020h/e2020h-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2182,7 +2182,7 @@
   {
     "retailer": "startech",
     "retailer_name": "Lenovo D20-30 19.5 Inch HD+ HDMI VGA Monitor",
-    "price": null,
+    "price": 9900,
     "url": "https://www.startech.com.bd/lenovo-d20-30-19-5-inch-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lenovo/d20-30/d20-30-1-228x228.webp",
     "availability": "Out of Stock",
@@ -2222,7 +2222,7 @@
   {
     "retailer": "startech",
     "retailer_name": "ViewSonic VA220-H 22\" 100Hz Full HD Monitor",
-    "price": null,
+    "price": 9500,
     "url": "https://www.startech.com.bd/viewsonic-va220-h-22-inch-100hz-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/va220-h/va220-h-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2251,26 +2251,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Philips 22E1N1100LA 21.5\" 100Hz FHD LED Monitor",
-    "price": 11200,
-    "url": "https://www.startech.com.bd/philips-22e1n1100la-100hz-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/philips/22e1n1100la/22e1n1100la-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "22E1N1100LA"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "ViewSonic VA2209-H-2 22\" 100HZ 1ms FHD IPS Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/viewsonic-va2209-h-2-100hz-fhd-ips-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/va2209-h-2/va2209-h-2-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "VA2209-H-2"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Xiaomi Redmi 1A 23.8\" IPS 100Hz Monitor",
     "price": 11700,
     "url": "https://www.startech.com.bd/xiaomi-redmi-1a-100hz-monitor",
@@ -2291,16 +2271,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "ViewSonic VA2214-H 22\" 100Hz IPS FHD Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/viewsonic-va2214-h-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/va2214-h/va2214-h-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "VA2214-H"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "HP V20 19.5\" HD+ LED TN Monitor",
     "price": null,
     "url": "https://www.startech.com.bd/hp-v20-hd-monitor",
@@ -2318,6 +2288,16 @@
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "22B20JH2"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "ViewSonic VA2214-H 22\" 100Hz IPS FHD Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/viewsonic-va2214-h-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/va2214-h/va2214-h-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "VA2214-H"
   },
   {
     "retailer": "startech",
@@ -2351,8 +2331,18 @@
   },
   {
     "retailer": "startech",
+    "retailer_name": "ViewSonic VA2209-H-2 22\" 100HZ 1ms FHD IPS Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/viewsonic-va2209-h-2-100hz-fhd-ips-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/va2209-h-2/va2209-h-2-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "VA2209-H-2"
+  },
+  {
+    "retailer": "startech",
     "retailer_name": "LG 22MK430H-B 22\" Full HD IPS LED Monitor with AMD FreeSync",
-    "price": 12400,
+    "price": null,
     "url": "https://www.startech.com.bd/lg-22mk430h-b-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lg-monitor/22mk430h-b/22mk430h-b-228x228.jpg",
     "availability": "Out of Stock",
@@ -2391,16 +2381,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "ASUS VY229HE 21.45\" 75Hz FHD IPS Eye Care Monitor",
-    "price": 12800,
-    "url": "https://www.startech.com.bd/asus-vy229he-22-inch-eye-care-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/asus/vy229he/vy229he-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "VY229HE"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Aiwa MF2528-B 24.5\" Full HD IPS 100Hz Monitor",
     "price": 12990,
     "url": "https://www.startech.com.bd/aiwa-mf2528-b-100hz-monitor",
@@ -2428,6 +2408,16 @@
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "PCM22FRX"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "ASUS VA279HG 27\" 120Hz FHD IPS Eye Care Gaming Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/asus-va279hg-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/asus/va279hg/va279hg-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "VA279HG"
   },
   {
     "retailer": "startech",
@@ -2501,16 +2491,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Aiwa MD2404-F 24\" Full HD IPS 180Hz Gaming Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/aiwa-md2404-f-24-inch-180hz-gaming-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/aiwa/md2404-f/md2404-f-007-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "MD2404-F"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Xiaomi Redmi G24 23.8\" 180Hz IPS FHD Gaming Monitor",
     "price": null,
     "url": "https://www.startech.com.bd/xiaomi-redmi-g24-180hz-ips-fhd-gaming-monitor",
@@ -2521,18 +2501,28 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "HP M22f 22\" FHD IPS Monitor",
+    "retailer_name": "Dahua DHI-LM24-B221 24\" FHD 144Hz IPS Gaming Monitor",
     "price": null,
-    "url": "https://www.startech.com.bd/hp-m22f-22-inch-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/hp-monitor/m22f/m22f-228x228.jpg",
+    "url": "https://www.startech.com.bd/dahua-dhi-lm24-b221-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/dahua/dhi-lm24-b221/dhi-lm24-b221-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "Monitor",
-    "model": "M22f"
+    "model": "DHI-LM24-B221"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Walton WD238I12 23.8\" 75Hz FHD IPS Monitor",
+    "price": 15750,
+    "url": "https://www.startech.com.bd/walton-wd238i12-23-8-inch-ips-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/walton/wd238i12/wd238i12-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "WD238I12"
   },
   {
     "retailer": "startech",
     "retailer_name": "Xiaomi Redmi P27FBB-RA 27\" FHD 100Hz Professional Monitor",
-    "price": 14900,
+    "price": null,
     "url": "https://www.startech.com.bd/xiaomi-redmi-p27fbb-ra-27-inch-professional-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/xiaomi/p27fbb-ra/p27fbb-ra-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2548,6 +2538,16 @@
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "25B36H"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "HP M22f 22\" FHD IPS Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/hp-m22f-22-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/hp-monitor/m22f/m22f-228x228.jpg",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "M22f"
   },
   {
     "retailer": "startech",
@@ -2571,23 +2571,13 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Dahua DHI-LM25-B211B 24.5\" 120Hz IPS FHD Monitor",
-    "price": 15500,
-    "url": "https://www.startech.com.bd/dahua-dhi-lm25-b211b-fhd-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/dahua/dhi-lm25-b211b/dhi-lm25-b211b-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "DHI-LM25-B211B"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "ThundeRobot Thor JF24F200P 23.8\" 200Hz FHD Fast VA Gaming Monitor",
+    "retailer_name": "Lenovo L24-4e 23.8\" 100Hz FHD IPS Monitor",
     "price": null,
-    "url": "https://www.startech.com.bd/thunderobot-thor-jf24f200p-gaming-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/thunderobot/thor-jq27f180p/thor-jq27f180p-01-228x228.webp",
+    "url": "https://www.startech.com.bd/lenovo-l24-4e-fhd-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lenovo/l24-4e/l24-4e-02-228x228.webp",
     "availability": "Out of Stock",
     "category": "Monitor",
-    "model": "Thor JF24F200P"
+    "model": "L24-4e"
   },
   {
     "retailer": "startech",
@@ -2601,33 +2591,23 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "ASUS VZ24EHE IPS FHD 23.8 inch Ultra Slim Monitor",
-    "price": 16900,
-    "url": "https://www.startech.com.bd/asus-vz24ehe-fhd-ultra-slim-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/asus/vz24ehe/asus-vz24ehe-fhd-ultra-slim-monitor-001-228x228.jpg",
+    "retailer_name": "ThundeRobot Thor JF24F200P 23.8\" 200Hz FHD Fast VA Gaming Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/thunderobot-thor-jf24f200p-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/thunderobot/thor-jq27f180p/thor-jq27f180p-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "Monitor",
-    "model": "VZ24EHE"
+    "model": "Thor JF24F200P"
   },
   {
     "retailer": "startech",
     "retailer_name": "Samsung LS24D300GAW 23.8\" 100Hz FHD IPS Monitor",
-    "price": 16500,
+    "price": 17000,
     "url": "https://www.startech.com.bd/samsung-ls24d300gaw-23-8-inch-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/samsung/ls22d300gaw/ls22d300gaw-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "LS24D300GAW"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Viewsonic VA240A-H 24” FHD 120Hz IPS Monitor",
-    "price": 17000,
-    "url": "https://www.startech.com.bd/viewsonic-va240a-h-24-inch-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/va240a-h/va240a-h-001-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "VA240A-H"
   },
   {
     "retailer": "startech",
@@ -2641,18 +2621,8 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "BenQ GW2491 23.8\" 100Hz FHD IPS Monitor",
-    "price": 17200,
-    "url": "https://www.startech.com.bd/benq-gw2491-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/benq/gw2491/gw2491-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "GW2491"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Value-Top S27IFR100 27\" FHD 100Hz IPS Monitor",
-    "price": 17000,
+    "price": 16500,
     "url": "https://www.startech.com.bd/value-top-s27ifr100-27-inch-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/value-top/s27ifr100/s27ifr100-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2671,33 +2641,113 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Lenovo L24-4e 23.8\" 100Hz FHD IPS Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/lenovo-l24-4e-fhd-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lenovo/l24-4e/l24-4e-02-228x228.webp",
+    "retailer_name": "Xiaomi Redmi G24 23.8\" 240Hz 1ms IPS FHD Gaming Monitor",
+    "price": 16900,
+    "url": "https://www.startech.com.bd/xiaomi-redmi-g24-240hz-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/xiaomi/redmi-g24-240hz/redmi-g24-240hz-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "Monitor",
-    "model": "L24-4e"
+    "model": "Redmi G24"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army P2510G2 24.5\" 200Hz FHD Fast IPS Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/titan-army-p2510g2-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/army-p2510g2/p2510g2-10-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "P2510G2"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army P275MR+ 27\" 2K 200Hz QD Mini LED FAST IPS Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/titan-army-p275mr-plus-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/p275mr-plus/p275mr-10-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "P275MR+"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army C34A1R 34\" WQHD 165Hz VA Curved Gaming Monitor",
+    "price": 48500,
+    "url": "https://www.startech.com.bd/titan-army-c34a1r-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/c34a1r/c34a1r-10-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "C34A1R"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army P2711V 27\" 4K FHD FAST IPS Dual Mode Gaming Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/titan-army-p2711v-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/p2711v/p2711v-05-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "P2711V"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army C30SK PRO 30\" 200Hz WFHD VA Ultrawide Curved Gaming Monitor",
+    "price": 40000,
+    "url": "https://www.startech.com.bd/titan-army-c30sk-pro-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/c30sk-pro/c30sk-pro-11-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "C30SK PRO"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army P2710R2 27\" WQHD 200Hz FAST IPS Gaming Monitor",
+    "price": 26500,
+    "url": "https://www.startech.com.bd/titan-army-p2710r2-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/army-p2710r2/army-p2710r2-05-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "P2710R2"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army P275MV 27\" 4K FHD FAST IPS Dual Mode Gaming Monitor",
+    "price": 55500,
+    "url": "https://www.startech.com.bd/titan-army-p275mv-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/p275mv/p275mv-05-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "P275MV"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Dahua DHI-LM27-B221 27\" FHD 144Hz IPS Gaming Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/dahua-dhi-lm27-b221-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/dahua/dhi-lm24-b221/dhi-lm24-b221-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "DHI-LM27-B221"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Titan Army P2712R 27\" 2K QHD 200Hz FAST IPS Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/titan-army-p2712r-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/titan/p2712r/p2712r-10-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "P2712R"
   },
   {
     "retailer": "startech",
     "retailer_name": "Lenovo L24i-4A 23.8\" 100Hz FHD IPS Monitor",
-    "price": null,
+    "price": 18100,
     "url": "https://www.startech.com.bd/lenovo-l24i-4a-fhd-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lenovo/l24i-4a/l24i-4a-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "L24i-4A"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Xiaomi Redmi G27 27-Inch 180Hz FHD IPS Gaming Monitor",
-    "price": 17600,
-    "url": "https://www.startech.com.bd/xiaomi-redmi-g27-27-inch-180hz-gaming-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/xiaomi/redmi-g27/xiaomi-redmi-g27-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "Redmi G27"
   },
   {
     "retailer": "startech",
@@ -2721,18 +2771,8 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "MSI PRO MP251W E2 24.5\" 120Hz IPS FHD Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/msi-pro-mp251w-e2-fhd-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/msi/mp251w-e2/mp251w-e2-03-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "PRO MP251W E2"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "PC Power PCG25F180W 25 Inch FHD IPS 180Hz Gaming Monitor",
-    "price": null,
+    "price": 19000,
     "url": "https://www.startech.com.bd/pc-power-pcg25f180w-gaming-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/pc-power/pcg25f180w/pcg25f180w-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2781,46 +2821,6 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "HP M24fwa 23.8-Inch 75Hz FHD IPS Monitor",
-    "price": 20000,
-    "url": "https://www.startech.com.bd/hp-m24fwa-fhd-ips-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/hp-monitor/m24fwa/m24fwa-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "M24fwa"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "BenQ GW2490 23.8\" 100Hz FHD IPS Monitor",
-    "price": 17200,
-    "url": "https://www.startech.com.bd/benq-gw2490-fhd-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/benq/gw2490/gw2490-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "GW2490"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Dell S2425H 23.8\" IPS 100Hz FHD Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/dell-s2425h-100hz-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/dell/s2425h/s2425h-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "S2425H"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Asus VA229QSB 21.5\" IPS Full HD Eye Care Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/asus-va229qsb-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/asus/va229qsb/va229qsb-01-228x228.jpg",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "VA229QSB"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "AOC 24G11E2 23.8\" 180Hz FHD FAST IPS Gaming Monitor",
     "price": 19600,
     "url": "https://www.startech.com.bd/aoc-24g11e2-gaming-monitor",
@@ -2828,26 +2828,6 @@
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "24G11E2"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Asus VA249QGS 23.8\" 120Hz FHD IPS Business Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/asus-va249qgs-120hz-business-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/asus/va249qgs/va249qgs-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "VA249QGS"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Lenovo L27i-4A 27\" 100Hz FHD IPS Monitor",
-    "price": 20500,
-    "url": "https://www.startech.com.bd/lenovo-l27i-4a-fhd-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lenovo/l24i-4a/l24i-4a-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "L27i-4A"
   },
   {
     "retailer": "startech",
@@ -2882,7 +2862,7 @@
   {
     "retailer": "startech",
     "retailer_name": "ViewSonic VX2479A-HD-PRO 24\" 240Hz IPS FHD Gaming Monitor",
-    "price": null,
+    "price": 19900,
     "url": "https://www.startech.com.bd/viewsonic-vx2479a-hd-pro-24-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/vx2479a-hd-pro/vx2479a-hd-pro-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2898,16 +2878,6 @@
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "Thor ZPF25F240"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "LG 27MS500-B 27\" FHD 100Hz IPS Monitor",
-    "price": 21500,
-    "url": "https://www.startech.com.bd/lg-27ms500-b-fhd-ips-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/lg-monitor/27ms500-b/27ms500-b-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "27MS500-B"
   },
   {
     "retailer": "startech",
@@ -2931,18 +2901,8 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "BenQ GW2790 27\" 100Hz FHD IPS Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/benq-gw2790-fhd-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/benq/gw2790/gw2790-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "GW2790"
-  },
-  {
-    "retailer": "startech",
     "retailer_name": "Viewsonic XG2409A 24\" FHD 240Hz IPS Gaming Monitor",
-    "price": 23700,
+    "price": null,
     "url": "https://www.startech.com.bd/viewsonic-xg2409a-24-inch-gaming-monitor",
     "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/viewsonic/xg2409a/xg2409a-01-228x228.webp",
     "availability": "Out of Stock",
@@ -2958,16 +2918,6 @@
     "availability": "Out of Stock",
     "category": "Monitor",
     "model": "GW2490T"
-  },
-  {
-    "retailer": "startech",
-    "retailer_name": "Asus TUF Gaming VG259Q5A 24.5\" FHD 200Hz IPS Gaming Monitor",
-    "price": null,
-    "url": "https://www.startech.com.bd/asus-tuf-gaming-vg259q5a-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/asus/tuf-gaming-vg259q5a/tuf-gaming-vg259q5a-01-228x228.webp",
-    "availability": "Out of Stock",
-    "category": "Monitor",
-    "model": "TUF Gaming VG259Q5A"
   },
   {
     "retailer": "startech",
@@ -2991,12 +2941,62 @@
   },
   {
     "retailer": "startech",
-    "retailer_name": "Philips Evnia 25M2N3200 25\" 180Hz FHD IPS G-SYNC Gaming Monitor",
-    "price": 23500,
-    "url": "https://www.startech.com.bd/philips-evnia-25m2n3200-gaming-monitor",
-    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/philips/evnia-25m2n3200/evnia-25m2n3200-01-228x228.webp",
+    "retailer_name": "Samsung LS27D300GAW 27\" 100Hz FHD IPS Monitor",
+    "price": 23800,
+    "url": "https://www.startech.com.bd/samsung-ls27d300gaw-fhd-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/samsung/ls27d300gaw/ls27d300gaw-01-228x228.webp",
     "availability": "Out of Stock",
     "category": "Monitor",
-    "model": "Evnia 25M2N3200"
+    "model": "LS27D300GAW"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "MSI PRO MP275 E2 27\" 120Hz IPS FHD Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/msi-pro-mp275-e2-27-inch-120hz-ips-fhd-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/msi/pro-mp275-e2/pro-mp275-e2-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "PRO MP275 E2"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "Dahua LM25-E241A 24.5\" 320Hz 1ms IPS FHD Gaming Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/dahua-lm25-e241a-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/dahua/lm25-e241a/lm25-e241a-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "LM25-E241A"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "MSI PRO MP275PG 27\" 100Hz 1ms FHD IPS Business Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/msi-pro-mp275pg-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/msi/pro-mp275pg/pro-mp275pg-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "PRO MP275PG"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "MSI PRO MP275W E2 27\" 120Hz IPS FHD Monitor",
+    "price": null,
+    "url": "https://www.startech.com.bd/msi-pro-mp275w-e2-27-inch-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/msi/pro-mp275w-e2/pro-mp275w-e2-01-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "PRO MP275W E2"
+  },
+  {
+    "retailer": "startech",
+    "retailer_name": "ThundeRobot Thor CF25F300-W 24.5\" 320Hz FHD Fast IPS Gaming Monitor",
+    "price": 24500,
+    "url": "https://www.startech.com.bd/thunderobot-thor-cf25f300-w-gaming-monitor",
+    "image_url": "https://www.startech.com.bd/image/cache/catalog/monitor/thunderobot/thor-cf25f300-w/thor-cf25f300-w-1-228x228.webp",
+    "availability": "Out of Stock",
+    "category": "Monitor",
+    "model": "Thor CF25F300-W"
   }
 ]

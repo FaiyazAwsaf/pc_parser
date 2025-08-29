@@ -127,7 +127,7 @@ class MyOrdersView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
-        return Order.objects.filter(product__seller=self.request.user)
+        return Order.objects.filter(product__seller=self.request.user).select_related('product', 'buyer', 'product__seller')
 
 class ChatListView(generics.ListAPIView):
     serializer_class = ChatSerializer

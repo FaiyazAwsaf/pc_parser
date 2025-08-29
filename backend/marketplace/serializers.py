@@ -54,15 +54,23 @@ class ProductCreateSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.name', read_only=True)
+    product_category = serializers.CharField(source='product.category', read_only=True)
+    product_image = serializers.SerializerMethodField()
     seller_name = serializers.CharField(source='product.seller.username', read_only=True)
     buyer_name = serializers.CharField(source='buyer.username', read_only=True)
     
     class Meta:
         model = Order
-        fields = ['id', 'product', 'product_name', 'seller_name', 'buyer_name', 
-                 'status', 'quantity', 'total_price', 'shipping_address', 
-                 'created_at', 'updated_at']
+        fields = ['id', 'product', 'product_name', 'product_category', 'product_image',
+                 'seller_name', 'buyer_name', 'status', 'quantity', 'total_price', 
+                 'shipping_address', 'created_at', 'updated_at']
         read_only_fields = ['buyer', 'total_price', 'created_at', 'updated_at']
+    
+    def get_product_image(self, obj):
+        """Get product image URL, handling cases where image is None"""
+        if obj.product.image:
+            return obj.product.image.url
+        return None
 
 class ChatSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.name', read_only=True)

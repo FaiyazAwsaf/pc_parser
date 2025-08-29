@@ -413,7 +413,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import AddProductModal from '../components/AddProductModal.vue'
 import EditProductModal from '../components/EditProductModal.vue'
@@ -765,5 +765,17 @@ onMounted(async () => {
     fetchChats()
   ])
   loading.value = false
+
+  window.addEventListener('orderPlaced', handleOrderPlaced)
+})
+
+const handleOrderPlaced = () => {
+  fetchSalesHistory()
+  fetchPurchaseHistory()
+  fetchUserStats()
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('orderPlaced', handleOrderPlaced)
 })
 </script>

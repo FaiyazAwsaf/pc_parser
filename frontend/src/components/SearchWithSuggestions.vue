@@ -132,7 +132,6 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'search', 'suggestion-selected'])
 
-// Reactive data
 const searchInput = ref(null)
 const searchQuery = ref(props.modelValue)
 const suggestions = ref([])
@@ -140,15 +139,12 @@ const showSuggestions = ref(false)
 const loading = ref(false)
 const selectedIndex = ref(-1)
 
-// Debounce timer
 let suggestionTimeout = null
 
-// Watch for external changes to modelValue
 watch(() => props.modelValue, (newValue) => {
   searchQuery.value = newValue
 })
 
-// Watch for changes to searchQuery
 watch(searchQuery, (newValue) => {
   emit('update:modelValue', newValue)
 })
@@ -176,13 +172,11 @@ const fetchSuggestions = async (query) => {
 const handleInput = () => {
   selectedIndex.value = -1
   
-  // Clear previous timeout
   clearTimeout(suggestionTimeout)
   
-  // Set new timeout for suggestions
   suggestionTimeout = setTimeout(() => {
     fetchSuggestions(searchQuery.value)
-  }, 300) // 300ms delay for suggestions
+  }, 300)
 }
 
 const handleKeydown = (event) => {
@@ -222,7 +216,6 @@ const handleKeydown = (event) => {
 }
 
 const handleBlur = () => {
-  // Delay hiding suggestions to allow for click events
   setTimeout(() => {
     showSuggestions.value = false
     selectedIndex.value = -1
@@ -233,7 +226,6 @@ const selectSuggestion = (suggestion) => {
   showSuggestions.value = false
   selectedIndex.value = -1
   
-  // Emit suggestion selected event to parent
   emit('suggestion-selected', suggestion)
 }
 
@@ -243,13 +235,11 @@ const executeSearch = () => {
   emit('search', searchQuery.value)
 }
 
-// Clear suggestions when component unmounts
 const clearSuggestions = () => {
   clearTimeout(suggestionTimeout)
   suggestions.value = []
 }
 
-// Expose methods for parent component
 defineExpose({
   focus: () => searchInput.value?.focus(),
   blur: () => searchInput.value?.blur(),
@@ -261,7 +251,7 @@ defineExpose({
 </script>
 
 <style scoped>
-/* Custom scrollbar for suggestions */
+
 .max-h-96::-webkit-scrollbar {
   width: 6px;
 }

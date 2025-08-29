@@ -47,14 +47,12 @@
         
         <div class="flex space-x-2">
           <button 
-            @click.stop="$emit('order', product)" 
-            :disabled="!product.is_available"
-            class="px-3 py-1 text-sm rounded transition"
-            :class="product.is_available !== false
-              ? 'bg-green-600 text-white hover:bg-green-700' 
-              : 'bg-gray-400 text-white cursor-not-allowed'"
+            v-if="isAuthenticated && product.is_available !== false"
+            @click.stop="addToCart(product)"
+            class="flex-1 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
           >
-            {{ product.is_available !== false ? 'Order' : 'Sold Out' }}
+            <span v-if="isInCart(product.id)">In Cart ({{ getCartItemQuantity(product.id) }})</span>
+            <span v-else>Add to Cart</span>
           </button>
           <button 
             v-if="isAuthenticated"
@@ -71,6 +69,7 @@
 
 <script>
 import StarRating from './StarRating.vue'
+import { useCart } from '../stores/cart.js'
 
 export default {
   name: 'ProductCard',
@@ -88,9 +87,12 @@ export default {
     }
   },
   emits: ['order', 'chat', 'view-details'],
+  setup() {
+    const { addToCart, isInCart, getCartItemQuantity } = useCart()
+    return { addToCart, isInCart, getCartItemQuantity }
+  },
   computed: {
     canRate() {
-      // User can rate if they are authenticated (we'll check seller restriction in the backend)
       return this.isAuthenticated
     }
   },

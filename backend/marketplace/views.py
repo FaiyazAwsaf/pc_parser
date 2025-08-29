@@ -105,6 +105,11 @@ class MyProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 class MyProductsView(generics.ListAPIView):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = CursorPagination
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'description', 'category', 'brand']
+    ordering_fields = ['price', 'created_at', 'name']
+    ordering = ['-created_at']
     
     def get_queryset(self):
         return Product.objects.filter(seller=self.request.user)
@@ -356,3 +361,27 @@ class SellerRatingListView(generics.ListAPIView):
     def get_queryset(self):
         seller_id = self.kwargs['seller_id']
         return SellerRating.objects.filter(seller_id=seller_id)
+
+class UserStatsView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        
+        total_products = Product.objects.filter(seller=user).count()
+        completed_sales = Order.objects.filter(
+            product__seller=user, 
+            status='completed'
+        )
+        total_sold = completed_sales.count()
+        total_revenue = sum(sale.total_price for sale in completed_sales)
+        active_chats = Chat.objects.filter(
+            Q(buyer=user) | Q(seller=user)
+        ).count()
+        
+        return Response({
+            'total_products': total_products,
+            'total_sold': total_sold,
+            'total_revenue': float(total_revenue),
+            'active_chats': active_chats
+        })

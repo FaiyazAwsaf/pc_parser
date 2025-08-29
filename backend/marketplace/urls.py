@@ -29,4 +29,7 @@ urlpatterns = [
     # Seller Rating URLs
     path('sellers/<int:seller_id>/ratings/', views.SellerRatingListView.as_view(), name='seller-ratings'),
     path('sellers/<int:seller_id>/ratings/create/', views.SellerRatingCreateView.as_view(), name='create-seller-rating'),
+    
+    # User Stats URL
+    path('user/stats/', views.UserStatsView.as_view(), name='user-stats'),
 ]

@@ -88,7 +88,6 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     is_available = models.BooleanField(default=True)
 
-    # New filter fields - null=True for migration, blank=False for forms
     age = models.CharField(max_length=20, choices=AGE_CHOICES, null=True, blank=False)
     warranty = models.CharField(max_length=20, choices=WARRANTY_CHOICES, null=True, blank=False)
     box_accessories = models.CharField(max_length=20, choices=BOX_ACCESSORIES_CHOICES, null=True, blank=False)
@@ -189,22 +188,6 @@ class Message(models.Model):
     def __str__(self):
         return f"Message from {self.sender.username} in {self.chat}"
 
-class ProductRating(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ratings')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_ratings')
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='rating', null=True, blank=True)
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    review = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        unique_together = ['product', 'user']  # One rating per user per product
-        ordering = ['-created_at']
-    
-    def __str__(self):
-        return f"{self.user.username} rated {self.product.name} - {self.rating} stars"
-
 class SellerRating(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller_ratings')
     rater = models.ForeignKey(User, on_delete=models.CASCADE, related_name='given_seller_ratings')
@@ -215,7 +198,7 @@ class SellerRating(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        unique_together = ['seller', 'rater']  # One rating per rater per seller
+        unique_together = ['seller', 'rater']  
         ordering = ['-created_at']
     
     def __str__(self):

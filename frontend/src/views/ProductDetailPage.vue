@@ -191,7 +191,18 @@ const canRateSeller = computed(() => {
 })
 
 const getCurrentUserId = () => {
-  return null
+  try {
+    const token = localStorage.getItem('access_token')
+    if (!token) return null
+    
+    // Decode JWT token to get user ID
+    const payload = JSON.parse(atob(token.split('.')[1]))
+    console.log('JWT payload:', payload)
+    return payload.user_id || payload.id
+  } catch (error) {
+    console.error('Error decoding token:', error)
+    return null
+  }
 }
 
 const fetchProduct = async () => {
@@ -200,8 +211,15 @@ const fetchProduct = async () => {
     error.value = ''
     const productId = route.params.id
     
+    const headers = {}
+    const token = localStorage.getItem('access_token')
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+    
     const response = await axios.get(
-      `http://localhost:8000/api/marketplace/products/${productId}/`
+      `http://localhost:8000/api/marketplace/products/${productId}/`,
+      { headers }
     )
     
     if (response.data) {

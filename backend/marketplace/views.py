@@ -5,10 +5,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from django.db.models import Q
-from .models import Product, Order, Chat, Message, ProductRating, SellerRating
+from .models import Product, Order, Chat, Message, SellerRating
 from .serializers import (
     ProductSerializer, ProductCreateSerializer, OrderSerializer,
-    ChatSerializer, MessageSerializer, ProductRatingSerializer, SellerRatingSerializer
+    ChatSerializer, MessageSerializer, SellerRatingSerializer
 )
 from .pagination import CursorPagination
 
@@ -281,131 +281,24 @@ class SearchSuggestionsView(generics.GenericAPIView):
         
         return Response({'suggestions': suggestions[:10]})
 
-class ProductRatingListView(generics.ListAPIView):
-    serializer_class = ProductRatingSerializer
-    permission_classes = [AllowAny]
-    
-    def get_queryset(self):
-        product_id = self.kwargs['product_id']
-        return ProductRating.objects.filter(product_id=product_id)
-
-class ProductRatingCreateView(generics.CreateAPIView):
-    serializer_class = ProductRatingSerializer
-    permission_classes = [IsAuthenticated]
-    
-    def create(self, request, product_id):
-        try:
-            product = Product.objects.get(id=product_id)
-            
-            # Don't allow seller to rate their own product
-            if product.seller == request.user:
-                return Response(
-                    {'error': 'You cannot rate your own product'}, 
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            
-            # Check if user has already rated this product
-            existing_rating = ProductRating.objects.filter(
-                product=product, 
-                user=request.user
-            ).first()
-            
-            if existing_rating:
-                # Update existing rating
-                serializer = ProductRatingSerializer(
-                    existing_rating, 
-                    data=request.data, 
-                    partial=True
-                )
-                if serializer.is_valid():
-                    serializer.save()
-                    return Response(serializer.data, status=status.HTTP_200_OK)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                # Create new rating
-                serializer = ProductRatingSerializer(data=request.data)
-                if serializer.is_valid():
-                    serializer.save(user=request.user, product=product)
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-                
-        except Product.DoesNotExist:
-            return Response(
-                {'error': 'Product not found'}, 
-                status=status.HTTP_404_NOT_FOUND
-            )
-
-class ProductRatingDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = ProductRatingSerializer
-    permission_classes = [IsAuthenticated]
-    
-    def get_queryset(self):
-        return ProductRating.objects.filter(user=self.request.user)
-
-class CanUserRateProductView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
-    
-    def get(self, request, product_id):
-        """Check if the current user can rate this product"""
-        try:
-            product = Product.objects.get(id=product_id)
-            
-            # User cannot rate their own product
-            if product.seller == request.user:
-                return Response({
-                    'can_rate': False,
-                    'reason': 'Cannot rate your own product'
-                })
-            
-            # Check if user has purchased this product (optional - you can remove this check)
-            # has_purchased = Order.objects.filter(
-            #     buyer=request.user,
-            #     product=product,
-            #     status='delivered'
-            # ).exists()
-            
-            # For now, allow any authenticated user to rate (except seller)
-            has_purchased = True
-            
-            if not has_purchased:
-                return Response({
-                    'can_rate': False,
-                    'reason': 'You must purchase this product before rating it'
-                })
-            
-            # Check if user has already rated
-            existing_rating = ProductRating.objects.filter(
-                product=product,
-                user=request.user
-            ).first()
-            
-            return Response({
-                'can_rate': True,
-                'has_rated': existing_rating is not None,
-                'existing_rating': {
-                    'rating': existing_rating.rating,
-                    'review': existing_rating.review
-                } if existing_rating else None
-            })
-            
-        except Product.DoesNotExist:
-            return Response(
-                {'error': 'Product not found'}, 
-                status=status.HTTP_404_NOT_FOUND
-            )
-
-class SellerRatingCreateView(generics.CreateAPIView):
+class SellerRatingCreateView(generics.GenericAPIView):
     serializer_class = SellerRatingSerializer
     permission_classes = [IsAuthenticated]
     
     def post(self, request, seller_id):
+        print(f"SellerRatingCreateView called with seller_id: {seller_id}")
+        print(f"Request user: {request.user}")
+        print(f"Request data: {request.data}")
+        
         try:
             from django.contrib.auth import get_user_model
             User = get_user_model()
             seller = User.objects.get(id=seller_id)
+            print(f"Found seller: {seller}")
             
             # Don't allow seller to rate themselves
             if seller == request.user:
+                print("User trying to rate themselves")
                 return Response(
                     {'error': 'You cannot rate yourself'}, 
                     status=status.HTTP_400_BAD_REQUEST
@@ -416,9 +309,11 @@ class SellerRatingCreateView(generics.CreateAPIView):
                 seller=seller, 
                 rater=request.user
             ).first()
+            print(f"Existing rating: {existing_rating}")
             
             if existing_rating:
                 # Update existing rating
+                print("Updating existing rating")
                 serializer = SellerRatingSerializer(
                     existing_rating, 
                     data=request.data, 
@@ -426,20 +321,32 @@ class SellerRatingCreateView(generics.CreateAPIView):
                 )
                 if serializer.is_valid():
                     serializer.save()
+                    print("Rating updated successfully")
                     return Response(serializer.data, status=status.HTTP_200_OK)
+                print(f"Serializer errors (update): {serializer.errors}")
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
                 # Create new rating
+                print("Creating new rating")
                 serializer = SellerRatingSerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(rater=request.user, seller=seller)
+                    print("Rating created successfully")
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
+                print(f"Serializer errors (create): {serializer.errors}")
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
                 
         except User.DoesNotExist:
+            print(f"Seller with id {seller_id} not found")
             return Response(
                 {'error': 'Seller not found'}, 
                 status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            print(f"Unexpected error: {e}")
+            return Response(
+                {'error': 'Internal server error'}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
 class SellerRatingListView(generics.ListAPIView):

@@ -141,6 +141,9 @@ class ResendVerificationSerializer(serializers.Serializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     profile_image_url = serializers.SerializerMethodField()
+    seller_rating = serializers.ReadOnlyField()
+    seller_rating_count = serializers.ReadOnlyField()
+    seller_rating_distribution = serializers.ReadOnlyField()
 
     class Meta:
         model = User
@@ -154,6 +157,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "date_joined",
             "profile_image",
             "profile_image_url",
+            "seller_rating",
+            "seller_rating_count",
+            "seller_rating_distribution",
         )
         read_only_fields = (
             "id",
@@ -161,6 +167,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "is_email_verified",
             "date_joined",
             "profile_image_url",
+            "seller_rating",
+            "seller_rating_count",
+            "seller_rating_distribution",
         )
 
     def get_profile_image_url(self, obj):

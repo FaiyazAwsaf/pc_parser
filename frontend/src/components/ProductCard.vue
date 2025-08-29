@@ -25,11 +25,11 @@
       
       <h3 class="text-lg font-semibold text-gray-800 mb-1 truncate">{{ product.name }}</h3>
       
-      <!-- Rating Display -->
+      <!-- Seller Rating Display -->
       <div class="mb-2">
         <StarRating 
-          :modelValue="product.average_rating || 0"
-          :count="product.rating_count || 0"
+          :modelValue="product.seller_rating || 0"
+          :count="product.seller_rating_count || 0"
           :interactive="false"
           :showText="true"
         />

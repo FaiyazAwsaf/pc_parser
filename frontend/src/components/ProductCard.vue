@@ -47,15 +47,21 @@
         
         <div class="flex space-x-2">
           <button 
-            v-if="isAuthenticated && product.is_available !== false"
+            v-if="isAuthenticated && product.is_available !== false && !isOwnProduct"
             @click.stop="addToCart(product)"
             class="flex-1 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
           >
             <span v-if="isInCart(product.id)">In Cart ({{ getCartItemQuantity(product.id) }})</span>
             <span v-else>Add to Cart</span>
           </button>
+          <div 
+            v-else-if="isAuthenticated && isOwnProduct"
+            class="flex-1 px-3 py-1 bg-gray-300 text-gray-500 text-sm rounded text-center"
+          >
+            Your Product
+          </div>
           <button 
-            v-if="isAuthenticated"
+            v-if="isAuthenticated && !isOwnProduct"
             @click.stop="$emit('chat', product)" 
             class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition"
           >
@@ -94,6 +100,11 @@ export default {
   computed: {
     canRate() {
       return this.isAuthenticated
+    },
+    isOwnProduct() {
+      if (!this.isAuthenticated) return false
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}')
+      return this.product.seller === currentUser.id || this.product.seller_id === currentUser.id
     }
   },
   methods: {

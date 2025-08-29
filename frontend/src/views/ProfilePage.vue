@@ -487,7 +487,7 @@ const monthlyRevenue = computed(() => {
       year: 'numeric', 
       month: 'short' 
     })
-    months[month] = (months[month] || 0) + sale.total_price
+    months[month] = (months[month] || 0) + (parseFloat(sale.total_price) || 0)
   })
   
   return Object.entries(months).map(([month, revenue]) => ({
@@ -626,7 +626,7 @@ const fetchSalesHistory = async () => {
       stats.value.totalSold = salesHistory.value.filter(sale => sale.status === 'delivered').length
       stats.value.totalRevenue = salesHistory.value
         .filter(sale => sale.status === 'delivered')
-        .reduce((sum, sale) => sum + (sale.total_price || 0), 0)
+        .reduce((sum, sale) => sum + (parseFloat(sale.total_price) || 0), 0)
     }
   } catch (error) {
     console.error('Error fetching sales:', error)

@@ -343,6 +343,38 @@
       @close="showEditProductModal = false"
       @product-updated="handleProductUpdated"
     />
+
+    <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center z-50" style="background-color: rgba(0, 0, 0, 0.4);">
+      <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+        <div class="flex items-center mb-4">
+          <div class="flex-shrink-0 w-10 h-10 mx-auto bg-red-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="text-center">
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Delete Product</h3>
+          <p class="text-sm text-gray-500 mb-6">
+            Are you sure you want to delete "{{ productToDelete?.name }}"? This action cannot be undone.
+          </p>
+          <div class="flex space-x-3">
+            <button 
+              @click="showDeleteModal = false"
+              class="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            >
+              Cancel
+            </button>
+            <button 
+              @click="confirmDelete"
+              class="flex-1 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -358,6 +390,8 @@ const showEditModal = ref(false)
 const showAddProductModal = ref(false)
 const showEditProductModal = ref(false)
 const selectedProduct = ref(null)
+const showDeleteModal = ref(false)
+const productToDelete = ref(null)
 const activeTab = ref('products')
 
 const user = ref({})
@@ -578,26 +612,33 @@ const handleProductUpdated = () => {
   fetchMyProducts()
 }
 
-const deleteProduct = async (product) => {
-  if (confirm(`Are you sure you want to delete "${product.name}"?`)) {
-    try {
-      const token = localStorage.getItem('access_token')
-      const response = await fetch(`http://localhost:8000/api/marketplace/products/my/${product.id}/`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      
-      if (response.ok) {
-        fetchMyProducts()
-      } else {
-        alert('Error deleting product. Please try again.')
+const deleteProduct = (product) => {
+  productToDelete.value = product
+  showDeleteModal.value = true
+}
+
+const confirmDelete = async () => {
+  if (!productToDelete.value) return
+  
+  try {
+    const token = localStorage.getItem('access_token')
+    const response = await fetch(`http://localhost:8000/api/marketplace/products/my/${productToDelete.value.id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    } catch (error) {
-      console.error('Error deleting product:', error)
+    })
+    
+    if (response.ok) {
+      showDeleteModal.value = false
+      productToDelete.value = null
+      fetchMyProducts()
+    } else {
       alert('Error deleting product. Please try again.')
     }
+  } catch (error) {
+    console.error('Error deleting product:', error)
+    alert('Error deleting product. Please try again.')
   }
 }
 

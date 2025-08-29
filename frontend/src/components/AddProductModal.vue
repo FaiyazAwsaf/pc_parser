@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50" @click="handleOverlayClick">
+  <div class="fixed inset-0 flex items-center justify-center z-50" style="background-color: rgba(0, 0, 0, 0.3);" @click="handleOverlayClick">
     <div class="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto m-4" @click.stop>
       <div class="flex justify-between items-center p-6 border-b border-gray-200">
         <h2 class="text-2xl font-bold text-gray-800">Add Product</h2>

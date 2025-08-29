@@ -623,9 +623,9 @@ const fetchSalesHistory = async () => {
     if (response.ok) {
       const data = await response.json()
       salesHistory.value = Array.isArray(data) ? data : (data.results || [])
-      stats.value.totalSold = salesHistory.value.filter(sale => sale.status === 'completed').length
+      stats.value.totalSold = salesHistory.value.filter(sale => sale.status === 'delivered').length
       stats.value.totalRevenue = salesHistory.value
-        .filter(sale => sale.status === 'completed')
+        .filter(sale => sale.status === 'delivered')
         .reduce((sum, sale) => sum + (sale.total_price || 0), 0)
     }
   } catch (error) {

@@ -131,12 +131,14 @@ const proceedToCheckout = async () => {
   try {
     const token = localStorage.getItem('access_token')
     const orders = []
+    const totalAmount = cartTotal.value
 
     for (const item of cartItems.value) {
       const orderData = {
         product: item.id,
         quantity: item.quantity,
-        shipping_address: 'Default Address'
+        shipping_address: 'Default Address',
+        status: 'delivered'
       }
 
       const response = await fetch('http://localhost:8000/api/marketplace/orders/create/', {
@@ -152,6 +154,8 @@ const proceedToCheckout = async () => {
         const order = await response.json()
         orders.push(order)
       } else {
+        const errorText = await response.text()
+        console.error('Order creation failed:', errorText)
         throw new Error(`Failed to create order for ${item.name}`)
       }
     }
@@ -159,7 +163,7 @@ const proceedToCheckout = async () => {
     clearCart()
     closeCart()
 
-    alert(`Successfully placed ${orders.length} order(s)! Total: ৳${formatPrice(cartTotal.value)}`)
+    alert(`Successfully placed ${orders.length} order(s)! Total: ৳${formatPrice(totalAmount)}`)
 
     window.dispatchEvent(new CustomEvent('orderPlaced', { detail: orders }))
 

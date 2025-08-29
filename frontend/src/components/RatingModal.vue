@@ -90,7 +90,6 @@ const review = ref('')
 const submitting = ref(false)
 const error = ref('')
 
-// Watch for existing rating to populate form
 watch(() => props.existingRating, (newRating) => {
   if (newRating) {
     rating.value = newRating.rating
@@ -101,7 +100,6 @@ watch(() => props.existingRating, (newRating) => {
   }
 }, { immediate: true })
 
-// Reset form when modal is closed
 watch(() => props.show, (newShow) => {
   if (!newShow) {
     error.value = ''
@@ -121,12 +119,52 @@ const submitRating = async () => {
   submitting.value = true
   error.value = ''
   
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  
-  // Always succeed
-  emit('rating-submitted')
-  emit('close')
-  submitting.value = false
+  try {
+    const token = localStorage.getItem('access_token')
+    if (!token) {
+      error.value = 'You must be logged in to rate a seller'
+      submitting.value = false
+      return
+    }
+    
+    const requestData = {
+      rating: rating.value,
+      review: review.value
+    }
+    
+    console.log('Submitting rating:', requestData)
+    console.log('Seller ID:', props.product.seller)
+    console.log('API URL:', `http://localhost:8000/api/marketplace/sellers/${props.product.seller}/ratings/create/`)
+    
+    const response = await axios.post(
+      `http://localhost:8000/api/marketplace/sellers/${props.product.seller}/ratings/create/`,
+      requestData,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+    
+    console.log('Rating response:', response.data)
+    
+    if (response.status === 200 || response.status === 201) {
+      emit('rating-submitted')
+      emit('close')
+    }
+  } catch (err) {
+    console.error('Error submitting rating:', err)
+    console.error('Error response:', err.response?.data)
+    if (err.response?.status === 401) {
+      error.value = 'You must be logged in to rate a seller'
+    } else if (err.response?.status === 400) {
+      error.value = err.response.data.error || 'Invalid rating data'
+    } else {
+      error.value = 'Failed to submit rating. Please try again.'
+    }
+  } finally {
+    submitting.value = false
+  }
 }
 </script>

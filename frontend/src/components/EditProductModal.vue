@@ -2,14 +2,13 @@
   <div class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50" @click="handleOverlayClick">
     <div class="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto m-4" @click.stop>
       <div class="flex justify-between items-center p-6 border-b border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-800">Add Product</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Edit Product</h2>
         <button @click="$emit('close')" class="text-gray-400 hover:text-gray-600 text-2xl font-bold w-8 h-8 flex items-center justify-center">
           &times;
         </button>
       </div>
       
       <form @submit.prevent="handleSubmit" class="p-6 space-y-6">
-        <!-- Product Name -->
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
           <input
@@ -22,7 +21,6 @@
           />
         </div>
         
-        <!-- Category and Condition -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
@@ -48,7 +46,6 @@
           </div>
         </div>
 
-        <!-- Age and Warranty -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="age" class="block text-sm font-medium text-gray-700 mb-2">Age/Usage *</label>
@@ -72,7 +69,6 @@
           </div>
         </div>
 
-        <!-- Brand and Performance Tier -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="brand" class="block text-sm font-medium text-gray-700 mb-2">Brand *</label>
@@ -102,7 +98,6 @@
           </div>
         </div>
 
-        <!-- Box & Accessories and Price Type -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="box_accessories" class="block text-sm font-medium text-gray-700 mb-2">Box & Accessories *</label>
@@ -124,7 +119,6 @@
           </div>
         </div>
 
-        <!-- Availability and Compatibility -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="availability" class="block text-sm font-medium text-gray-700 mb-2">Availability *</label>
@@ -151,7 +145,6 @@
           </div>
         </div>
         
-        <!-- Price -->
         <div>
           <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price (৳) *</label>
           <input
@@ -166,7 +159,6 @@
           />
         </div>
         
-        <!-- Description -->
         <div>
           <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
           <textarea
@@ -179,7 +171,6 @@
           ></textarea>
         </div>
         
-        <!-- Image Upload -->
         <div>
           <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
           <input
@@ -194,7 +185,6 @@
           </div>
         </div>
         
-        <!-- Form Actions -->
         <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
           <button 
             type="button" 
@@ -206,9 +196,9 @@
           <button 
             type="submit" 
             :disabled="loading" 
-            class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+            class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
           >
-            {{ loading ? 'Adding...' : 'Add Product' }}
+            {{ loading ? 'Updating...' : 'Update Product' }}
           </button>
         </div>
       </form>
@@ -217,9 +207,16 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 
-const emit = defineEmits(['close', 'product-added'])
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true
+  }
+})
+
+const emit = defineEmits(['close', 'product-updated'])
 
 const loading = ref(false)
 const imagePreview = ref(null)
@@ -240,6 +237,17 @@ const form = reactive({
   price: '',
   description: '',
 })
+
+watch(() => props.product, (newProduct) => {
+  if (newProduct) {
+    Object.keys(form).forEach(key => {
+      form[key] = newProduct[key] || ''
+    })
+    if (newProduct.image) {
+      imagePreview.value = newProduct.image
+    }
+  }
+}, { immediate: true })
 
 const handleImageChange = (event) => {
   const file = event.target.files[0]
@@ -277,8 +285,8 @@ const handleSubmit = async () => {
     }
     
     const token = localStorage.getItem('access_token')
-    const response = await fetch('http://localhost:8000/api/marketplace/products/create/', {
-      method: 'POST',
+    const response = await fetch(`http://localhost:8000/api/marketplace/products/my/${props.product.id}/`, {
+      method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
       },
@@ -286,15 +294,15 @@ const handleSubmit = async () => {
     })
     
     if (response.ok) {
-      emit('product-added')
+      emit('product-updated')
     } else {
       const errorData = await response.json()
-      console.error('Error adding product:', errorData)
-      alert('Error adding product. Please try again.')
+      console.error('Error updating product:', errorData)
+      alert('Error updating product. Please try again.')
     }
   } catch (error) {
-    console.error('Error adding product:', error)
-    alert('Error adding product. Please try again.')
+    console.error('Error updating product:', error)
+    alert('Error updating product. Please try again.')
   } finally {
     loading.value = false
   }

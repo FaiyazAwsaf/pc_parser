@@ -127,6 +127,14 @@
 
       <!-- Main Content Table -->
       <main class="lg:col-span-4">
+        <div class="flex justify-between items-center mb-4">
+          <input
+            type="text"
+            placeholder="Search CPU"
+            v-model="searchQuery"
+            class="border rounded px-4 py-2 w-full max-w-sm"
+          />
+        </div>
         <div v-if="loading" class="text-center py-8">
           <div
             class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"

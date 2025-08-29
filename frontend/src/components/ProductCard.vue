@@ -5,7 +5,7 @@
   >
     <div class="relative">
       <img 
-        :src="product.image || '/placeholder-product.jpg'" 
+        :src="product.image || defaultImage" 
         :alt="product.name"
         @error="handleImageError"
         class="w-full h-48 object-contain bg-gray-100 p-4"
@@ -27,6 +27,7 @@
       
       <!-- Seller Rating Display -->
       <div class="mb-2">
+        <div class="text-xs text-gray-500 mb-1">Seller Rating:</div>
         <StarRating 
           :modelValue="product.seller_rating || 0"
           :count="product.seller_rating_count || 0"
@@ -105,6 +106,9 @@ export default {
       if (!this.isAuthenticated) return false
       const currentUser = JSON.parse(localStorage.getItem('user') || '{}')
       return this.product.seller === currentUser.id || this.product.seller_id === currentUser.id
+    },
+    defaultImage() {
+      return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PGcgZmlsbD0iIzlmYTZiMiI+PHBhdGggZD0iTTE2MCA5NmMxNy42NzMgMCAzMiAxNC4zMjcgMzIgMzJzLTE0LjMyNyAzMi0zMiAzMi0zMi0xNC4zMjctMzItMzIgMTQuMzI3LTMyIDMyLTMyem0wIDEyYy0xMS4wNDYgMC0yMCA4Ljk1NC0yMCAyMHM4Ljk1NCAyMCAyMCAyMCAyMC04Ljk1NCAyMC0yMC04Ljk1NC0yMC0yMC0yMHoiLz48cGF0aCBkPSJNMTAwIDIwMGgxNjBsLTMyLTQwLTMyIDQwLTMyLTQweiIvPjwvZz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOWZhNmIyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+Tm8gSW1hZ2U8L3RleHQ+PC9zdmc+'
     }
   },
   methods: {

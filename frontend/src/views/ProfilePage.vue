@@ -468,32 +468,61 @@ const userInitials = computed(() => {
 
 const categoryStats = computed(() => {
   const categories = {}
-  myProducts.value.forEach(product => {
-    categories[product.category] = (categories[product.category] || 0) + 1
+  const deliveredSales = salesHistory.value.filter(sale => sale.status === 'delivered')
+  
+  deliveredSales.forEach(sale => {
+    const category = sale.product_category || 'Unknown'
+    categories[category] = (categories[category] || 0) + 1
   })
   
-  const total = myProducts.value.length
-  return Object.entries(categories).map(([name, count]) => ({
-    name,
-    count,
-    percentage: total > 0 ? (count / total) * 100 : 0
-  }))
+  const total = Object.values(categories).reduce((sum, count) => sum + count, 0)
+  
+  if (total === 0) {
+    return [{ name: 'No sales yet', count: 0, percentage: 0 }]
+  }
+  
+  return Object.entries(categories)
+    .map(([name, count]) => ({
+      name,
+      count,
+      percentage: (count / total) * 100
+    }))
+    .sort((a, b) => b.count - a.count)
 })
 
 const monthlyRevenue = computed(() => {
   const months = {}
-  salesHistory.value.forEach(sale => {
-    const month = new Date(sale.created_at).toLocaleDateString('en-US', { 
+  const deliveredSales = salesHistory.value.filter(sale => sale.status === 'delivered')
+  
+  deliveredSales.forEach(sale => {
+    const date = new Date(sale.created_at)
+    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+    const monthDisplay = date.toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'short' 
     })
-    months[month] = (months[month] || 0) + (parseFloat(sale.total_price) || 0)
+    
+    if (!months[monthKey]) {
+      months[monthKey] = {
+        display: monthDisplay,
+        revenue: 0
+      }
+    }
+    months[monthKey].revenue += parseFloat(sale.total_price) || 0
   })
   
-  return Object.entries(months).map(([month, revenue]) => ({
-    month,
-    revenue
-  })).slice(-6)
+  const sortedMonths = Object.entries(months)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .slice(-6)
+  
+  if (sortedMonths.length === 0) {
+    return [{ month: 'No sales yet', revenue: 0 }]
+  }
+  
+  return sortedMonths.map(([key, data]) => ({
+    month: data.display,
+    revenue: data.revenue
+  }))
 })
 
 const fetchUserProfile = async () => {

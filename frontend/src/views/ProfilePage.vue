@@ -134,39 +134,73 @@
               </button>
             </div>
             
-            <div v-if="myProducts.length === 0" class="text-center py-8">
+            <div class="mb-4">
+              <SearchWithSuggestions
+                v-model="productSearchQuery"
+                placeholder="Search your products..."
+                @search="searchProducts"
+                @suggestion-selected="handleSuggestionSelected"
+              />
+            </div>
+            
+            <div v-if="loadingProducts" class="flex justify-center py-8">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+            
+            <div v-else-if="myProducts.length === 0 && !productSearchQuery" class="text-center py-8">
               <div class="text-4xl mb-4">📦</div>
               <p class="text-gray-500">You haven't listed any products yet.</p>
             </div>
             
-            <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div 
-                v-for="product in myProducts" 
-                :key="product.id"
-                class="border rounded-lg p-4 hover:shadow-md transition"
-              >
-                <img 
-                  :src="product.image || 'https://via.placeholder.com/200x150'" 
-                  :alt="product.name"
-                  class="w-full h-32 object-cover rounded mb-3"
-                />
-                <h4 class="font-medium text-gray-900 mb-1">{{ product.name }}</h4>
-                <p class="text-sm text-gray-600 mb-2">{{ product.category }} - {{ product.condition }}</p>
-                <p class="text-lg font-semibold text-blue-600 mb-3">৳{{ formatPrice(product.price) }}</p>
-                <div class="flex space-x-2">
-                  <button 
-                    @click="editProduct(product)"
-                    class="flex-1 px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    @click="deleteProduct(product)"
-                    class="flex-1 px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200"
-                  >
-                    Delete
-                  </button>
+            <div v-else-if="myProducts.length === 0 && productSearchQuery" class="text-center py-8">
+              <div class="text-4xl mb-4">🔍</div>
+              <p class="text-gray-500">No products found matching "{{ productSearchQuery }}"</p>
+            </div>
+            
+            <div v-else>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                <div 
+                  v-for="product in myProducts" 
+                  :key="product.id"
+                  class="border rounded-lg p-4 hover:shadow-md transition"
+                >
+                  <img 
+                    :src="product.image || 'https://via.placeholder.com/200x150'" 
+                    :alt="product.name"
+                    class="w-full h-32 object-cover rounded mb-3"
+                  />
+                  <h4 class="font-medium text-gray-900 mb-1">{{ product.name }}</h4>
+                  <p class="text-sm text-gray-600 mb-2">{{ product.category }} - {{ product.condition }}</p>
+                  <p class="text-lg font-semibold text-blue-600 mb-3">৳{{ formatPrice(product.price) }}</p>
+                  <div class="flex space-x-2">
+                    <button 
+                      @click="editProduct(product)"
+                      class="flex-1 px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      @click="deleteProduct(product)"
+                      class="flex-1 px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
+              </div>
+              
+              <div v-if="hasMoreProducts" class="text-center">
+                <button
+                  @click="loadMoreProducts"
+                  :disabled="loadingMoreProducts"
+                  class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                >
+                  <span v-if="loadingMoreProducts" class="flex items-center">
+                    <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Loading...
+                  </span>
+                  <span v-else>Load More Products</span>
+                </button>
               </div>
             </div>
           </div>
@@ -379,10 +413,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import AddProductModal from '../components/AddProductModal.vue'
 import EditProductModal from '../components/EditProductModal.vue'
+import SearchWithSuggestions from '../components/SearchWithSuggestions.vue'
 
 const router = useRouter()
 const loading = ref(true)
@@ -404,6 +439,13 @@ const stats = ref({
   totalRevenue: 0,
   activeChats: 0
 })
+
+const productSearchQuery = ref('')
+const loadingProducts = ref(false)
+const loadingMoreProducts = ref(false)
+const hasMoreProducts = ref(false)
+const nextCursor = ref(null)
+const searchTimeout = ref(null)
 
 const editForm = reactive({
   first_name: '',
@@ -445,7 +487,7 @@ const monthlyRevenue = computed(() => {
       year: 'numeric', 
       month: 'short' 
     })
-    months[month] = (months[month] || 0) + sale.total_price
+    months[month] = (months[month] || 0) + (parseFloat(sale.total_price) || 0)
   })
   
   return Object.entries(months).map(([month, revenue]) => ({
@@ -480,10 +522,10 @@ const fetchUserProfile = async () => {
   }
 }
 
-const fetchMyProducts = async () => {
+const fetchUserStats = async () => {
   try {
     const token = localStorage.getItem('access_token')
-    const response = await fetch('http://localhost:8000/api/marketplace/products/my/', {
+    const response = await fetch('http://localhost:8000/api/marketplace/user/stats/', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -491,12 +533,81 @@ const fetchMyProducts = async () => {
     
     if (response.ok) {
       const data = await response.json()
-      myProducts.value = Array.isArray(data) ? data : (data.results || [])
-      stats.value.totalProducts = myProducts.value.length
+      stats.value.totalProducts = data.total_products || 0
+      stats.value.totalSold = data.total_sold || 0
+      stats.value.totalRevenue = data.total_revenue || 0
+      stats.value.activeChats = data.active_chats || 0
+    }
+  } catch (error) {
+    console.error('Error fetching user stats:', error)
+  }
+}
+
+const fetchMyProducts = async (reset = true, cursor = null, search = '') => {
+  try {
+    loadingProducts.value = reset
+    loadingMoreProducts.value = !reset
+    
+    const token = localStorage.getItem('access_token')
+    const params = new URLSearchParams()
+    
+    if (cursor) {
+      params.append('cursor', cursor)
+    }
+    
+    if (search) {
+      params.append('search', search)
+    }
+    
+    const url = `http://localhost:8000/api/marketplace/products/my/${params.toString() ? '?' + params.toString() : ''}`
+    
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    
+    if (response.ok) {
+      const data = await response.json()
+      const products = data.results || []
+      
+      if (reset) {
+        myProducts.value = products
+      } else {
+        myProducts.value = [...myProducts.value, ...products]
+      }
+      
+      hasMoreProducts.value = !!data.next
+      nextCursor.value = data.next ? new URL(data.next).searchParams.get('cursor') : null
     }
   } catch (error) {
     console.error('Error fetching products:', error)
-    myProducts.value = []
+    if (reset) {
+      myProducts.value = []
+    }
+  } finally {
+    loadingProducts.value = false
+    loadingMoreProducts.value = false
+  }
+}
+
+const searchProducts = () => {
+  fetchMyProducts(true, null, productSearchQuery.value)
+}
+
+const handleSuggestionSelected = (suggestion) => {
+  productSearchQuery.value = suggestion.text
+  searchProducts()
+}
+
+const clearSearch = () => {
+  productSearchQuery.value = ''
+  fetchMyProducts(true, null, '')
+}
+
+const loadMoreProducts = () => {
+  if (hasMoreProducts.value && !loadingMoreProducts.value) {
+    fetchMyProducts(false, nextCursor.value, productSearchQuery.value)
   }
 }
 
@@ -512,10 +623,10 @@ const fetchSalesHistory = async () => {
     if (response.ok) {
       const data = await response.json()
       salesHistory.value = Array.isArray(data) ? data : (data.results || [])
-      stats.value.totalSold = salesHistory.value.filter(sale => sale.status === 'completed').length
+      stats.value.totalSold = salesHistory.value.filter(sale => sale.status === 'delivered').length
       stats.value.totalRevenue = salesHistory.value
-        .filter(sale => sale.status === 'completed')
-        .reduce((sum, sale) => sum + (sale.total_price || 0), 0)
+        .filter(sale => sale.status === 'delivered')
+        .reduce((sum, sale) => sum + (parseFloat(sale.total_price) || 0), 0)
     }
   } catch (error) {
     console.error('Error fetching sales:', error)
@@ -599,6 +710,7 @@ const formatDate = (dateString) => {
 const handleProductAdded = () => {
   showAddProductModal.value = false
   fetchMyProducts()
+  fetchUserStats()
 }
 
 const editProduct = (product) => {
@@ -633,6 +745,7 @@ const confirmDelete = async () => {
       showDeleteModal.value = false
       productToDelete.value = null
       fetchMyProducts()
+      fetchUserStats()
     } else {
       alert('Error deleting product. Please try again.')
     }
@@ -645,11 +758,24 @@ const confirmDelete = async () => {
 onMounted(async () => {
   await Promise.all([
     fetchUserProfile(),
+    fetchUserStats(),
     fetchMyProducts(),
     fetchSalesHistory(),
     fetchPurchaseHistory(),
     fetchChats()
   ])
   loading.value = false
+
+  window.addEventListener('orderPlaced', handleOrderPlaced)
+})
+
+const handleOrderPlaced = () => {
+  fetchSalesHistory()
+  fetchPurchaseHistory()
+  fetchUserStats()
+}
+
+onBeforeUnmount(() => {
+  window.removeEventListener('orderPlaced', handleOrderPlaced)
 })
 </script>

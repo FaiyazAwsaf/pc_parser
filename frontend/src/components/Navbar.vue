@@ -107,6 +107,9 @@
 
         <!-- User Section -->
         <div class="flex items-center space-x-4">
+          <!-- Marketplace Cart -->
+          <CartDropdown v-if="isLoggedIn && isInMarketplace" />
+          
           <!-- Authenticated User -->
           <div v-if="isLoggedIn && user" class="flex items-center space-x-3">
             <span class="hidden sm:block text-sm text-gray-600">
@@ -235,18 +238,23 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import UserAvatar from './UserAvatar.vue'
+import CartDropdown from './CartDropdown.vue'
 import pcLogo from '@/assets/Images/PC Parser logo.png'
 
 const router = useRouter()
+const route = useRoute()
 const user = ref(null)
 const showMobileMenu = ref(false)
 const accessToken = ref(localStorage.getItem('access_token'))
 const showComponentsDropdown = ref(false)
 const componentsDropdown = ref(null)
 
-// Watch for changes in access token
+const isInMarketplace = computed(() => {
+  return route.path.startsWith('/marketplace')
+})
+
 watch(accessToken, (newToken) => {
   if (newToken) {
     loadUserData()
@@ -255,7 +263,6 @@ watch(accessToken, (newToken) => {
   }
 })
 
-// Check if user is logged in
 const isLoggedIn = computed(() => {
   return !!accessToken.value && !!user.value
 })
@@ -297,13 +304,12 @@ const handleLogout = async () => {
   } catch (error) {
     console.error('Logout error:', error)
   } finally {
-    // Clear local storage regardless of API call success
+    
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
     localStorage.removeItem('user')
     user.value = null
 
-    // Close mobile menu and redirect to home
     closeMobileMenu()
     router.push('/')
   }
@@ -332,14 +338,12 @@ onMounted(() => {
 
   document.addEventListener('click', handleClickOutsideDropdown)
 
-  // Listen for storage changes (when user logs in/out in another tab or same tab)
   window.addEventListener('storage', (e) => {
     if (e.key === 'user' || e.key === 'access_token') {
       loadUserData()
     }
   })
 
-  // Also listen for custom login event
   window.addEventListener('userLoggedIn', () => {
     accessToken.value = localStorage.getItem('access_token')
     loadUserData()

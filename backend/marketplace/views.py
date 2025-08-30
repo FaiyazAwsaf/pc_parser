@@ -4,7 +4,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from django.db.models import Q
+from django.db.models import Q, Avg
+from datetime import datetime, timedelta
 from .models import Product, Order, Chat, Message, SellerRating
 from .serializers import (
     ProductSerializer, ProductCreateSerializer, OrderSerializer,
@@ -26,47 +27,40 @@ class ProductListView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Product.objects.filter(is_available=True)
         
-        # Price range filtering
         min_price = self.request.query_params.get('min_price')
         max_price = self.request.query_params.get('max_price')
-        
-        print(f"Price filtering - min_price: {min_price}, max_price: {max_price}")
         
         if min_price:
             try:
                 min_price_val = float(min_price)
                 queryset = queryset.filter(price__gte=min_price_val)
-                print(f"Applied min_price filter: {min_price_val}")
             except (ValueError, TypeError):
-                print(f"Invalid min_price value: {min_price}")
+                pass
                 
         if max_price:
             try:
                 max_price_val = float(max_price)
                 queryset = queryset.filter(price__lte=max_price_val)
-                print(f"Applied max_price filter: {max_price_val}")
             except (ValueError, TypeError):
-                print(f"Invalid max_price value: {max_price}")
+                pass
         
-        # Debug: Print the final query and count
-        print(f"Final queryset count: {queryset.count()}")
-        if queryset.exists():
-            prices = list(queryset.values_list('price', flat=True)[:10])
-            print(f"Sample prices from results: {prices}")
-        
-        # Additional filters that require custom logic
         seller_rating = self.request.query_params.get('seller_rating')
         distance = self.request.query_params.get('distance')
         listing_age = self.request.query_params.get('listing_age')
         
-        # Note: These filters would require additional implementation
-        # For now, they are placeholders for future enhancement
-        # seller_rating would need a rating system
-        # distance would need location data
-        # listing_age can be implemented with date filtering
-        
+        if seller_rating:
+            if seller_rating == '4plus':
+                queryset = queryset.filter(seller__seller_ratings__rating__gte=4).annotate(
+                    avg_seller_rating=Avg('seller__seller_ratings__rating')
+                ).filter(avg_seller_rating__gte=4.0).distinct()
+            elif seller_rating == '3plus':
+                queryset = queryset.filter(seller__seller_ratings__rating__gte=3).annotate(
+                    avg_seller_rating=Avg('seller__seller_ratings__rating')
+                ).filter(avg_seller_rating__gte=3.0).distinct()
+            elif seller_rating == 'new':
+                queryset = queryset.filter(seller__seller_ratings__isnull=True)
+            
         if listing_age:
-            from datetime import datetime, timedelta
             if listing_age == 'today':
                 queryset = queryset.filter(created_at__date=datetime.now().date())
             elif listing_age == 'week':
@@ -105,6 +99,11 @@ class MyProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 class MyProductsView(generics.ListAPIView):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = CursorPagination
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'description', 'category', 'brand']
+    ordering_fields = ['price', 'created_at', 'name']
+    ordering = ['-created_at']
     
     def get_queryset(self):
         return Product.objects.filter(seller=self.request.user)
@@ -128,7 +127,7 @@ class MyOrdersView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
-        return Order.objects.filter(product__seller=self.request.user)
+        return Order.objects.filter(product__seller=self.request.user).select_related('product', 'buyer', 'product__seller')
 
 class ChatListView(generics.ListAPIView):
     serializer_class = ChatSerializer
@@ -178,14 +177,12 @@ class CreateChatView(generics.CreateAPIView):
         try:
             product = Product.objects.get(id=product_id)
             
-            # Don't allow seller to chat with themselves
             if product.seller == request.user:
                 return Response(
                     {'error': 'You cannot chat about your own product'}, 
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
-            # Get or create chat
             chat, created = Chat.objects.get_or_create(
                 product=product,
                 buyer=request.user,
@@ -205,7 +202,6 @@ class ProductCategoriesView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
     
     def get(self, request):
-        """Get all available product categories"""
         categories = [choice[0] for choice in Product.CATEGORY_CHOICES]
         return Response({'categories': categories})
 
@@ -213,7 +209,6 @@ class ProductConditionsView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
     
     def get(self, request):
-        """Get all available product conditions"""
         conditions = [choice[0] for choice in Product.CONDITION_CHOICES]
         return Response({'conditions': conditions})
 
@@ -221,13 +216,11 @@ class SearchSuggestionsView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
     
     def get(self, request):
-        """Get search suggestions based on query"""
         query = request.query_params.get('q', '').strip()
         
         if len(query) < 2:
             return Response({'suggestions': []})
         
-        # Limit to 10 suggestions for performance
         products = Product.objects.filter(
             Q(name__icontains=query) | Q(description__icontains=query),
             is_available=True
@@ -237,7 +230,6 @@ class SearchSuggestionsView(generics.GenericAPIView):
         seen = set()
         
         for product in products:
-            # Add product name suggestions
             name = product['name']
             if name not in seen and query.lower() in name.lower():
                 suggestions.append({
@@ -248,7 +240,6 @@ class SearchSuggestionsView(generics.GenericAPIView):
                 })
                 seen.add(name)
         
-        # Add brand suggestions
         brands = Product.objects.filter(
             brand__icontains=query,
             is_available=True
@@ -264,7 +255,6 @@ class SearchSuggestionsView(generics.GenericAPIView):
                 })
                 seen.add(brand_display)
         
-        # Add category suggestions
         categories = Product.objects.filter(
             category__icontains=query,
             is_available=True
@@ -286,34 +276,23 @@ class SellerRatingCreateView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request, seller_id):
-        print(f"SellerRatingCreateView called with seller_id: {seller_id}")
-        print(f"Request user: {request.user}")
-        print(f"Request data: {request.data}")
-        
         try:
             from django.contrib.auth import get_user_model
             User = get_user_model()
             seller = User.objects.get(id=seller_id)
-            print(f"Found seller: {seller}")
             
-            # Don't allow seller to rate themselves
             if seller == request.user:
-                print("User trying to rate themselves")
                 return Response(
                     {'error': 'You cannot rate yourself'}, 
                     status=status.HTTP_400_BAD_REQUEST
                 )
             
-            # Check if user has already rated this seller
             existing_rating = SellerRating.objects.filter(
                 seller=seller, 
                 rater=request.user
             ).first()
-            print(f"Existing rating: {existing_rating}")
             
             if existing_rating:
-                # Update existing rating
-                print("Updating existing rating")
                 serializer = SellerRatingSerializer(
                     existing_rating, 
                     data=request.data, 
@@ -321,29 +300,21 @@ class SellerRatingCreateView(generics.GenericAPIView):
                 )
                 if serializer.is_valid():
                     serializer.save()
-                    print("Rating updated successfully")
                     return Response(serializer.data, status=status.HTTP_200_OK)
-                print(f"Serializer errors (update): {serializer.errors}")
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else:
-                # Create new rating
-                print("Creating new rating")
                 serializer = SellerRatingSerializer(data=request.data)
                 if serializer.is_valid():
                     serializer.save(rater=request.user, seller=seller)
-                    print("Rating created successfully")
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
-                print(f"Serializer errors (create): {serializer.errors}")
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
                 
         except User.DoesNotExist:
-            print(f"Seller with id {seller_id} not found")
             return Response(
                 {'error': 'Seller not found'}, 
                 status=status.HTTP_404_NOT_FOUND
             )
         except Exception as e:
-            print(f"Unexpected error: {e}")
             return Response(
                 {'error': 'Internal server error'}, 
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -356,3 +327,27 @@ class SellerRatingListView(generics.ListAPIView):
     def get_queryset(self):
         seller_id = self.kwargs['seller_id']
         return SellerRating.objects.filter(seller_id=seller_id)
+
+class UserStatsView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        
+        total_products = Product.objects.filter(seller=user).count()
+        completed_sales = Order.objects.filter(
+            product__seller=user, 
+            status='delivered'
+        )
+        total_sold = completed_sales.count()
+        total_revenue = sum(sale.total_price for sale in completed_sales)
+        active_chats = Chat.objects.filter(
+            Q(buyer=user) | Q(seller=user)
+        ).count()
+        
+        return Response({
+            'total_products': total_products,
+            'total_sold': total_sold,
+            'total_revenue': float(total_revenue),
+            'active_chats': active_chats
+        })
